@@ -1,0 +1,35 @@
+
+> lamahatta-os@0.1.0 build
+> next build --turbopack
+
+   ▲ Next.js 15.5.4 (Turbopack)
+
+   Creating an optimized production build ...
+Error: Cannot apply unknown utility class `bg-foreground`
+    [2m[at onInvalidCandidate (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:18:1529)][0m
+    [2m[at ge (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:13:30343)][0m
+    [2m[at C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:18:373][0m
+    [2m[at L (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:3:1656)][0m
+    [2m[at Ie (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:18:172)][0m
+    [2m[at xi (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:37:294)][0m
+    [2m[at async Ai (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\tailwindcss\dist\lib.js:37:637)][0m
+    [2m[at async Ur (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\@tailwindcss\node\dist\index.js:10:3384)][0m
+    [2m[at async ue (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\@tailwindcss\postcss\dist\index.js:10:3981)][0m
+    [2m[at async Object.Once (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\@tailwindcss\postcss\dist\index.js:10:4252)][0m
+ ✓ Finished writing to disk in 331ms
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./src/app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: tailwindcss: C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\src\app\globals.css:1:1: Cannot apply unknown utility class `bg-foreground`
+    at Input.error (node_modules/postcss/lib/input.js:135:16) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\node_modules_fe693df6._.js:4651:22]
+    at Root.error (node_modules/postcss/lib/node.js:146:32) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\node_modules_fe693df6._.js:928:38]
+    [at Object.Once (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\@tailwindcss\postcss\dist\index.js:10:6913)]
+    at async LazyResult.runAsync (node_modules/postcss/lib/lazy-result.js:293:11) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\node_modules_fe693df6._.js:6207:21]
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\[root-of-the-server]__51225daf._.js:146:36]
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\[root-of-the-server]__974941ed._.js:442:31]
+
+
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\[root-of-the-server]__51225daf._.js:146:36])
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\build\chunks\[root-of-the-server]__974941ed._.js:442:31])
