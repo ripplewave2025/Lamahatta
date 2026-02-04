@@ -3,7 +3,12 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
-export default function PortfolioEditor({ user }: { user: any }) {
+interface UserProps {
+    id: string;
+    email?: string;
+}
+
+export default function PortfolioEditor({ user }: { user: UserProps }) {
     const [loading, setLoading] = useState(true)
     const [formData, setFormData] = useState({
         title: '',

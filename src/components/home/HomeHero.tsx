@@ -286,7 +286,7 @@ export default function HomeHero() {
                         viewport={{ once: true }}
                         className="text-2xl md:text-4xl font-serif italic leading-relaxed"
                     >
-                        "{t("life.quote")}"
+                        &ldquo;{t("life.quote")}&rdquo;
                     </motion.blockquote>
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -455,7 +455,7 @@ export default function HomeHero() {
                         viewport={{ once: true }}
                         className="text-xl font-serif text-muted italic"
                     >
-                        "{t("vision.quote")}"
+                        &ldquo;{t("vision.quote")}&rdquo;
                     </motion.p>
                 </div>
             </section>

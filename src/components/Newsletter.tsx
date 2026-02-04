@@ -54,7 +54,7 @@ export default function Newsletter() {
                 </motion.div>
                 <h3 className="text-2xl font-light text-white mb-2">Subscribed!</h3>
                 <p className="text-white/70">
-                    You'll receive updates about government schemes, grants, and village benefits.
+                    You&apos;ll receive updates about government schemes, grants, and village benefits.
                 </p>
                 <button
                     onClick={() => setIsSubmitted(false)}
