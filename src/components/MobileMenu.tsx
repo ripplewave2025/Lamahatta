@@ -75,11 +75,18 @@ const MobileMenu = ({ isOpen, onClose, navItems }: MobileMenuProps) => {
                                 transition={{ delay: 0.2 + navItems.length * 0.05 }}
                             >
                                 <Link
-                                    href="/village"
+                                    href="/hub"
                                     onClick={onClose}
                                     className="text-2xl font-light tracking-tight hover:text-accent transition-colors block"
                                 >
-                                    Village Showcase
+                                    Village Hub
+                                </Link>
+                                <Link
+                                    href="/hub/personality"
+                                    onClick={onClose}
+                                    className="text-lg font-light tracking-tight text-accent mt-2 block"
+                                >
+                                    → Take Personality Test
                                 </Link>
                             </motion.div>
                         </nav>

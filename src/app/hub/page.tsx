@@ -189,6 +189,38 @@ export default function SunlightHub() {
                         })}
                     </div>
                 </section>
+
+                {/* Village Heart Section */}
+                <motion.section
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="max-w-7xl mx-auto mt-24 mb-16 px-6"
+                >
+                    <div className="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
+                        <div
+                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                            style={{ backgroundImage: "url('/images/village-path.jpg')" }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                        <div className="absolute bottom-0 left-0 p-8 md:p-16 max-w-2xl">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.3 }}
+                            >
+                                <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">
+                                    The Heart of Lamahatta
+                                </h2>
+                                <p className="text-white/90 text-lg md:text-xl font-light italic leading-relaxed">
+                                    "Common paths we walk every day, where the morning sun greets us through the trees. This is where our stories begin."
+                                </p>
+                            </motion.div>
+                        </div>
+                    </div>
+                </motion.section>
             </div>
         </div>
     )

@@ -43,6 +43,7 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.scroll": "Scroll to explore ↓",
         "hero.opportunity": "See the Opportunity",
         "hero.story": "Our Story",
+        "hero.join": "Join the Village",
 
         // Opportunities Section
         "opportunities.title": "Opportunities",
@@ -167,6 +168,7 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.scroll": "तल स्क्रोल गर्नुहोस् ↓",
         "hero.opportunity": "अवसर हेर्नुहोस्",
         "hero.story": "हाम्रो कथा",
+        "hero.join": "गाउँमा सामेल हुनुहोस्",
 
         // Opportunities
         "opportunities.title": "अवसरहरू",

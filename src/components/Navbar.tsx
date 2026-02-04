@@ -45,8 +45,11 @@ const Navbar = () => {
             <LanguageToggle />
 
             {/* Hidden on small mobile */}
-            <Link href="/village" className="hidden md:block text-sm font-medium hover:text-accent transition-colors">
-              Village
+            <Link href="/hub" className="hidden md:block text-sm font-medium hover:text-accent transition-colors">
+              Village Hub
+            </Link>
+            <Link href="/hub/personality" className="hidden lg:block text-sm font-medium hover:text-accent transition-colors">
+              Personality Test
             </Link>
             <Link href="/auth" className="hidden sm:flex btn-primary !px-6 !py-2.5 text-[10px]">
               Join Village

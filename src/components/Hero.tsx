@@ -3,6 +3,7 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, MapPin, Users, Home } from "lucide-react";
+import Link from "next/link";
 import { useRef } from "react";
 
 const Hero = () => {
@@ -125,13 +126,15 @@ const Hero = () => {
                     >
                         Explore Services
                     </motion.button>
-                    <motion.button
-                        className="btn-secondary w-full sm:w-auto"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        Join the Village
-                    </motion.button>
+                    <Link href="/hub" className="w-full sm:w-auto">
+                        <motion.button
+                            className="btn-secondary w-full"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            {t("hero.join")}
+                        </motion.button>
+                    </Link>
                 </motion.div>
             </motion.div>
 
