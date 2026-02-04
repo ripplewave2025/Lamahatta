@@ -14,7 +14,7 @@ export default function HomeHero() {
             id: "villagers",
             titleKey: "opportunities.villagers",
             subtitleKey: "opportunities.villagers.desc",
-            href: "/village",
+            href: "/hub",
             color: "from-green-600 to-green-800",
         },
         {

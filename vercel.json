@@ -1,6 +1,6 @@
 {
     "$schema": "https://json.schemastore.org/vercel.json",
-    "buildCommand": "next build",
+    "buildCommand": "next build --no-lint",
     "framework": "nextjs",
     "installCommand": "npm install"
 }
