@@ -73,26 +73,44 @@ export default function HomeHero() {
                         transition={{ duration: 0.8 }}
                         className="mb-4"
                     >
-                        <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm text-white/80 text-xs uppercase tracking-[0.3em]">
+                        <span className="inline-block px-4 py-2 bg-amber-500/10 backdrop-blur-md border border-amber-500/30 text-amber-300 text-xs uppercase tracking-[0.3em] rounded-full">
                             {t("hero.location")}
                         </span>
                     </motion.div>
 
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.1 }}
-                        className="text-6xl md:text-8xl lg:text-9xl font-serif text-white mb-6"
-                        style={{ fontFamily: "var(--font-serif)" }}
-                    >
-                        {t("hero.title")}
-                    </motion.h1>
+                    <div className="relative inline-block">
+                        {/* Gold Glow Effect behind title */}
+                        <div className="absolute -inset-4 bg-amber-500/20 blur-3xl rounded-full opacity-50"></div>
+
+                        <motion.h1
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 1, type: "spring", bounce: 0.5 }}
+                            className="relative text-6xl md:text-8xl lg:text-9xl font-serif mb-6"
+                            style={{ fontFamily: "var(--font-serif)" }}
+                        >
+                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-amber-200 via-yellow-400 to-amber-600 drop-shadow-2xl">
+                                {t("hero.title")}
+                            </span>
+                            {/* Sparkles */}
+                            <motion.span
+                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
+                                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                                className="absolute -top-2 -right-4 text-3xl"
+                            >✨</motion.span>
+                            <motion.span
+                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
+                                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 2 }}
+                                className="absolute -bottom-2 -left-4 text-2xl"
+                            >✨</motion.span>
+                        </motion.h1>
+                    </div>
 
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className="text-xl md:text-2xl text-white/80 font-light max-w-2xl mx-auto mb-8"
+                        className="text-xl md:text-2xl text-amber-100/90 font-light max-w-2xl mx-auto mb-8 leading-relaxed"
                     >
                         {t("hero.subtitle")}
                     </motion.p>
@@ -109,11 +127,11 @@ export default function HomeHero() {
                             { num: "93", labelKey: "hero.residents" },
                             { num: "∞", labelKey: "hero.potential" }
                         ].map((stat) => (
-                            <div key={stat.labelKey} className="text-center">
-                                <div className="text-4xl md:text-6xl font-serif text-amber-400">
+                            <div key={stat.labelKey} className="text-center group">
+                                <div className="text-4xl md:text-6xl font-serif text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-yellow-600 group-hover:scale-110 transition-transform duration-300">
                                     {stat.num}
                                 </div>
-                                <div className="text-xs uppercase tracking-widest text-white/50 mt-1">
+                                <div className="text-xs uppercase tracking-widest text-amber-200/60 mt-2">
                                     {t(stat.labelKey)}
                                 </div>
                             </div>
@@ -129,13 +147,13 @@ export default function HomeHero() {
                     >
                         <Link
                             href="#opportunities"
-                            className="px-8 py-4 bg-amber-500 text-earth text-sm uppercase tracking-widest hover:bg-amber-400 transition-colors font-medium"
+                            className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-sm uppercase tracking-widest hover:from-amber-400 hover:to-yellow-500 transition-all shadow-lg shadow-amber-500/25 font-medium rounded-sm"
                         >
                             {t("hero.opportunity")}
                         </Link>
                         <Link
                             href="/why"
-                            className="px-8 py-4 border border-white/30 text-white text-sm uppercase tracking-widest hover:border-amber-400 hover:text-amber-400 transition-colors"
+                            className="px-8 py-4 border border-amber-500/30 text-amber-100 text-sm uppercase tracking-widest hover:border-amber-400 hover:text-white hover:bg-amber-500/10 transition-colors rounded-sm"
                         >
                             {t("hero.story")}
                         </Link>
@@ -151,11 +169,36 @@ export default function HomeHero() {
                         <motion.div
                             animate={{ y: [0, 10, 0] }}
                             transition={{ duration: 2, repeat: Infinity }}
-                            className="text-white/50 text-sm"
+                            className="text-amber-200/50 text-sm"
                         >
                             {t("hero.scroll")}
                         </motion.div>
                     </motion.div>
+                </div>
+
+                {/* Floating Gold Particles Animation */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    {[...Array(8)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{
+                                x: Math.random() * 100 + "%",
+                                y: Math.random() * 100 + "%",
+                                opacity: 0
+                            }}
+                            animate={{
+                                y: [null, Math.random() * -100 + "%"],
+                                opacity: [0, 0.8, 0]
+                            }}
+                            transition={{
+                                duration: Math.random() * 10 + 10,
+                                repeat: Infinity,
+                                ease: "linear",
+                                delay: Math.random() * 5
+                            }}
+                            className="absolute w-1 h-1 bg-amber-300 rounded-full blur-[1px]"
+                        />
+                    ))}
                 </div>
             </section>
 
