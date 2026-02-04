@@ -127,6 +127,15 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.stats.families": "Families",
         "hub.stats.stories": "Stories",
 
+        // Personality Test
+        "hub.personality": "Find My Personality",
+        "hub.personality.desc": "Discover your true self with our village-style quiz!",
+        "personality.title": "Village Personality Quiz",
+        "personality.subtitle": "10 questions. Brutally honest results.",
+        "personality.start": "Start Quiz",
+        "personality.submit": "Reveal My True Self",
+        "personality.retake": "Retake Quiz",
+
         // Footer
         "footer.tagline": "A living record of a small village in Lamahatta, Darjeeling. 22 houses. ~93 people. One story.",
         "footer.navigate": "Navigate",

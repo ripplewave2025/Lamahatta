@@ -11,7 +11,8 @@ import {
     Megaphone,
     Trophy,
     ArrowRight,
-    Sun
+    Sun,
+    Brain
 } from "lucide-react"
 
 const categories = [
@@ -74,6 +75,16 @@ const categories = [
         bgColor: "bg-yellow-50",
         iconColor: "text-yellow-600",
         href: "/hub/praises"
+    },
+    {
+        id: "personality",
+        titleKey: "hub.personality",
+        descKey: "hub.personality.desc",
+        icon: Brain,
+        color: "from-fuchsia-500 to-pink-500",
+        bgColor: "bg-fuchsia-50",
+        iconColor: "text-fuchsia-600",
+        href: "/hub/personality"
     }
 ]
 
