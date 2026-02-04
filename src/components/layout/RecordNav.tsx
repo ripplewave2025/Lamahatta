@@ -4,19 +4,21 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageToggle from "@/components/LanguageToggle";
-
-const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/why", label: "Why This Exists" },
-    { href: "/generations", label: "Change" },
-    { href: "/economy", label: "What We Do" },
-    { href: "/challenges", label: "Challenges" },
-    { href: "/voices", label: "Voices" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function RecordNav() {
+    const { t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const navLinks = [
+        { href: "/", label: t("nav.home") },
+        { href: "/why", label: t("nav.why") },
+        { href: "/generations", label: t("nav.change") },
+        { href: "/economy", label: t("nav.economy") },
+        { href: "/challenges", label: t("nav.challenges") },
+        { href: "/voices", label: t("nav.voices") },
+    ];
 
     useEffect(() => {
         const handleScroll = () => {
@@ -160,7 +162,7 @@ export default function RecordNav() {
                                         className="block w-full py-3 px-4 text-center bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 transition-colors"
                                         onClick={() => setMobileOpen(false)}
                                     >
-                                        Partner With Us
+                                        {t("cta.partner")}
                                     </Link>
                                 </div>
                             </div>
