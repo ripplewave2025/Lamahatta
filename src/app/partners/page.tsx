@@ -4,13 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import PageHeader from "@/components/shared/PageHeader";
 import { supabase } from "@/lib/supabase";
-
-const whyPartner = [
-    { title: "Genuine Service", desc: "We serve our community first" },
-    { title: "Local Pride", desc: "We take pride in our work" },
-    { title: "Careful Growth", desc: "We grow without losing identity" },
-    { title: "Long Memory", desc: "We remember who stood with us" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 const experiences = [
     "Good food",
@@ -21,8 +15,16 @@ const experiences = [
 ];
 
 export default function PartnersPage() {
+    const { t } = useLanguage();
     const [formData, setFormData] = useState({ phone: "", message: "" });
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+    const whyPartner = [
+        { title: t("partners.genuine"), desc: t("partners.genuine.desc") },
+        { title: t("partners.pride"), desc: t("partners.pride.desc") },
+        { title: t("partners.growth"), desc: t("partners.growth.desc") },
+        { title: t("partners.memory"), desc: t("partners.memory.desc") },
+    ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,9 +49,9 @@ export default function PartnersPage() {
     return (
         <div className="min-h-screen">
             <PageHeader
-                label="Invest & Collaborate"
-                title="Work With Us"
-                subtitle="We are valuable because we serve genuinely, grow carefully, and remember."
+                label={t("partners.label")}
+                title={t("partners.title")}
+                subtitle={t("partners.subtitle")}
             />
 
             <section className="section">
@@ -58,7 +60,7 @@ export default function PartnersPage() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
                         {whyPartner.map((item, index) => (
                             <motion.div
-                                key={item.title}
+                                key={index}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
@@ -82,7 +84,7 @@ export default function PartnersPage() {
                         className="bg-earth text-warmgray p-12 mb-16"
                     >
                         <h3 className="font-serif text-2xl text-center mb-8">
-                            People who come here experience:
+                            {t("partners.experience")}
                         </h3>
                         <div className="flex flex-wrap justify-center gap-4">
                             {experiences.map((exp) => (
@@ -95,7 +97,7 @@ export default function PartnersPage() {
                             ))}
                         </div>
                         <p className="text-center mt-8 text-warmgray/60 font-serif italic">
-                            &quot;We do not sell spectacle. We build trust.&quot;
+                            &quot;{t("partners.quote")}&quot;
                         </p>
                     </motion.div>
 
@@ -107,21 +109,21 @@ export default function PartnersPage() {
                         className="max-w-md mx-auto"
                     >
                         <h3 className="font-serif text-2xl mb-4 text-center">
-                            Interested in partnering?
+                            {t("partners.formTitle")}
                         </h3>
                         <p className="text-muted mb-8 text-center">
-                            Reach out for investment opportunities, collaborations, or visits.
+                            {t("partners.formDesc")}
                         </p>
 
                         {status === "success" ? (
                             <div className="text-center p-8 bg-green-50 border border-green-200 rounded-lg">
                                 <span className="text-4xl mb-4 block">✅</span>
-                                <p className="text-green-800 font-medium">Thank you! We&apos;ll get back to you soon.</p>
+                                <p className="text-green-800 font-medium">{t("partners.success")}</p>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
-                                    <label className="block text-sm text-muted mb-2">Phone Number *</label>
+                                    <label className="block text-sm text-muted mb-2">{t("partners.phone")} *</label>
                                     <input
                                         type="tel"
                                         value={formData.phone}
@@ -132,11 +134,11 @@ export default function PartnersPage() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm text-muted mb-2">Message (optional)</label>
+                                    <label className="block text-sm text-muted mb-2">{t("partners.message")}</label>
                                     <textarea
                                         value={formData.message}
                                         onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                                        placeholder="Tell us how you'd like to collaborate..."
+                                        placeholder={t("partners.messagePlaceholder")}
                                         rows={4}
                                         className="w-full px-4 py-3 border border-border bg-white focus:border-accent focus:outline-none transition-colors resize-none"
                                     />
@@ -146,10 +148,10 @@ export default function PartnersPage() {
                                     disabled={status === "loading"}
                                     className="w-full px-8 py-4 bg-accent text-earth text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors disabled:opacity-50"
                                 >
-                                    {status === "loading" ? "Sending..." : "Get In Touch"}
+                                    {status === "loading" ? t("investor.sending") : t("partners.submit")}
                                 </button>
                                 {status === "error" && (
-                                    <p className="text-red-600 text-sm text-center">Something went wrong. Please try again.</p>
+                                    <p className="text-red-600 text-sm text-center">{t("investor.error")}</p>
                                 )}
                             </form>
                         )}

@@ -156,6 +156,46 @@ const translations: Record<Language, Record<string, string>> = {
         // Common
         "common.loading": "Loading...",
         "common.partnerWithUs": "Partner With Us",
+
+        // Investor Section
+        "investor.label": "For Investors",
+        "investor.title": "A Letter to You",
+        "investor.greeting": "Dear Investor,",
+        "investor.p1": "If you are looking for land to build a vacation home, homestay, restaurant, or retreat in the mountains of Darjeeling — we welcome you to Sunaray Gown.",
+        "investor.p2": "Our village sits at the edge of Lamahatta, surrounded by pine forests and mountain views. We have 22 houses, 93 residents, and a community that values careful growth over quick money.",
+        "investor.p3": "We are open to partnerships that respect our land, involve our people, and contribute to the local economy. Whether you want to build a boutique homestay, a small café, or simply own a piece of mountain peace — let's talk.",
+        "investor.closing": "We remember who stood with us when we were small.",
+        "investor.formTitle": "Interested in Investing?",
+        "investor.phone": "Phone Number",
+        "investor.interest": "What are you interested in?",
+        "investor.placeholder": "E.g., Building a homestay, buying land, opening a café...",
+        "investor.submit": "Contact Us",
+        "investor.sending": "Sending...",
+        "investor.success": "Thank you! We'll be in touch soon.",
+        "investor.error": "Something went wrong. Please try again.",
+        "investor.learn": "Learn More About Partnerships →",
+
+        // Partners Page
+        "partners.label": "Invest & Collaborate",
+        "partners.title": "Work With Us",
+        "partners.subtitle": "We are valuable because we serve genuinely, grow carefully, and remember.",
+        "partners.genuine": "Genuine Service",
+        "partners.genuine.desc": "We serve our community first",
+        "partners.pride": "Local Pride",
+        "partners.pride.desc": "We take pride in our work",
+        "partners.growth": "Careful Growth",
+        "partners.growth.desc": "We grow without losing identity",
+        "partners.memory": "Long Memory",
+        "partners.memory.desc": "We remember who stood with us",
+        "partners.experience": "People who come here experience:",
+        "partners.quote": "We do not sell spectacle. We build trust.",
+        "partners.formTitle": "Interested in partnering?",
+        "partners.formDesc": "Reach out for investment opportunities, collaborations, or visits.",
+        "partners.phone": "Phone Number",
+        "partners.message": "Message (optional)",
+        "partners.messagePlaceholder": "Tell us how you'd like to collaborate...",
+        "partners.submit": "Get In Touch",
+        "partners.success": "Thank you! We'll get back to you soon.",
     },
 
     NE: {
@@ -292,6 +332,31 @@ const translations: Record<Language, Record<string, string>> = {
         // Common
         "common.loading": "लोड हुँदैछ...",
         "common.partnerWithUs": "हामीसँग साझेदारी गर्नुहोस्",
+
+        // Investor Section
+        "investor.label": "लगानीकर्ताहरूको लागि",
+        "investor.title": "तपाईंलाई एउटा पत्र",
+        "investor.greeting": "प्रिय लगानीकर्ता,",
+        "investor.p1": "यदि तपाईं दार्जीलिङको पहाडमा भ्रमण घर, होमस्टे, रेस्टुरेन्ट, वा रिट्रीट बनाउन जमिन खोज्दै हुनुहुन्छ भने — सुनरे गाउनमा स्वागत छ।",
+        "investor.p2": "हाम्रो गाउँ लामाहट्टाको छेउमा छ, पाइन जंगल र पहाडको दृश्यले घेरिएको छ। हामीसँग २२ घरहरू, ९३ बासिन्दाहरू, र छिटो पैसाभन्दा होसियार बृद्धिलाई महत्त्व दिने समुदाय छ।",
+        "investor.p3": "हाम्रो जमिनलाई सम्मान गर्ने, हाम्रा मानिसहरूलाई संलग्न गराउने, र स्थानीय अर्थतन्त्रमा योगदान गर्ने साझेदारीमा हामी खुला छौं।",
+        "investor.closing": "हामी सानो हुँदा हामीसँग उभिनेहरूलाई सम्झन्छौं।",
+        "investor.formTitle": "लगानीमा रुचि छ?",
+        "investor.phone": "फोन नम्बर",
+        "investor.interest": "तपाईं के मा रुचि राख्नुहुन्छ?",
+        "investor.submit": "सम्पर्क गर्नुहोस्",
+        "investor.success": "धन्यवाद! हामी चाँडै सम्पर्कमा हुनेछौं।",
+
+        // Partners
+        "partners.label": "लगानी र सहयोग",
+        "partners.title": "हामीसँग काम गर्नुहोस्",
+        "partners.subtitle": "हामी साँच्चै सेवा गर्छौं, होसियारसँग बढ्छौं, र सम्झन्छौं।",
+        "partners.experience": "यहाँ आउने मानिसहरूले अनुभव गर्छन्:",
+        "partners.quote": "हामी तमाशा बेच्दैनौं। हामी विश्वास बनाउँछौं।",
+        "partners.formTitle": "साझेदारीमा रुचि छ?",
+        "partners.formDesc": "लगानी अवसरहरू, सहयोग, वा भ्रमणको लागि सम्पर्क गर्नुहोस्।",
+        "partners.submit": "सम्पर्क गर्नुहोस्",
+        "partners.success": "धन्यवाद! हामी चाँडै जवाफ दिनेछौं।",
     },
 
     HI: {
@@ -408,6 +473,31 @@ const translations: Record<Language, Record<string, string>> = {
         // Common
         "common.loading": "लोड हो रहा है...",
         "common.partnerWithUs": "हमारे साथ भागीदारी करें",
+
+        // Investor Section
+        "investor.label": "निवेशकों के लिए",
+        "investor.title": "आपके लिए एक पत्र",
+        "investor.greeting": "प्रिय निवेशक,",
+        "investor.p1": "यदि आप दार्जीलिंग की पहाड़ियों में छुट्टियों का घर, होमस्टे, रेस्तरां, या रिट्रीट बनाने के लिए जमीन ढूंढ रहे हैं — सुनरे गाउन में आपका स्वागत है।",
+        "investor.p2": "हमारा गाँव लामाहट्टा के किनारे पर है, पाइन के जंगलों और पहाड़ी दृश्यों से घिरा हुआ। हमारे पास 22 घर, 93 निवासी, और एक समुदाय है जो तेज पैसे से ज्यादा सावधानीपूर्ण विकास को महत्व देता है।",
+        "investor.p3": "हम उन साझेदारियों के लिए खुले हैं जो हमारी जमीन का सम्मान करती हैं, हमारे लोगों को शामिल करती हैं, और स्थानीय अर्थव्यवस्था में योगदान देती हैं।",
+        "investor.closing": "हम उन्हें याद रखते हैं जो हमारे छोटे होने पर हमारे साथ खड़े थे।",
+        "investor.formTitle": "निवेश में रुचि है?",
+        "investor.phone": "फोन नंबर",
+        "investor.interest": "आप किसमें रुचि रखते हैं?",
+        "investor.submit": "संपर्क करें",
+        "investor.success": "धन्यवाद! हम जल्द ही संपर्क करेंगे।",
+
+        // Partners
+        "partners.label": "निवेश और सहयोग",
+        "partners.title": "हमारे साथ काम करें",
+        "partners.subtitle": "हम सच्ची सेवा करते हैं, सावधानी से बढ़ते हैं, और याद रखते हैं।",
+        "partners.experience": "यहाँ आने वाले लोग अनुभव करते हैं:",
+        "partners.quote": "हम तमाशा नहीं बेचते। हम विश्वास बनाते हैं।",
+        "partners.formTitle": "साझेदारी में रुचि है?",
+        "partners.formDesc": "निवेश अवसरों, सहयोग, या यात्राओं के लिए संपर्क करें।",
+        "partners.submit": "संपर्क करें",
+        "partners.success": "धन्यवाद! हम जल्द जवाब देंगे।",
     },
 
     BN: {
@@ -524,6 +614,31 @@ const translations: Record<Language, Record<string, string>> = {
         // Common
         "common.loading": "লোড হচ্ছে...",
         "common.partnerWithUs": "আমাদের সাথে অংশীদার হন",
+
+        // Investor Section
+        "investor.label": "বিনিয়োগকারীদের জন্য",
+        "investor.title": "আপনার জন্য একটি চিঠি",
+        "investor.greeting": "প্রিয় বিনিয়োগকারী,",
+        "investor.p1": "আপনি যদি দার্জিলিংয়ের পাহাড়ে ছুটির বাড়ি, হোমস্টে, রেস্তোরাঁ বা রিট্রিট তৈরি করতে জমি খুঁজছেন — সুনরে গাউনে স্বাগতম।",
+        "investor.p2": "আমাদের গ্রাম লামাহাট্টার প্রান্তে, পাইন বন এবং পাহাড়ি দৃশ্য দ্বারা বেষ্টিত। আমাদের ২২টি বাড়ি, ৯৩ জন বাসিন্দা এবং দ্রুত টাকার চেয়ে সতর্ক বৃদ্ধিকে মূল্য দেওয়া একটি সম্প্রদায় আছে।",
+        "investor.p3": "আমাদের জমিকে সম্মান করে, আমাদের মানুষদের জড়িত করে এবং স্থানীয় অর্থনীতিতে অবদান রাখে এমন অংশীদারিত্বে আমরা উন্মুক্ত।",
+        "investor.closing": "আমরা মনে রাখি কারা আমাদের ছোট থাকতে পাশে দাঁড়িয়েছিল।",
+        "investor.formTitle": "বিনিয়োগে আগ্রহী?",
+        "investor.phone": "ফোন নম্বর",
+        "investor.interest": "আপনি কিসে আগ্রহী?",
+        "investor.submit": "যোগাযোগ করুন",
+        "investor.success": "ধন্যবাদ! আমরা শীঘ্রই যোগাযোগ করব।",
+
+        // Partners
+        "partners.label": "বিনিয়োগ ও সহযোগিতা",
+        "partners.title": "আমাদের সাথে কাজ করুন",
+        "partners.subtitle": "আমরা সত্যিকারের সেবা করি, সতর্কভাবে বাড়ি এবং মনে রাখি।",
+        "partners.experience": "এখানে আসা মানুষরা অভিজ্ঞতা করেন:",
+        "partners.quote": "আমরা দর্শনীয়তা বিক্রি করি না। আমরা বিশ্বাস তৈরি করি।",
+        "partners.formTitle": "অংশীদারিত্বে আগ্রহী?",
+        "partners.formDesc": "বিনিয়োগ সুযোগ, সহযোগিতা বা পরিদর্শনের জন্য যোগাযোগ করুন।",
+        "partners.submit": "যোগাযোগ করুন",
+        "partners.success": "ধন্যবাদ! আমরা শীঘ্রই উত্তর দেব।",
     },
 
     DZ: {
