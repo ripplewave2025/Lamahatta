@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, CheckCircle, Loader2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function Newsletter() {
     const [email, setEmail] = useState("");
@@ -30,12 +31,32 @@ export default function Newsletter() {
 
         setIsSubmitting(true);
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            const supabase = createClient();
+            const { error: insertError } = await supabase
+                .from('newsletter_subscribers')
+                .insert({ email: email.toLowerCase().trim() });
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        setEmail("");
+            if (insertError) {
+                // Handle duplicate email error
+                if (insertError.code === '23505') {
+                    setError("This email is already subscribed!");
+                } else {
+                    setError("Failed to subscribe. Please try again.");
+                    console.error('Newsletter error:', insertError);
+                }
+                setIsSubmitting(false);
+                return;
+            }
+
+            setIsSubmitting(false);
+            setIsSubmitted(true);
+            setEmail("");
+        } catch (err) {
+            console.error('Newsletter error:', err);
+            setError("Something went wrong. Please try again.");
+            setIsSubmitting(false);
+        }
     };
 
     if (isSubmitted) {

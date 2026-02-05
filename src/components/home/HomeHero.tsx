@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import SocialAccounts from "@/components/SocialAccounts";
 
 export default function HomeHero() {
     const { t } = useLanguage();
@@ -513,6 +514,9 @@ export default function HomeHero() {
                     </motion.p>
                 </div>
             </section>
+
+            {/* Social Accounts */}
+            <SocialAccounts />
 
             {/* CTA */}
             <section className="py-16 bg-earth">

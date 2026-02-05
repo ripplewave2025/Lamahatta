@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { ChevronRight, ChevronLeft, Send, CheckCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronRight, ChevronLeft, Send, CheckCircle, Loader2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 interface Question {
     id: number;
@@ -34,6 +35,13 @@ export default function Survey() {
     const [currentStep, setCurrentStep] = useState(0);
     const [answers, setAnswers] = useState<Record<number, string | number>>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [sessionId, setSessionId] = useState("");
+
+    // Generate unique session ID on mount
+    useEffect(() => {
+        setSessionId(`survey_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+    }, []);
 
     const currentQuestion = questions[currentStep];
     const progress = ((currentStep + 1) / questions.length) * 100;
@@ -50,8 +58,37 @@ export default function Survey() {
         }
     };
 
-    const handleSubmit = () => {
-        setIsSubmitted(true);
+    const handleSubmit = async () => {
+        setIsSubmitting(true);
+
+        try {
+            const supabase = createClient();
+
+            // Format answers with question text for clarity
+            const formattedAnswers = questions.reduce((acc, q) => {
+                acc[q.question] = answers[q.id] || null;
+                return acc;
+            }, {} as Record<string, string | number | null>);
+
+            const { error } = await supabase
+                .from('survey_responses')
+                .insert({
+                    session_id: sessionId,
+                    answers: formattedAnswers,
+                    user_agent: typeof window !== 'undefined' ? navigator.userAgent : null,
+                    language: typeof window !== 'undefined' ? navigator.language : 'en'
+                });
+
+            if (error) {
+                console.error('Survey submission error:', error);
+            }
+
+            setIsSubmitted(true);
+        } catch (err) {
+            console.error('Survey error:', err);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleAnswer = (value: string | number) => {
@@ -131,8 +168,8 @@ export default function Survey() {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => handleAnswer(rating)}
                                     className={`w-14 h-14 rounded-full border-2 transition-all ${answers[currentQuestion.id] === rating
-                                            ? "border-accent bg-accent text-white"
-                                            : "border-white/20 text-white/60 hover:border-accent/50"
+                                        ? "border-accent bg-accent text-white"
+                                        : "border-white/20 text-white/60 hover:border-accent/50"
                                         }`}
                                 >
                                     {rating}
@@ -150,8 +187,8 @@ export default function Survey() {
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleAnswer(option)}
                                     className={`p-4 rounded-lg border-2 transition-all text-left ${answers[currentQuestion.id] === option
-                                            ? "border-accent bg-accent/20 text-white"
-                                            : "border-white/20 text-white/80 hover:border-accent/50"
+                                        ? "border-accent bg-accent/20 text-white"
+                                        : "border-white/20 text-white/80 hover:border-accent/50"
                                         }`}
                                 >
                                     {option}
@@ -180,10 +217,20 @@ export default function Survey() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={handleSubmit}
-                        className="btn-primary flex items-center gap-2"
+                        disabled={isSubmitting}
+                        className="btn-primary flex items-center gap-2 disabled:opacity-50"
                     >
-                        Submit
-                        <Send className="w-4 h-4" />
+                        {isSubmitting ? (
+                            <>
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                Submitting...
+                            </>
+                        ) : (
+                            <>
+                                Submit
+                                <Send className="w-4 h-4" />
+                            </>
+                        )}
                     </motion.button>
                 ) : (
                     <motion.button
