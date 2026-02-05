@@ -82,7 +82,7 @@ const Hero = () => {
                 >
                     {t("hero.welcome")} <br />
                     <span className="italic font-serif gradient-text glow-text text-6xl md:text-8xl lg:text-9xl">
-                        Seemana Gown
+                        Seemana Gaon
                     </span>
                 </motion.h1>
 

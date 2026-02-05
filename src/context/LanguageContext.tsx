@@ -35,7 +35,7 @@ const translations: Record<Language, Record<string, string>> = {
 
         // Hero Section
         "hero.location": "Lamahatta · Darjeeling",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "A village economy in transition",
         "hero.houses": "Houses",
         "hero.residents": "Residents",
@@ -107,7 +107,7 @@ const translations: Record<Language, Record<string, string>> = {
 
         // Sunlight Hub
         "hub.title": "Sunlight Hub",
-        "hub.subtitle": "Your community space. Share stories, celebrate wins, and stay connected with Sunaray Gown.",
+        "hub.subtitle": "Your community space. Share stories, celebrate wins, and stay connected with Seemana Gaon.",
         "hub.join": "Join the Community",
         "hub.explore": "Explore Spaces",
         "hub.explore.desc": "Find your corner of the village",
@@ -143,7 +143,7 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.connected": "Stay Connected",
         "footer.connected.desc": "Local updates, government schemes, opportunities.",
         "footer.subscribe": "Subscribe to Updates →",
-        "footer.credit": "A Living Record · Sunaray Gown, Lamahatta, Darjeeling",
+        "footer.credit": "A Living Record · Seemana Gaon, Lamahatta, Darjeeling",
         "footer.unfinished": "This site is not finished. Neither is the village.",
 
         // Village Page
@@ -537,7 +537,7 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.partners": "མཉམ་འབྲེལ",
         "nav.updates": "གསར་བཏོན",
         "hero.location": "ལ་མ་ཧཊྭཱ · དར་ཇི་གླིང",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "གྱུར་བའི་གཡུས་ཚན་དཔལ་འབྱོར",
         "hero.houses": "ཁྱིམ",
         "hero.residents": "མི་སེར",
@@ -578,7 +578,7 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.partners": "མཉམ་འབྲེལ་བ",
         "nav.updates": "གསར་གཏོད",
         "hero.location": "ལ་མ་ཧཊྭཱ · དར་རྒྱས་གླིང",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "འགྱུར་བཞིན་པའི་གྲོང་གསེབ་དཔལ་འབྱོར",
         "hero.houses": "ཁང་པ",
         "hero.residents": "མི་སེར",
@@ -614,7 +614,7 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.partners": "Nyam-drel-wa",
         "nav.updates": "Sar-tön",
         "hero.location": "Lama-hatta · Darjeeling",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "Gyur-zhin-pé Yul-chung Pal-jor",
         "hero.houses": "Khangpa",
         "hero.residents": "Mi-ser",
@@ -650,7 +650,7 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.partners": "合作伙伴",
         "nav.updates": "更新",
         "hero.location": "拉马哈塔 · 大吉岭",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "转型中的乡村经济",
         "hero.houses": "房屋",
         "hero.residents": "居民",
@@ -709,7 +709,7 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.connected": "保持联系",
         "footer.connected.desc": "本地更新、政府计划、机会。",
         "footer.subscribe": "订阅更新 →",
-        "footer.credit": "生活记录 · Sunaray Gown, 拉马哈塔, 大吉岭",
+        "footer.credit": "生活记录 · Seemana Gaon, 拉马哈塔, 大吉岭",
         "footer.unfinished": "这个网站尚未完成。村庄也是。",
     },
 
@@ -724,7 +724,7 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.partners": "พันธมิตร",
         "nav.updates": "อัปเดต",
         "hero.location": "ลามาฮัตตา · ดาร์จีลิ่ง",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "เศรษฐกิจหมู่บ้านที่กำลังเปลี่ยนแปลง",
         "hero.houses": "บ้าน",
         "hero.residents": "ผู้อยู่อาศัย",
@@ -757,7 +757,7 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.connected": "เชื่อมต่อ",
         "footer.connected.desc": "อัปเดตท้องถิ่น โครงการรัฐบาล โอกาส",
         "footer.subscribe": "สมัครรับการอัปเดต →",
-        "footer.credit": "บันทึกชีวิต · Sunaray Gown, Lamahatta, Darjeeling",
+        "footer.credit": "บันทึกชีวิต · Seemana Gaon, Lamahatta, Darjeeling",
         "footer.unfinished": "เว็บไซต์นี้ยังไม่เสร็จ หมู่บ้านก็เช่นกัน",
     },
 
@@ -772,7 +772,7 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.partners": "Partenaires",
         "nav.updates": "Mises à jour",
         "hero.location": "Lamahatta · Darjeeling",
-        "hero.title": "Sunaray Gown",
+        "hero.title": "Seemana Gaon",
         "hero.subtitle": "Une économie villageoise en transition",
         "hero.houses": "Maisons",
         "hero.residents": "Résidents",
@@ -831,7 +831,7 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.connected": "Rester connecté",
         "footer.connected.desc": "Actualités locales, programmes gouvernementaux, opportunités.",
         "footer.subscribe": "S'abonner aux mises à jour →",
-        "footer.credit": "Document vivant · Sunaray Gown, Lamahatta, Darjeeling",
+        "footer.credit": "Document vivant · Seemana Gaon, Lamahatta, Darjeeling",
         "footer.unfinished": "Ce site n'est pas fini. Le village non plus.",
     },
 };
