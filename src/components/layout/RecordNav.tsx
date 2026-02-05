@@ -4,19 +4,21 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageToggle from "@/components/LanguageToggle";
-
-const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/why", label: "Why This Exists" },
-    { href: "/generations", label: "Change" },
-    { href: "/economy", label: "What We Do" },
-    { href: "/challenges", label: "Challenges" },
-    { href: "/voices", label: "Voices" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function RecordNav() {
+    const { t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const navLinks = [
+        { href: "/", labelKey: "nav.home" },
+        { href: "/why", labelKey: "nav.why" },
+        { href: "/generations", labelKey: "nav.change" },
+        { href: "/economy", labelKey: "nav.economy" },
+        { href: "/challenges", labelKey: "nav.challenges" },
+        { href: "/voices", labelKey: "nav.voices" },
+    ];
 
     useEffect(() => {
         const handleScroll = () => {
@@ -45,8 +47,8 @@ export default function RecordNav() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                        ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-slate-100"
-                        : "bg-transparent"
+                    ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-slate-100"
+                    : "bg-transparent"
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,7 +71,7 @@ export default function RecordNav() {
                                     href={link.href}
                                     className="text-xs xl:text-sm font-medium uppercase tracking-wider text-slate-600 hover:text-amber-600 transition-colors relative group"
                                 >
-                                    {link.label}
+                                    {t(link.labelKey)}
                                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full" />
                                 </Link>
                             ))}
@@ -147,7 +149,7 @@ export default function RecordNav() {
                                                 className="block py-3 px-4 text-base font-medium text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
                                                 onClick={() => setMobileOpen(false)}
                                             >
-                                                {link.label}
+                                                {t(link.labelKey)}
                                             </Link>
                                         </motion.div>
                                     ))}
@@ -160,7 +162,7 @@ export default function RecordNav() {
                                         className="block w-full py-3 px-4 text-center bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 transition-colors"
                                         onClick={() => setMobileOpen(false)}
                                     >
-                                        Partner With Us
+                                        {t("common.partnerWithUs")}
                                     </Link>
                                 </div>
                             </div>

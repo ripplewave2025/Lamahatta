@@ -1,19 +1,29 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import PortfolioCard from '@/components/PortfolioCard'
 import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext'
 
-export const revalidate = 60 // ISR
+export default function VillageShowcase() {
+    const { t } = useLanguage()
+    const [portfolios, setPortfolios] = useState<any[]>([])
+    const [loading, setLoading] = useState(true)
 
-export default async function VillageShowcase() {
-    // Fetch real data in production, mock for now if no tables
-    let portfolios: any[] = []
-
-    try {
-        const { data } = await supabase.from('portfolios').select('*')
-        if (data) portfolios = data
-    } catch (e) {
-        console.error("Failed to fetch portfolios", e)
-    }
+    useEffect(() => {
+        const fetchPortfolios = async () => {
+            try {
+                const { data } = await supabase.from('portfolios').select('*')
+                if (data) setPortfolios(data)
+            } catch (e) {
+                console.error("Failed to fetch portfolios", e)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchPortfolios()
+    }, [])
 
     return (
         <div className="min-h-screen bg-[#0A0A0A] text-white">
@@ -22,16 +32,16 @@ export default async function VillageShowcase() {
                 <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
                 <div className="max-w-6xl mx-auto text-center relative z-10">
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                        The Village <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">Talent</span>
+                        {t("village.title")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">{t("village.talent")}</span>
                     </h1>
                     <p className="text-xl text-white/60 max-w-2xl mx-auto mb-10">
-                        Discover the creators, guides, and artisans that make Lamahatta special.
+                        {t("village.subtitle")}
                     </p>
                     <Link
                         href="/auth"
                         className="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full transition-all text-sm font-medium"
                     >
-                        Create Your Portfolio →
+                        {t("village.createPortfolio")} →
                     </Link>
                 </div>
 
@@ -42,7 +52,11 @@ export default async function VillageShowcase() {
 
             {/* Grid */}
             <main className="max-w-7xl mx-auto px-6 pb-32">
-                {portfolios.length > 0 ? (
+                {loading ? (
+                    <div className="text-center py-20">
+                        <p className="text-white/40">{t("common.loading")}</p>
+                    </div>
+                ) : portfolios.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {portfolios.map((portfolio) => (
                             <PortfolioCard key={portfolio.id} portfolio={portfolio} />
@@ -50,7 +64,7 @@ export default async function VillageShowcase() {
                     </div>
                 ) : (
                     <div className="text-center py-20 border border-dashed border-white/10 rounded-3xl">
-                        <p className="text-white/40 mb-4">No portfolios yet. Be the first!</p>
+                        <p className="text-white/40 mb-4">{t("village.noPortfolios")}</p>
                     </div>
                 )}
             </main>

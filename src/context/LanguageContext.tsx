@@ -145,6 +145,17 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "Subscribe to Updates →",
         "footer.credit": "A Living Record · Sunaray Gown, Lamahatta, Darjeeling",
         "footer.unfinished": "This site is not finished. Neither is the village.",
+
+        // Village Page
+        "village.title": "The Village",
+        "village.talent": "Talent",
+        "village.subtitle": "Discover the creators, guides, and artisans that make Lamahatta special.",
+        "village.noPortfolios": "No portfolios yet. Be the first!",
+        "village.createPortfolio": "Create Your Portfolio",
+
+        // Common
+        "common.loading": "Loading...",
+        "common.partnerWithUs": "Partner With Us",
     },
 
     NE: {
@@ -238,6 +249,49 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "अपडेटहरूमा सदस्यता लिनुहोस् →",
         "footer.credit": "जीवित अभिलेख · सुनरे गाउन, लामाहट्टा, दार्जीलिङ",
         "footer.unfinished": "यो साइट समाप्त भएको छैन। गाउँ पनि छैन।",
+
+        // Sunlight Hub
+        "hub.title": "सनलाइट हब",
+        "hub.subtitle": "तपाईंको समुदाय स्थान। कथाहरू साझा गर्नुहोस्, जितहरू मनाउनुहोस्, र सुनरे गाउनसँग जोडिइ रहनुहोस्।",
+        "hub.join": "समुदायमा सामेल हुनुहोस्",
+        "hub.explore": "स्थानहरू अन्वेषण गर्नुहोस्",
+        "hub.explore.desc": "गाउँको आफ्नो कुना खोज्नुहोस्",
+        "hub.enter": "अन्वेषण गर्नुहोस्",
+        "hub.creators": "सिर्जकहरूको कुना",
+        "hub.creators.desc": "गाउँको जीवन देखाउने भिडियो निर्माता, टिकटकर्स र सामग्री सिर्जकहरू",
+        "hub.youth": "युवा आवाजहरू",
+        "hub.youth.desc": "बालबालिकाको कला, विद्यालयका उपलब्धिहरू र सुनरेका भविष्यका प्रतिभाहरू",
+        "hub.mothers": "आमाको सर्कल",
+        "hub.mothers.desc": "पुस्तौं पुस्तासम्म सारिएका परिकार, परम्पराहरू र ज्ञान",
+        "hub.fathers": "बुवाको गिल्ड",
+        "hub.fathers.desc": "गाउँ निर्माताहरूबाट निर्माण, खेती सुझावहरू र मार्गदर्शन",
+        "hub.updates": "विकास नोटहरू",
+        "hub.updates.desc": "गाउँ घोषणाहरू, योजनाहरू र सामुदायिक बैठकहरू",
+        "hub.praises": "प्रशंसा र गौरव",
+        "hub.praises.desc": "उपलब्धिहरू, धन्यवाद नोटहरू र चाड हाइलाइटहरू",
+        "hub.stats.members": "सदस्यहरू",
+        "hub.stats.families": "परिवारहरू",
+        "hub.stats.stories": "कथाहरू",
+
+        // Personality Test
+        "hub.personality": "मेरो व्यक्तित्व खोज्नुहोस्",
+        "hub.personality.desc": "हाम्रो गाउँ-शैली क्विजमार्फत आफ्नो साँचो स्वरूप पत्ता लगाउनुहोस्!",
+        "personality.title": "गाउँ व्यक्तित्व क्विज",
+        "personality.subtitle": "१० प्रश्न। निर्मम इमानदार परिणामहरू।",
+        "personality.start": "क्विज सुरु गर्नुहोस्",
+        "personality.submit": "मेरो साँचो स्वरूप खोल्नुहोस्",
+        "personality.retake": "फेरि क्विज लिनुहोस्",
+
+        // Village Page
+        "village.title": "गाउँ",
+        "village.talent": "प्रतिभा",
+        "village.subtitle": "लामाहट्टालाई विशेष बनाउने सिर्जक, गाइड र कारीगरहरू पत्ता लगाउनुहोस्।",
+        "village.noPortfolios": "अहिले सम्म कुनै पोर्टफोलियो छैन। पहिलो बन्नुहोस्!",
+        "village.createPortfolio": "आफ्नो पोर्टफोलियो बनाउनुहोस्",
+
+        // Common
+        "common.loading": "लोड हुँदैछ...",
+        "common.partnerWithUs": "हामीसँग साझेदारी गर्नुहोस्",
     },
 
     HI: {
@@ -311,6 +365,49 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "अपडेट के लिए सदस्यता लें →",
         "footer.credit": "जीवित रिकॉर्ड · सुनरे गाउन, लामाहट्टा, दार्जीलिंग",
         "footer.unfinished": "यह साइट पूरी नहीं हुई है। न ही गाँव।",
+
+        // Sunlight Hub
+        "hub.title": "सनलाइट हब",
+        "hub.subtitle": "आपका सामुदायिक स्थान। कहानियाँ साझा करें, जीत का जश्न मनाएं, और सुनरे गाउन से जुड़े रहें।",
+        "hub.join": "समुदाय में शामिल हों",
+        "hub.explore": "स्थानों का अन्वेषण करें",
+        "hub.explore.desc": "गाँव में अपना कोना खोजें",
+        "hub.enter": "अन्वेषण करें",
+        "hub.creators": "क्रिएटर्स कॉर्नर",
+        "hub.creators.desc": "गाँव की जिंदगी दिखाने वाले वीडियो मेकर्स, टिकटॉकर्स और कंटेंट क्रिएटर्स",
+        "hub.youth": "युवा आवाजें",
+        "hub.youth.desc": "बच्चों की कला, स्कूल की उपलब्धियाँ और सुनरे की भविष्य की प्रतिभाएं",
+        "hub.mothers": "माँ का सर्कल",
+        "hub.mothers.desc": "पीढ़ियों से चली आ रही रेसिपी, परंपराएं और ज्ञान",
+        "hub.fathers": "पिता का गिल्ड",
+        "hub.fathers.desc": "गाँव के निर्माताओं से निर्माण, खेती की सलाह और मार्गदर्शन",
+        "hub.updates": "विकास नोट्स",
+        "hub.updates.desc": "गाँव की घोषणाएं, योजनाएं और सामुदायिक बैठकें",
+        "hub.praises": "प्रशंसा और गौरव",
+        "hub.praises.desc": "उपलब्धियाँ, धन्यवाद नोट्स और त्योहार हाइलाइट्स",
+        "hub.stats.members": "सदस्य",
+        "hub.stats.families": "परिवार",
+        "hub.stats.stories": "कहानियाँ",
+
+        // Personality Test
+        "hub.personality": "मेरा व्यक्तित्व खोजें",
+        "hub.personality.desc": "हमारी गाँव-शैली क्विज से अपना असली स्वरूप जानें!",
+        "personality.title": "गाँव व्यक्तित्व क्विज",
+        "personality.subtitle": "10 सवाल। बेरहमी से ईमानदार परिणाम।",
+        "personality.start": "क्विज शुरू करें",
+        "personality.submit": "मेरा असली स्वरूप दिखाएं",
+        "personality.retake": "क्विज फिर से लें",
+
+        // Village Page
+        "village.title": "गाँव",
+        "village.talent": "प्रतिभा",
+        "village.subtitle": "उन रचनाकारों, गाइडों और कारीगरों की खोज करें जो लामाहट्टा को खास बनाते हैं।",
+        "village.noPortfolios": "अभी तक कोई पोर्टफोलियो नहीं। पहले बनें!",
+        "village.createPortfolio": "अपना पोर्टफोलियो बनाएं",
+
+        // Common
+        "common.loading": "लोड हो रहा है...",
+        "common.partnerWithUs": "हमारे साथ भागीदारी करें",
     },
 
     BN: {
@@ -384,6 +481,49 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "আপডেটের জন্য সাবস্ক্রাইব করুন →",
         "footer.credit": "জীবন্ত রেকর্ড · সুনরে গাউন, লামাহাট্টা, দার্জিলিং",
         "footer.unfinished": "এই সাইট শেষ হয়নি। গ্রামও না।",
+
+        // Sunlight Hub
+        "hub.title": "সানলাইট হাব",
+        "hub.subtitle": "আপনার কমিউনিটি স্পেস। গল্প শেয়ার করুন, জয় উদযাপন করুন, এবং সুনরে গাউনের সাথে সংযুক্ত থাকুন।",
+        "hub.join": "কমিউনিটিতে যোগ দিন",
+        "hub.explore": "স্থানগুলো অন্বেষণ করুন",
+        "hub.explore.desc": "গ্রামে আপনার কোণ খুঁজুন",
+        "hub.enter": "অন্বেষণ করুন",
+        "hub.creators": "ক্রিয়েটর্স কর্নার",
+        "hub.creators.desc": "গ্রামের জীবন দেখানো ভিডিও মেকার, টিকটকার এবং কনটেন্ট ক্রিয়েটর",
+        "hub.youth": "তরুণ কণ্ঠ",
+        "hub.youth.desc": "শিশুদের শিল্প, স্কুলের অর্জন এবং সুনরের ভবিষ্যত প্রতিভা",
+        "hub.mothers": "মায়ের সার্কেল",
+        "hub.mothers.desc": "প্রজন্ম থেকে প্রজন্মে চলে আসা রেসিপি, ঐতিহ্য এবং জ্ঞান",
+        "hub.fathers": "বাবার গিল্ড",
+        "hub.fathers.desc": "গ্রামের নির্মাতাদের কাছ থেকে নির্মাণ, চাষের টিপস এবং পরামর্শ",
+        "hub.updates": "উন্নয়ন নোট",
+        "hub.updates.desc": "গ্রামের ঘোষণা, স্কিম এবং কমিউনিটি মিটিং",
+        "hub.praises": "প্রশংসা ও গর্ব",
+        "hub.praises.desc": "অর্জন, ধন্যবাদ নোট এবং উৎসবের হাইলাইট",
+        "hub.stats.members": "সদস্য",
+        "hub.stats.families": "পরিবার",
+        "hub.stats.stories": "গল্প",
+
+        // Personality Test
+        "hub.personality": "আমার ব্যক্তিত্ব খুঁজুন",
+        "hub.personality.desc": "আমাদের গ্রাম-স্টাইল কুইজ দিয়ে আপনার প্রকৃত স্বরূপ আবিষ্কার করুন!",
+        "personality.title": "গ্রাম ব্যক্তিত্ব কুইজ",
+        "personality.subtitle": "১০টি প্রশ্ন। নির্মম সৎ ফলাফল।",
+        "personality.start": "কুইজ শুরু করুন",
+        "personality.submit": "আমার প্রকৃত স্বরূপ দেখান",
+        "personality.retake": "আবার কুইজ নিন",
+
+        // Village Page
+        "village.title": "গ্রাম",
+        "village.talent": "প্রতিভা",
+        "village.subtitle": "লামাহাট্টাকে বিশেষ করে তোলা সৃষ্টিকর্তা, গাইড এবং কারিগরদের আবিষ্কার করুন।",
+        "village.noPortfolios": "এখনও কোনো পোর্টফোলিও নেই। প্রথম হন!",
+        "village.createPortfolio": "আপনার পোর্টফোলিও তৈরি করুন",
+
+        // Common
+        "common.loading": "লোড হচ্ছে...",
+        "common.partnerWithUs": "আমাদের সাথে অংশীদার হন",
     },
 
     DZ: {
