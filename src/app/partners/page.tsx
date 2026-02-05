@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import PageHeader from "@/components/shared/PageHeader";
+import { supabase } from "@/lib/supabase";
 
 const whyPartner = [
     { title: "Genuine Service", desc: "We serve our community first" },
@@ -19,6 +21,29 @@ const experiences = [
 ];
 
 export default function PartnersPage() {
+    const [formData, setFormData] = useState({ phone: "", message: "" });
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!formData.phone.trim()) return;
+
+        setStatus("loading");
+        try {
+            const { error } = await supabase.from("contact_requests").insert({
+                phone: formData.phone,
+                message: formData.message,
+                type: "partner"
+            });
+
+            if (error) throw error;
+            setStatus("success");
+            setFormData({ phone: "", message: "" });
+        } catch {
+            setStatus("error");
+        }
+    };
+
     return (
         <div className="min-h-screen">
             <PageHeader
@@ -70,29 +95,64 @@ export default function PartnersPage() {
                             ))}
                         </div>
                         <p className="text-center mt-8 text-warmgray/60 font-serif italic">
-                            "We do not sell spectacle. We build trust."
+                            &quot;We do not sell spectacle. We build trust.&quot;
                         </p>
                     </motion.div>
 
-                    {/* Contact Form Placeholder */}
+                    {/* Contact Form */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-center"
+                        className="max-w-md mx-auto"
                     >
-                        <h3 className="font-serif text-2xl mb-4">
+                        <h3 className="font-serif text-2xl mb-4 text-center">
                             Interested in partnering?
                         </h3>
-                        <p className="text-muted mb-8">
+                        <p className="text-muted mb-8 text-center">
                             Reach out for investment opportunities, collaborations, or visits.
                         </p>
-                        <a
-                            href="mailto:hello@seemanagaon.com"
-                            className="inline-block px-8 py-4 bg-accent text-earth text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors"
-                        >
-                            Get In Touch
-                        </a>
+
+                        {status === "success" ? (
+                            <div className="text-center p-8 bg-green-50 border border-green-200 rounded-lg">
+                                <span className="text-4xl mb-4 block">✅</span>
+                                <p className="text-green-800 font-medium">Thank you! We&apos;ll get back to you soon.</p>
+                            </div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm text-muted mb-2">Phone Number *</label>
+                                    <input
+                                        type="tel"
+                                        value={formData.phone}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                                        placeholder="+91 98765 43210"
+                                        className="w-full px-4 py-3 border border-border bg-white focus:border-accent focus:outline-none transition-colors"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm text-muted mb-2">Message (optional)</label>
+                                    <textarea
+                                        value={formData.message}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                                        placeholder="Tell us how you'd like to collaborate..."
+                                        rows={4}
+                                        className="w-full px-4 py-3 border border-border bg-white focus:border-accent focus:outline-none transition-colors resize-none"
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={status === "loading"}
+                                    className="w-full px-8 py-4 bg-accent text-earth text-sm uppercase tracking-widest hover:bg-accent/90 transition-colors disabled:opacity-50"
+                                >
+                                    {status === "loading" ? "Sending..." : "Get In Touch"}
+                                </button>
+                                {status === "error" && (
+                                    <p className="text-red-600 text-sm text-center">Something went wrong. Please try again.</p>
+                                )}
+                            </form>
+                        )}
                     </motion.div>
                 </div>
             </section>
