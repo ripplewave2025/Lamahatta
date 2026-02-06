@@ -97,7 +97,7 @@ export default function VoicesPage() {
                     </motion.div>
 
                     <PullQuote>
-                        No one's words are polished away.
+                        No one&apos;s words are polished away.
                     </PullQuote>
                 </div>
             </section>

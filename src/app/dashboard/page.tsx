@@ -5,8 +5,10 @@ import { supabase } from '@/lib/supabase'
 import PortfolioEditor from '@/components/PortfolioEditor'
 import { useRouter } from 'next/navigation'
 
+import { User } from '@supabase/supabase-js'
+
 export default function Dashboard() {
-    const [user, setUser] = useState<any>(null)
+    const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true)
     const router = useRouter()
 
@@ -64,7 +66,7 @@ export default function Dashboard() {
                             Your portfolio helps visitors discover your talents. Make sure to:
                         </p>
                         <ul className="list-disc pl-5 space-y-2 text-sm text-white/60">
-                            <li>Choose a clear title (e.g., "Homestay & Local Guide").</li>
+                            <li>Choose a clear title (e.g., &quot;Homestay & Local Guide&quot;).</li>
                             <li>Write a short but engaging bio.</li>
                             <li>List your key skills or offerings.</li>
                             <li>Update your contact info so people can reach you.</li>

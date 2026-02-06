@@ -67,7 +67,7 @@ export default function UpdatesPage() {
                             </div>
                             <h3 className="text-2xl font-serif mb-4">Thank you</h3>
                             <p className="text-muted">
-                                You'll receive updates about:<br />
+                                You&apos;ll receive updates about:<br />
                                 local news, government schemes, and village opportunities.
                             </p>
                         </motion.div>
@@ -83,7 +83,7 @@ export default function UpdatesPage() {
                             <span className="section-label">Updates</span>
                             <h4 className="font-serif text-lg mt-2">Local News</h4>
                             <p className="text-sm text-muted mt-2">
-                                What's happening in and around the village
+                                What&apos;s happening in and around the village
                             </p>
                         </div>
                         <div className="record-card text-center">
@@ -97,7 +97,7 @@ export default function UpdatesPage() {
                             <span className="section-label">Change</span>
                             <h4 className="font-serif text-lg mt-2">Progress</h4>
                             <p className="text-sm text-muted mt-2">
-                                What's improving, what's next
+                                What&apos;s improving, what&apos;s next
                             </p>
                         </div>
                     </motion.div>

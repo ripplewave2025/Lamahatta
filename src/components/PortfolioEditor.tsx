@@ -22,7 +22,7 @@ export default function PortfolioEditor({ user }: { user: UserProps }) {
     useEffect(() => {
         async function fetchPortfolio() {
             try {
-                const { data, error } = await supabase
+                const { data } = await supabase
                     .from('portfolios')
                     .select('*')
                     .eq('user_id', user.id)

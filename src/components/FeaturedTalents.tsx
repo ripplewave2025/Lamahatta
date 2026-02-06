@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Award, Star } from "lucide-react";
-import Image from "next/image";
 
 interface Talent {
     id: number;
@@ -89,6 +88,7 @@ export default function FeaturedTalents() {
                                 {/* Image */}
                                 <div className="relative h-64 overflow-hidden">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10" />
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={talent.image}
                                         alt={talent.name}

@@ -116,7 +116,7 @@ export default function GenerationsPage() {
                     </div>
 
                     <PullQuote>
-                        This is not "success".<br />
+                        This is not &quot;success&quot;.<br />
                         This is normalization — delayed, but real.
                     </PullQuote>
 

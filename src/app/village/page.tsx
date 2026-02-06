@@ -6,6 +6,7 @@ export const revalidate = 60 // ISR
 
 export default async function VillageShowcase() {
     // Fetch real data in production, mock for now if no tables
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let portfolios: any[] = []
 
     try {

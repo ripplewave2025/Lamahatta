@@ -70,7 +70,7 @@ export default function PartnersPage() {
                             ))}
                         </div>
                         <p className="text-center mt-8 text-warmgray/60 font-serif italic">
-                            "We do not sell spectacle. We build trust."
+                            &quot;We do not sell spectacle. We build trust.&quot;
                         </p>
                     </motion.div>
 
