@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState } from "react";
 
-export type Language = "EN" | "NE" | "HI" | "BN" | "DZ" | "TB" | "SH" | "ZH" | "TH" | "FR";
+export type Language = "EN" | "NE" | "HI" | "BN";
 
 interface LanguageContextType {
     language: Language;
@@ -20,10 +20,8 @@ export const useLanguage = () => {
     return context;
 };
 
-// Comprehensive translations for all site content
 const translations: Record<Language, Record<string, string>> = {
     EN: {
-        // Navigation
         "nav.home": "Home",
         "nav.why": "Story",
         "nav.change": "Change",
@@ -34,8 +32,6 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.hub": "Hub",
         "nav.partners": "Partners",
         "nav.updates": "Updates",
-
-        // Hero Section
         "hero.location": "Lamahatta · Darjeeling",
         "hero.title": "Seemana Gaon",
         "hero.subtitle": "A village economy in transition",
@@ -50,13 +46,9 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.panorama.desc": "Every corner of Seemana Gaon is connected by a shared history and breathtaking views of the surrounding mountains.",
         "hero.main_title": "Sunaray Gaon is not just a village website.",
         "hero.main_subtitle": "It is the front door to a living village economy.",
-
-        // Opportunities Section
         "opportunities.empty": "No opportunities listed yet.",
         "opportunities.add": "Add Opportunity",
         "opportunities.desc": "List jobs, training, contracts, and business needs.",
-
-        // Voices Page
         "voices.label": "Voices page",
         "voices.title": "This page should become the village opinion board.",
         "voices.subtitle": "People should be able to say what is needed, what is working, and what should be built next.",
@@ -73,20 +65,14 @@ const translations: Record<Language, Record<string, string>> = {
         "opportunities.partners": "For Partners",
         "opportunities.partners.desc": "Collaborate with us",
         "opportunities.enter": "Enter →",
-
-        // Location Section
         "location.label": "Location",
         "location.title": "Where We Are",
         "location.subtitle": "Between 6th Mile and Takdah. A hidden gem in the hills.",
         "location.satellite": "Satellite View",
         "location.houses": "22 Houses nestled in the forest",
         "location.maps": "Open in Google Maps ↗",
-
-        // Village Life
         "life.quote": "Good food. Honest hospitality. Humor and warmth. A sense of belonging.",
         "life.attribution": "— What visitors experience here",
-
-        // Opportunity Gaps
         "gaps.label": "For Investors",
         "gaps.title": "Opportunity Gaps",
         "gaps.subtitle": "High demand. Zero supply. Ideal for investment.",
@@ -96,8 +82,6 @@ const translations: Record<Language, Record<string, string>> = {
         "gaps.organic": "Organic Farm",
         "gaps.status": "Gap",
         "gaps.potential": "Homestay Potential: Mountain views, authentic experience",
-
-        // Economy
         "economy.label": "Active Economy",
         "economy.title": "What We Do",
         "economy.subtitle": "From cooking to coding. A working village economy.",
@@ -107,8 +91,6 @@ const translations: Record<Language, Record<string, string>> = {
         "economy.construction": "Construction",
         "economy.digital": "Digital Services",
         "economy.active": "active",
-
-        // Vision
         "vision.label": "The Vision",
         "vision.title": "What We're Building",
         "vision.portal": "Village Portal",
@@ -118,13 +100,9 @@ const translations: Record<Language, Record<string, string>> = {
         "vision.network": "Skills Network",
         "vision.network.desc": "Talent meets opportunity",
         "vision.quote": "We are not waiting for access. We are building an economy first.",
-
-        // CTA
         "cta.title": "Ready to be part of the story?",
         "cta.partner": "Partner With Us",
         "cta.story": "Read Our Story",
-
-        // Sunlight Hub
         "hub.title": "Sunlight Hub",
         "hub.subtitle": "Your community space. Share stories, celebrate wins, and stay connected with Seemana Gaon.",
         "hub.join": "Join the Community",
@@ -146,8 +124,6 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.stats.members": "Members",
         "hub.stats.families": "Families",
         "hub.stats.stories": "Stories",
-
-        // Personality Test
         "hub.personality": "Find My Personality",
         "hub.personality.desc": "Discover your true self with our village-style quiz!",
         "personality.title": "Village Personality Quiz",
@@ -155,8 +131,6 @@ const translations: Record<Language, Record<string, string>> = {
         "personality.start": "Start Quiz",
         "personality.submit": "Reveal My True Self",
         "personality.retake": "Retake Quiz",
-
-        // Footer
         "footer.tagline": "A living record of a small village in Lamahatta, Darjeeling. 22 houses. ~93 people. One story.",
         "footer.navigate": "Navigate",
         "footer.connected": "Stay Connected",
@@ -164,19 +138,13 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "Subscribe to Updates →",
         "footer.credit": "A Living Record · Seemana Gaon, Lamahatta, Darjeeling",
         "footer.unfinished": "This site is not finished. Neither is the village.",
-
-        // Village Page
         "village.title": "The Village",
         "village.talent": "Talent",
         "village.subtitle": "Discover the creators, guides, and artisans that make Lamahatta special.",
         "village.noPortfolios": "No portfolios yet. Be the first!",
         "village.createPortfolio": "Create Your Portfolio",
-
-        // Common
         "common.loading": "Loading...",
         "common.partnerWithUs": "Partner With Us",
-
-        // Investor Section
         "investor.label": "For Investors",
         "investor.title": "A Letter to You",
         "investor.greeting": "Dear Investor,",
@@ -193,8 +161,6 @@ const translations: Record<Language, Record<string, string>> = {
         "investor.success": "Thank you! We'll be in touch soon.",
         "investor.error": "Something went wrong. Please try again.",
         "investor.learn": "Learn More About Partnerships →",
-
-        // Partners Page
         "partners.label": "Invest & Collaborate",
         "partners.title": "Work With Us",
         "partners.subtitle": "We are valuable because we serve genuinely, grow carefully, and remember.",
@@ -215,8 +181,6 @@ const translations: Record<Language, Record<string, string>> = {
         "partners.messagePlaceholder": "Tell us how you'd like to collaborate...",
         "partners.submit": "Get In Touch",
         "partners.success": "Thank you! We'll get back to you soon.",
-
-        // Dashboard
         "dashboard.loading": "Loading...",
         "dashboard.title": "Member Dashboard",
         "dashboard.adminTitle": "Admin Dashboard",
@@ -239,9 +203,7 @@ const translations: Record<Language, Record<string, string>> = {
         "dashboard.admin.inquiries": "Investor Inquiries",
         "dashboard.admin.inquiriesDesc": "Review partnership requests."
     },
-
     NE: {
-        // Navigation
         "nav.home": "गृहपृष्ठ",
         "nav.why": "कथा",
         "nav.change": "परिवर्तन",
@@ -252,8 +214,6 @@ const translations: Record<Language, Record<string, string>> = {
         "nav.hub": "हब",
         "nav.partners": "साझेदारहरू",
         "nav.updates": "अपडेटहरू",
-
-        // Hero
         "hero.location": "लामाहट्टा · दार्जीलिङ",
         "hero.title": "सुनरे गाउन",
         "hero.subtitle": "संक्रमणमा रहेको गाउँले अर्थतन्त्र",
@@ -268,8 +228,6 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.panorama.desc": "सीमा गाउँको हरेक कुना साझा इतिहास र वरपरका पहाडहरूको मनमोहक दृश्यले जोडिएको छ।",
         "hero.main_title": "सुनरे गाउँ केवल एउटा गाउँको वेबसाइट होइन।",
         "hero.main_subtitle": "यो एउटा जीवित गाउँले अर्थतन्त्रको मूल ढोका हो।",
-
-        // Opportunities
         "opportunities.title": "अवसरहरू",
         "opportunities.villagers": "गाउँलेहरूको लागि",
         "opportunities.villagers.desc": "सेवा, योजना र अवसरहरू पहुँच गर्नुहोस्",
@@ -278,20 +236,14 @@ const translations: Record<Language, Record<string, string>> = {
         "opportunities.partners": "साझेदारहरूको लागि",
         "opportunities.partners.desc": "हामीसँग सहयोग गर्नुहोस्",
         "opportunities.enter": "प्रवेश गर्नुहोस् →",
-
-        // Location
         "location.label": "स्थान",
         "location.title": "हामी कहाँ छौं",
         "location.subtitle": "६ माईल र ताकदाह बीचमा। पहाडमा लुकेको रत्न।",
         "location.satellite": "उपग्रह दृश्य",
         "location.houses": "जंगलमा बसेका २२ घरहरू",
         "location.maps": "Google Maps मा खोल्नुहोस् ↗",
-
-        // Village Life
         "life.quote": "राम्रो खाना। इमानदार आतिथ्य। हाँसो र न्यानोपन। आफ्नो महसुस।",
         "life.attribution": "— आगन्तुकहरूले यहाँ अनुभव गर्ने कुरा",
-
-        // Gaps
         "gaps.label": "लगानीकर्ताहरूको लागि",
         "gaps.title": "अवसरको खाडल",
         "gaps.subtitle": "उच्च माग। शून्य आपूर्ति। लगानीको लागि आदर्श।",
@@ -301,8 +253,6 @@ const translations: Record<Language, Record<string, string>> = {
         "gaps.organic": "जैविक खेती",
         "gaps.status": "खाडल",
         "gaps.potential": "होमस्टे सम्भावना: हिमाल दृश्य, प्रामाणिक अनुभव",
-
-        // Economy
         "economy.label": "सक्रिय अर्थतन्त्र",
         "economy.title": "हामी के गर्छौं",
         "economy.subtitle": "खाना पकाउनेदेखि कोडिङसम्म। काम गर्ने गाउँले अर्थतन्त्र।",
@@ -312,8 +262,6 @@ const translations: Record<Language, Record<string, string>> = {
         "economy.construction": "निर्माण",
         "economy.digital": "डिजिटल सेवाहरू",
         "economy.active": "सक्रिय",
-
-        // Vision
         "vision.label": "दृष्टिकोण",
         "vision.title": "हामी के बनाउँदैछौं",
         "vision.portal": "गाउँ पोर्टल",
@@ -323,13 +271,9 @@ const translations: Record<Language, Record<string, string>> = {
         "vision.network": "सीप नेटवर्क",
         "vision.network.desc": "प्रतिभाले अवसर भेट्छ",
         "vision.quote": "हामी पहुँचको लागि कुर्दैनौं। हामी पहिले अर्थतन्त्र बनाउँदैछौं।",
-
-        // CTA
         "cta.title": "कथाको अंश बन्न तयार हुनुहुन्छ?",
         "cta.partner": "हामीसँग साझेदारी गर्नुहोस्",
         "cta.story": "हाम्रो कथा पढ्नुहोस्",
-
-        // Footer
         "footer.tagline": "लामाहट्टा, दार्जीलिङको सानो गाउँको जीवित अभिलेख। २२ घर। ~९३ मानिस। एक कथा।",
         "footer.navigate": "नेभिगेट",
         "footer.connected": "जोडिइ रहनुहोस्",
@@ -337,8 +281,6 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "अपडेटहरूमा सदस्यता लिनुहोस् →",
         "footer.credit": "जीवित अभिलेख · सुनरे गाउन, लामाहट्टा, दार्जीलिङ",
         "footer.unfinished": "यो साइट समाप्त भएको छैन। गाउँ पनि छैन।",
-
-        // Sunlight Hub
         "hub.title": "सनलाइट हब",
         "hub.subtitle": "तपाईंको समुदाय स्थान। कथाहरू साझा गर्नुहोस्, जितहरू मनाउनुहोस्, र सुनरे गाउनसँग जोडिइ रहनुहोस्।",
         "hub.join": "समुदायमा सामेल हुनुहोस्",
@@ -350,7 +292,7 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.youth": "युवा आवाजहरू",
         "hub.youth.desc": "बालबालिकाको कला, विद्यालयका उपलब्धिहरू र सुनरेका भविष्यका प्रतिभाहरू",
         "hub.mothers": "आमाको सर्कल",
-        "hub.mothers.desc": "पुस्तौं पुस्तासम्म सारिएका परिकार, परम्पराहरू र ज्ञान",
+        "hub.mothers.desc": "परिकार, परम्पराहरू र ज्ञान पुस्तौं पुस्तासम्म सारिएका छन्",
         "hub.fathers": "बुवाको गिल्ड",
         "hub.fathers.desc": "गाउँ निर्माताहरूबाट निर्माण, खेती सुझावहरू र मार्गदर्शन",
         "hub.updates": "विकास नोटहरू",
@@ -360,8 +302,6 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.stats.members": "सदस्यहरू",
         "hub.stats.families": "परिवारहरू",
         "hub.stats.stories": "कथाहरू",
-
-        // Personality Test
         "hub.personality": "मेरो व्यक्तित्व खोज्नुहोस्",
         "hub.personality.desc": "हाम्रो गाउँ-शैली क्विजमार्फत आफ्नो साँचो स्वरूप पत्ता लगाउनुहोस्!",
         "personality.title": "गाउँ व्यक्तित्व क्विज",
@@ -369,19 +309,13 @@ const translations: Record<Language, Record<string, string>> = {
         "personality.start": "क्विज सुरु गर्नुहोस्",
         "personality.submit": "मेरो साँचो स्वरूप खोल्नुहोस्",
         "personality.retake": "फेरि क्विज लिनुहोस्",
-
-        // Village Page
         "village.title": "गाउँ",
         "village.talent": "प्रतिभा",
         "village.subtitle": "लामाहट्टालाई विशेष बनाउने सिर्जक, गाइड र कारीगरहरू पत्ता लगाउनुहोस्।",
         "village.noPortfolios": "अहिले सम्म कुनै पोर्टफोलियो छैन। पहिलो बन्नुहोस्!",
         "village.createPortfolio": "आफ्नो पोर्टफोलियो बनाउनुहोस्",
-
-        // Common
         "common.loading": "लोड हुँदैछ...",
         "common.partnerWithUs": "हामीसँग साझेदारी गर्नुहोस्",
-
-        // Investor Section
         "investor.label": "लगानीकर्ताहरूको लागि",
         "investor.title": "तपाईंलाई एउटा पत्र",
         "investor.greeting": "प्रिय लगानीकर्ता,",
@@ -394,19 +328,16 @@ const translations: Record<Language, Record<string, string>> = {
         "investor.interest": "तपाईं के मा रुचि राख्नुहुन्छ?",
         "investor.submit": "सम्पर्क गर्नुहोस्",
         "investor.success": "धन्यवाद! हामी चाँडै सम्पर्कमा हुनेछौं।",
-
-        // Partners
         "partners.label": "लगानी र सहयोग",
         "partners.title": "हामीसँग काम गर्नुहोस्",
         "partners.subtitle": "हामी साँच्चै सेवा गर्छौं, होसियारसँग बढ्छौं, र सम्झन्छौं।",
         "partners.experience": "यहाँ आउने मानिसहरूले अनुभव गर्छन्:",
-        "partners.quote": "हामी तमाशा बेच्दैनौं। हामी विश्वास बनाउँछौं।",
+        "partners.quote": "हामी तমাशा बेच्दैनौं। हामी विश्वास बनाउँछौं।",
         "partners.formTitle": "साझेदारीमा रुचि छ?",
         "partners.formDesc": "लगानी अवसरहरू, सहयोग, वा भ्रमणको लागि सम्पर्क गर्नुहोस्।",
         "partners.submit": "सम्पर्क गर्नुहोस्",
-        "partners.success": "धन्यवाद! हामी चाँडै जवाफ दिनेछौं।",
+        "partners.success": "धन्यवाद! हामी चाँडै जवाफ दिनेछौं।"
     },
-
     HI: {
         "nav.home": "होम",
         "nav.why": "यह क्यों मौजूद है",
@@ -478,8 +409,6 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.subscribe": "अपडेट के लिए सदस्यता लें →",
         "footer.credit": "जीवित रिकॉर्ड · सुनरे गाउन, लामाहट्टा, दार्जीलिंग",
         "footer.unfinished": "यह साइट पूरी नहीं हुई है। न ही गाँव।",
-
-        // Sunlight Hub
         "hub.title": "सनलाइट हब",
         "hub.subtitle": "आपका सामुदायिक स्थान। कहानियाँ साझा करें, जीत का जश्न मनाएं, और सुनरे गाउन से जुड़े रहें।",
         "hub.join": "समुदाय में शामिल हों",
@@ -501,8 +430,6 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.stats.members": "सदस्य",
         "hub.stats.families": "परिवार",
         "hub.stats.stories": "कहानियाँ",
-
-        // Personality Test
         "hub.personality": "मेरा व्यक्तित्व खोजें",
         "hub.personality.desc": "हमारी गाँव-शैली क्विज से अपना असली स्वरूप जानें!",
         "personality.title": "गाँव व्यक्तित्व क्विज",
@@ -510,19 +437,13 @@ const translations: Record<Language, Record<string, string>> = {
         "personality.start": "क्विज शुरू करें",
         "personality.submit": "मेरा असली स्वरूप दिखाएं",
         "personality.retake": "क्विज फिर से लें",
-
-        // Village Page
         "village.title": "गाँव",
         "village.talent": "प्रतिभा",
         "village.subtitle": "उन रचनाकारों, गाइडों और कारीगरों की खोज करें जो लामाहट्टा को खास बनाते हैं।",
         "village.noPortfolios": "अभी तक कोई पोर्टफोलियो नहीं। पहले बनें!",
         "village.createPortfolio": "अपना पोर्टफोलियो बनाएं",
-
-        // Common
         "common.loading": "लोड हो रहा है...",
         "common.partnerWithUs": "हमारे साथ भागीदारी करें",
-
-        // Investor Section
         "investor.label": "निवेशकों के लिए",
         "investor.title": "आपके लिए एक पत्र",
         "investor.greeting": "प्रिय निवेशक,",
@@ -535,8 +456,6 @@ const translations: Record<Language, Record<string, string>> = {
         "investor.interest": "आप किसमें रुचि रखते हैं?",
         "investor.submit": "संपर्क करें",
         "investor.success": "धन्यवाद! हम जल्द ही संपर्क करेंगे।",
-
-        // Partners
         "partners.label": "निवेश और सहयोग",
         "partners.title": "हमारे साथ काम करें",
         "partners.subtitle": "हम सच्ची सेवा करते हैं, सावधानी से बढ़ते हैं, और याद रखते हैं।",
@@ -545,9 +464,8 @@ const translations: Record<Language, Record<string, string>> = {
         "partners.formTitle": "साझेदारी में रुचि है?",
         "partners.formDesc": "निवेश अवसरों, सहयोग, या यात्राओं के लिए संपर्क करें।",
         "partners.submit": "संपर्क करें",
-        "partners.success": "धन्यवाद! हम जल्द जवाब देंगे।",
+        "partners.success": "धन्यवाद! हम जल्द जवाब देंगे।"
     },
-
     BN: {
         "nav.home": "হোম",
         "nav.why": "এটি কেন বিদ্যমান",
@@ -568,7 +486,7 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.story": "আমাদের গল্প",
         "opportunities.title": "সুযোগ",
         "opportunities.villagers": "গ্রামবাসীদের জন্য",
-        "opportunities.villagers.desc": "পরিষেবা, স্কিম এবং সুযোগ অ্যাক্সেস করুন",
+        "opportunities.villagers.desc": "পরিষেবা, স্কিম এবং সুযোগ অ্যাক্সেส করুন",
         "opportunities.investors": "বিনিয়োগকারীদের জন্য",
         "opportunities.investors.desc": "সুযোগের ফাঁক দেখুন",
         "opportunities.partners": "অংশীদারদের জন্য",
@@ -617,12 +535,10 @@ const translations: Record<Language, Record<string, string>> = {
         "footer.connected": "সংযুক্ত থাকুন",
         "footer.connected.desc": "স্থানীয় আপডেট, সরকারি স্কিম, সুযোগ।",
         "footer.subscribe": "আপডেটের জন্য সাবস্ক্রাইব করুন →",
-        "footer.credit": "জীবন্ত রেকর্ড · সুনরে গাউন, লামাহাট্টা, দার্জিলিং",
+        "footer.credit": "জীবন্ত রেকর্ড · सुनरे गाउन, লামাহাট্টা, দার্জিলিং",
         "footer.unfinished": "এই সাইট শেষ হয়নি। গ্রামও না।",
-
-        // Sunlight Hub
         "hub.title": "সানলাইট হাব",
-        "hub.subtitle": "আপনার কমিউনিটি স্পেস। গল্প শেয়ার করুন, জয় উদযাপন করুন, এবং সুনরে গাউনের সাথে সংযুক্ত থাকুন।",
+        "hub.subtitle": "আপনার কমিউনিটি স্পেস। গল্প শেয়ার করুন, জয় উদযাপন করুন, และ সুনরে গাউনের সাথে সংযুক্ত থাকুন।",
         "hub.join": "কমিউনিটিতে যোগ দিন",
         "hub.explore": "স্থানগুলো অন্বেষণ করুন",
         "hub.explore.desc": "গ্রামে আপনার কোণ খুঁজুন",
@@ -634,7 +550,7 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.mothers": "মায়ের সার্কেল",
         "hub.mothers.desc": "প্রজন্ম থেকে প্রজন্মে চলে আসা রেসিপি, ঐতিহ্য এবং জ্ঞান",
         "hub.fathers": "বাবার গিল্ড",
-        "hub.fathers.desc": "গ্রামের নির্মাতাদের কাছ থেকে নির্মাণ, চাষের টিপস এবং পরামর্শ",
+        "hub.fathers.desc": "গ্রামের নির্মাতাদের কাছ থেকে নির্মাণ, চাষের টিপส এবং পরামর্শ",
         "hub.updates": "উন্নয়ন নোট",
         "hub.updates.desc": "গ্রামের ঘোষণা, স্কিম এবং কমিউনিটি মিটিং",
         "hub.praises": "প্রশংসা ও গর্ব",
@@ -642,8 +558,6 @@ const translations: Record<Language, Record<string, string>> = {
         "hub.stats.members": "সদস্য",
         "hub.stats.families": "পরিবার",
         "hub.stats.stories": "গল্প",
-
-        // Personality Test
         "hub.personality": "আমার ব্যক্তিত্ব খুঁজুন",
         "hub.personality.desc": "আমাদের গ্রাম-স্টাইল কুইজ দিয়ে আপনার প্রকৃত স্বরূপ আবিষ্কার করুন!",
         "personality.title": "গ্রাম ব্যক্তিত্ব কুইজ",
@@ -651,19 +565,13 @@ const translations: Record<Language, Record<string, string>> = {
         "personality.start": "কুইজ শুরু করুন",
         "personality.submit": "আমার প্রকৃত স্বরূপ দেখান",
         "personality.retake": "আবার কুইজ নিন",
-
-        // Village Page
         "village.title": "গ্রাম",
         "village.talent": "প্রতিভা",
         "village.subtitle": "লামাহাট্টাকে বিশেষ করে তোলা সৃষ্টিকর্তা, গাইড এবং কারিগরদের আবিষ্কার করুন।",
         "village.noPortfolios": "এখনও কোনো পোর্টফোলিও নেই। প্রথম হন!",
         "village.createPortfolio": "আপনার পোর্টফোলিও তৈরি করুন",
-
-        // Common
         "common.loading": "লোড হচ্ছে...",
         "common.partnerWithUs": "আমাদের সাথে অংশীদার হন",
-
-        // Investor Section
         "investor.label": "বিনিয়োগকারীদের জন্য",
         "investor.title": "আপনার জন্য একটি চিঠি",
         "investor.greeting": "প্রিয় বিনিয়োগকারী,",
@@ -676,8 +584,6 @@ const translations: Record<Language, Record<string, string>> = {
         "investor.interest": "আপনি কিসে আগ্রহী?",
         "investor.submit": "যোগাযোগ করুন",
         "investor.success": "ধন্যবাদ! আমরা শীঘ্রই যোগাযোগ করব।",
-
-        // Partners
         "partners.label": "বিনিয়োগ ও সহযোগিতা",
         "partners.title": "আমাদের সাথে কাজ করুন",
         "partners.subtitle": "আমরা সত্যিকারের সেবা করি, সতর্কভাবে বাড়ি এবং মনে রাখি।",
@@ -686,317 +592,8 @@ const translations: Record<Language, Record<string, string>> = {
         "partners.formTitle": "অংশীদারিত্বে আগ্রহী?",
         "partners.formDesc": "বিনিয়োগ সুযোগ, সহযোগিতা বা পরিদর্শনের জন্য যোগাযোগ করুন।",
         "partners.submit": "যোগাযোগ করুন",
-        "partners.success": "ধন্যবাদ! আমরা শীঘ্রই উত্তর দেব।",
-    },
-
-    DZ: {
-        // Bhutanese/Dzongkha
-        "nav.home": "མདུན་ཤོག",
-        "nav.why": "འདི་ག་ཅི་སྦེ་ཡོདཔ",
-        "nav.change": "བསྒྱུར་བཅོས",
-        "nav.economy": "ང་བཅས་ག་ཅི་འབདཝ",
-        "nav.challenges": "དཀའ་ངལ",
-        "nav.voices": "སྐད་སྒྲ",
-        "nav.partners": "མཉམ་འབྲེལ",
-        "nav.updates": "གསར་བཏོན",
-        "hero.location": "ལ་མ་ཧཊྭཱ · དར་ཇི་གླིང",
-        "hero.title": "Seemana Gaon",
-        "hero.subtitle": "གྱུར་བའི་གཡུས་ཚན་དཔལ་འབྱོར",
-        "hero.houses": "ཁྱིམ",
-        "hero.residents": "མི་སེར",
-        "hero.potential": "ནུས་པ",
-        "hero.scroll": "མར་བཤུད ↓",
-        "hero.opportunity": "གོ་སྐབས་བལྟ",
-        "hero.story": "ང་བཅས་ཀྱི་ལོ་རྒྱུས",
-        "opportunities.title": "གོ་སྐབས",
-        "opportunities.villagers": "གཡུས་མིའི་དོན་ལུ",
-        "opportunities.villagers.desc": "ཞབས་ཏོག་དང་གོ་སྐབས་ལེན",
-        "opportunities.investors": "མ་རྩ་བཙུགས་མི་དོན་ལུ",
-        "opportunities.investors.desc": "གོ་སྐབས་ཀྱི་སྟོངམ་བལྟ",
-        "opportunities.partners": "མཉམ་འབྲེལ་པའི་དོན་ལུ",
-        "opportunities.partners.desc": "ང་བཅས་དང་མཉམ་འབྲེལ་འབད",
-        "opportunities.enter": "ནང་འཛུལ →",
-        "location.label": "ས་གནས",
-        "location.title": "ང་བཅས་ག་ཏེ་ཡོད",
-        "location.subtitle": "མའི་ལི་དྲུག་པ་དང་ཏཀ་དྷ་བར་ན། རི་ནང་གི་རིན་ཐང་ཅན།",
-        "location.satellite": "མཁའ་དབྱིངས་མཐོང་ཚད",
-        "location.houses": "ནགས་ནང་གི་ཁྱིམ་ཉི་ཤུ་རྩ་གཉིས",
-        "location.maps": "Google Maps ནང་ཁ་ཕྱེ ↗",
-        "life.quote": "བཟའ་ནོར་ལེགས། བསྟུན་འགྲིགས་བདེནམ། གད་མོ་དང་དྲོ་བ། རང་ཁྱིམ་འདྲ།",
-        "life.attribution": "— འགྱོ་མི་གིས་ནཱ་མྱོང་བ",
-        "vision.quote": "ང་བཅས་འབྱོར་ལམ་བསྒུགས་མིན་འདུག། ང་བཅས་ཧེ་མ་དཔལ་འབྱོར་བཟོ་དོ།",
-        "cta.title": "ལོ་རྒྱུས་ཀྱི་ཆ་ཤས་འགྱོ་ནིའི་གྲ་སྒྲིག་ཡོད?",
-        "cta.partner": "ང་བཅས་དང་མཉམ་འབྲེལ་འབད",
-        "cta.story": "ང་བཅས་ཀྱི་ལོ་རྒྱུས་ལྷག",
-    },
-
-    TB: {
-        // Tibetan
-        "nav.home": "མདུན་ཤོག",
-        "nav.why": "འདི་ག་རེ་ཡིན",
-        "nav.change": "འགྱུར་བ",
-        "nav.economy": "ང་ཚོ་གང་བྱེད",
-        "nav.challenges": "དཀའ་ངལ",
-        "nav.voices": "སྐད་སྒྲ",
-        "nav.partners": "མཉམ་འབྲེལ་བ",
-        "nav.updates": "གསར་གཏོད",
-        "hero.location": "ལ་མ་ཧཊྭཱ · དར་རྒྱས་གླིང",
-        "hero.title": "Seemana Gaon",
-        "hero.subtitle": "འགྱུར་བཞིན་པའི་གྲོང་གསེབ་དཔལ་འབྱོར",
-        "hero.houses": "ཁང་པ",
-        "hero.residents": "མི་སེར",
-        "hero.potential": "ནུས་པ",
-        "hero.scroll": "མར་འཁྱེར ↓",
-        "hero.opportunity": "གོ་སྐབས་ལྟ",
-        "hero.story": "ང་ཚོའི་ལོ་རྒྱུས",
-        "opportunities.title": "གོ་སྐབས",
-        "opportunities.villagers": "གྲོང་མིའི་ཆེད",
-        "opportunities.villagers.desc": "ཞབས་ཞུ་དང་གོ་སྐབས་ལེན",
-        "opportunities.investors": "མ་རྩ་འཇོག་མཁན་ཆེད",
-        "opportunities.investors.desc": "གོ་སྐབས་བར་སྟོང་ལྟ",
-        "opportunities.partners": "མཉམ་ལས་པའི་ཆེད",
-        "opportunities.partners.desc": "ང་ཚོ་དང་མཉམ་ལས་བྱོས",
-        "opportunities.enter": "འཛུལ →",
-        "location.label": "ས་གནས",
-        "location.title": "ང་ཚོ་གང་དུ་ཡོད",
-        "location.subtitle": "དྲུག་པ་མའིལ་དང་ཏཀ་དྷ་བར། རི་ཁྲོད་ཀྱི་རིན་ཐང་ཆེན།",
-        "vision.quote": "ང་ཚོ་ལྷན་ལམ་སྒུག་གི་མིན། ང་ཚོ་སྔོན་ལ་དཔལ་འབྱོར་བཟོ་གི་ཡོད།",
-        "cta.title": "ལོ་རྒྱུས་ཀྱི་ཆ་ཤས་བྱེད་འདོད་ཡོད་དམ?",
-        "cta.partner": "ང་ཚོ་དང་མཉམ་འབྲེལ་བྱོས",
-        "cta.story": "ང་ཚོའི་ལོ་རྒྱུས་ཀློག",
-    },
-
-    SH: {
-        // Sherpa
-        "nav.home": "Tse-khang",
-        "nav.why": "Di garé yin",
-        "nav.change": "Gyur-wa",
-        "nav.economy": "Nga-tsö ka jé",
-        "nav.challenges": "Kang-ngal",
-        "nav.voices": "Ké-dra",
-        "nav.partners": "Nyam-drel-wa",
-        "nav.updates": "Sar-tön",
-        "hero.location": "Lama-hatta · Darjeeling",
-        "hero.title": "Seemana Gaon",
-        "hero.subtitle": "Gyur-zhin-pé Yul-chung Pal-jor",
-        "hero.houses": "Khangpa",
-        "hero.residents": "Mi-ser",
-        "hero.potential": "Nü-pa",
-        "hero.scroll": "Marla teng ↓",
-        "hero.opportunity": "Go-kab ta",
-        "hero.story": "Nga-tsö Lo-gyü",
-        "opportunities.title": "Go-kab",
-        "opportunities.villagers": "Yul-mi ché",
-        "opportunities.villagers.desc": "Zhab-zhü dang go-kab len",
-        "opportunities.investors": "Ma-tsa jog-khen ché",
-        "opportunities.investors.desc": "Go-kab bar-tong ta",
-        "opportunities.partners": "Nyam-lé-pa ché",
-        "opportunities.partners.desc": "Nga-tsö dang nyam-lé jö",
-        "opportunities.enter": "Dzü →",
-        "location.label": "Sa-né",
-        "location.title": "Nga-tsö gang-du yö",
-        "location.subtitle": "6th Mile dang Takdah bar. Ri-khé rin-thang chen.",
-        "vision.quote": "Nga-tsö thon-lam gü-gi min. Nga-tsö ngön-la pal-jor zo-gi yö.",
-        "cta.title": "Lo-gyü cha-shé jé-dö yö-pe?",
-        "cta.partner": "Nga-tsö dang nyam-drel jö",
-        "cta.story": "Nga-tsö lo-gyü log",
-    },
-
-    ZH: {
-        // Chinese
-        "nav.home": "首页",
-        "nav.why": "为什么存在",
-        "nav.change": "变化",
-        "nav.economy": "我们做什么",
-        "nav.challenges": "挑战",
-        "nav.voices": "声音",
-        "nav.partners": "合作伙伴",
-        "nav.updates": "更新",
-        "hero.location": "拉马哈塔 · 大吉岭",
-        "hero.title": "Seemana Gaon",
-        "hero.subtitle": "转型中的乡村经济",
-        "hero.houses": "房屋",
-        "hero.residents": "居民",
-        "hero.potential": "潜力",
-        "hero.scroll": "向下滚动 ↓",
-        "hero.opportunity": "查看机会",
-        "hero.story": "我们的故事",
-        "opportunities.title": "机会",
-        "opportunities.villagers": "村民专区",
-        "opportunities.villagers.desc": "获取服务、计划和机会",
-        "opportunities.investors": "投资者专区",
-        "opportunities.investors.desc": "查看机会缺口",
-        "opportunities.partners": "合作伙伴专区",
-        "opportunities.partners.desc": "与我们合作",
-        "opportunities.enter": "进入 →",
-        "location.label": "位置",
-        "location.title": "我们在哪里",
-        "location.subtitle": "位于6英里和塔克达之间。山间隐藏的宝石。",
-        "location.satellite": "卫星视图",
-        "location.houses": "森林中的22栋房屋",
-        "location.maps": "在Google Maps中打开 ↗",
-        "life.quote": "美食。诚挚的热情款待。幽默与温暖。归属感。",
-        "life.attribution": "— 游客在这里的体验",
-        "gaps.label": "投资者专区",
-        "gaps.title": "机会缺口",
-        "gaps.subtitle": "高需求。零供应。投资的理想选择。",
-        "gaps.homestay": "民宿",
-        "gaps.cafe": "咖啡馆",
-        "gaps.guide": "导游",
-        "gaps.organic": "有机农场",
-        "gaps.status": "缺口",
-        "gaps.potential": "民宿潜力：山景，真实体验",
-        "economy.label": "活跃经济",
-        "economy.title": "我们做什么",
-        "economy.subtitle": "从烹饪到编程。一个运转中的乡村经济。",
-        "economy.view": "查看所有服务",
-        "economy.food": "餐饮与款待",
-        "economy.agriculture": "农业",
-        "economy.construction": "建筑",
-        "economy.digital": "数字服务",
-        "economy.active": "活跃",
-        "vision.label": "愿景",
-        "vision.title": "我们正在建设什么",
-        "vision.portal": "村庄门户",
-        "vision.portal.desc": "所有服务的统一平台",
-        "vision.hub": "旅游中心",
-        "vision.hub.desc": "山间的目的地",
-        "vision.network": "技能网络",
-        "vision.network.desc": "人才遇见机会",
-        "vision.quote": "我们不等待接入。我们先建设经济。",
-        "cta.title": "准备好成为故事的一部分了吗？",
-        "cta.partner": "与我们合作",
-        "cta.story": "阅读我们的故事",
-        "footer.tagline": "大吉岭拉马哈塔一个小村庄的生活记录。22栋房屋。约93人。一个故事。",
-        "footer.navigate": "导航",
-        "footer.connected": "保持联系",
-        "footer.connected.desc": "本地更新、政府计划、机会。",
-        "footer.subscribe": "订阅更新 →",
-        "footer.credit": "生活记录 · Seemana Gaon, 拉马哈塔, 大吉岭",
-        "footer.unfinished": "这个网站尚未完成。村庄也是。",
-    },
-
-    TH: {
-        // Thai
-        "nav.home": "หน้าแรก",
-        "nav.why": "ทำไมถึงมีอยู่",
-        "nav.change": "การเปลี่ยนแปลง",
-        "nav.economy": "เราทำอะไร",
-        "nav.challenges": "ความท้าทาย",
-        "nav.voices": "เสียง",
-        "nav.partners": "พันธมิตร",
-        "nav.updates": "อัปเดต",
-        "hero.location": "ลามาฮัตตา · ดาร์จีลิ่ง",
-        "hero.title": "Seemana Gaon",
-        "hero.subtitle": "เศรษฐกิจหมู่บ้านที่กำลังเปลี่ยนแปลง",
-        "hero.houses": "บ้าน",
-        "hero.residents": "ผู้อยู่อาศัย",
-        "hero.potential": "ศักยภาพ",
-        "hero.scroll": "เลื่อนลง ↓",
-        "hero.opportunity": "ดูโอกาส",
-        "hero.story": "เรื่องราวของเรา",
-        "opportunities.title": "โอกาส",
-        "opportunities.villagers": "สำหรับชาวบ้าน",
-        "opportunities.villagers.desc": "เข้าถึงบริการ โครงการ และโอกาส",
-        "opportunities.investors": "สำหรับนักลงทุน",
-        "opportunities.investors.desc": "ดูช่องว่างโอกาส",
-        "opportunities.partners": "สำหรับพันธมิตร",
-        "opportunities.partners.desc": "ร่วมมือกับเรา",
-        "opportunities.enter": "เข้าสู่ →",
-        "location.label": "ที่ตั้ง",
-        "location.title": "เราอยู่ที่ไหน",
-        "location.subtitle": "ระหว่างไมล์ที่ 6 และทักดาห์ อัญมณีที่ซ่อนอยู่ในภูเขา",
-        "location.satellite": "มุมมองดาวเทียม",
-        "location.houses": "22 หลังคาเรือนในป่า",
-        "location.maps": "เปิดใน Google Maps ↗",
-        "life.quote": "อาหารอร่อย การต้อนรับที่จริงใจ อารมณ์ขันและความอบอุ่น ความรู้สึกเป็นส่วนหนึ่ง",
-        "life.attribution": "— สิ่งที่ผู้มาเยือนสัมผัสได้ที่นี่",
-        "vision.quote": "เราไม่รอการเข้าถึง เราสร้างเศรษฐกิจก่อน",
-        "cta.title": "พร้อมที่จะเป็นส่วนหนึ่งของเรื่องราวแล้วหรือยัง?",
-        "cta.partner": "ร่วมเป็นพันธมิตรกับเรา",
-        "cta.story": "อ่านเรื่องราวของเรา",
-        "footer.tagline": "บันทึกชีวิตของหมู่บ้านเล็กๆ ในลามาฮัตตา ดาร์จีลิ่ง 22 บ้าน ~93 คน หนึ่งเรื่องราว",
-        "footer.navigate": "นำทาง",
-        "footer.connected": "เชื่อมต่อ",
-        "footer.connected.desc": "อัปเดตท้องถิ่น โครงการรัฐบาล โอกาส",
-        "footer.subscribe": "สมัครรับการอัปเดต →",
-        "footer.credit": "บันทึกชีวิต · Seemana Gaon, Lamahatta, Darjeeling",
-        "footer.unfinished": "เว็บไซต์นี้ยังไม่เสร็จ หมู่บ้านก็เช่นกัน",
-    },
-
-    FR: {
-        // French
-        "nav.home": "Accueil",
-        "nav.why": "Pourquoi ça existe",
-        "nav.change": "Changement",
-        "nav.economy": "Ce que nous faisons",
-        "nav.challenges": "Défis",
-        "nav.voices": "Voix",
-        "nav.partners": "Partenaires",
-        "nav.updates": "Mises à jour",
-        "hero.location": "Lamahatta · Darjeeling",
-        "hero.title": "Seemana Gaon",
-        "hero.subtitle": "Une économie villageoise en transition",
-        "hero.houses": "Maisons",
-        "hero.residents": "Résidents",
-        "hero.potential": "Potentiel",
-        "hero.scroll": "Défiler pour explorer ↓",
-        "hero.opportunity": "Voir l'opportunité",
-        "hero.story": "Notre histoire",
-        "opportunities.title": "Opportunités",
-        "opportunities.villagers": "Pour les villageois",
-        "opportunities.villagers.desc": "Accédez aux services, programmes et opportunités",
-        "opportunities.investors": "Pour les investisseurs",
-        "opportunities.investors.desc": "Voir les opportunités manquantes",
-        "opportunities.partners": "Pour les partenaires",
-        "opportunities.partners.desc": "Collaborez avec nous",
-        "opportunities.enter": "Entrer →",
-        "location.label": "Emplacement",
-        "location.title": "Où nous sommes",
-        "location.subtitle": "Entre 6th Mile et Takdah. Un joyau caché dans les collines.",
-        "location.satellite": "Vue satellite",
-        "location.houses": "22 maisons nichées dans la forêt",
-        "location.maps": "Ouvrir dans Google Maps ↗",
-        "life.quote": "Bonne nourriture. Hospitalité honnête. Humour et chaleur. Un sentiment d'appartenance.",
-        "life.attribution": "— Ce que les visiteurs vivent ici",
-        "gaps.label": "Pour les investisseurs",
-        "gaps.title": "Opportunités manquantes",
-        "gaps.subtitle": "Forte demande. Aucune offre. Idéal pour l'investissement.",
-        "gaps.homestay": "Hébergement",
-        "gaps.cafe": "Café",
-        "gaps.guide": "Guide",
-        "gaps.organic": "Ferme bio",
-        "gaps.status": "Manque",
-        "gaps.potential": "Potentiel d'hébergement: Vue montagne, expérience authentique",
-        "economy.label": "Économie active",
-        "economy.title": "Ce que nous faisons",
-        "economy.subtitle": "De la cuisine au codage. Une économie villageoise fonctionnelle.",
-        "economy.view": "Voir tous les services",
-        "economy.food": "Alimentation & Hospitalité",
-        "economy.agriculture": "Agriculture",
-        "economy.construction": "Construction",
-        "economy.digital": "Services numériques",
-        "economy.active": "actif",
-        "vision.label": "La vision",
-        "vision.title": "Ce que nous construisons",
-        "vision.portal": "Portail du village",
-        "vision.portal.desc": "Une plateforme pour tous les services",
-        "vision.hub": "Hub touristique",
-        "vision.hub.desc": "Destination entre les collines",
-        "vision.network": "Réseau de compétences",
-        "vision.network.desc": "Le talent rencontre l'opportunité",
-        "vision.quote": "Nous n'attendons pas l'accès. Nous construisons d'abord une économie.",
-        "cta.title": "Prêt à faire partie de l'histoire ?",
-        "cta.partner": "Devenez partenaire",
-        "cta.story": "Lire notre histoire",
-        "footer.tagline": "Un document vivant d'un petit village à Lamahatta, Darjeeling. 22 maisons. ~93 personnes. Une histoire.",
-        "footer.navigate": "Naviguer",
-        "footer.connected": "Rester connecté",
-        "footer.connected.desc": "Actualités locales, programmes gouvernementaux, opportunités.",
-        "footer.subscribe": "S'abonner aux mises à jour →",
-        "footer.credit": "Document vivant · Seemana Gaon, Lamahatta, Darjeeling",
-        "footer.unfinished": "Ce site n'est pas fini. Le village non plus.",
-    },
+        "partners.success": "ধন্যবাদ! আমরা শীঘ্রই উত্তর দেব।"
+    }
 };
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
