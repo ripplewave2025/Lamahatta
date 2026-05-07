@@ -1,175 +1,162 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import LanguageToggle from "@/components/LanguageToggle";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import LanguageToggle from "@/components/LanguageToggle";
+
+const navLinks = [
+  { href: "/", key: "nav.home", defaultLabel: "Home" },
+  { href: "/why", key: "nav.why", defaultLabel: "Story" },
+  { href: "/voices", key: "nav.voices", defaultLabel: "Voices" },
+  { href: "/economy", key: "nav.economy", defaultLabel: "Opportunity" },
+  { href: "/village", key: "nav.village", defaultLabel: "Talent" },
+  { href: "/hub", key: "nav.hub", defaultLabel: "Hub" },
+];
 
 export default function RecordNav() {
-    const { t } = useLanguage();
-    const [scrolled, setScrolled] = useState(false);
-    const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = useLanguage();
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    const navLinks = [
-        { href: "/", labelKey: "nav.home" },
-        { href: "/why", labelKey: "nav.why" },
-        { href: "/generations", labelKey: "nav.change" },
-        { href: "/economy", labelKey: "nav.economy" },
-        { href: "/challenges", labelKey: "nav.challenges" },
-        { href: "/voices", labelKey: "nav.voices" },
-    ];
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMobileOpen(false);
+      }
+    };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    // Close mobile menu on resize
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 768) {
-                setMobileOpen(false);
-            }
-        };
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+  const isHomeHeroMode = pathname === "/" && !scrolled;
+  const navSurface = isHomeHeroMode
+    ? "bg-transparent border-transparent"
+    : "bg-white/88 border-stone-200/70 shadow-[0_10px_30px_rgba(0,0,0,0.06)] backdrop-blur-xl";
+  const textColor = isHomeHeroMode ? "text-white" : "text-stone-900";
+  const linkColor = isHomeHeroMode
+    ? "text-white/78 hover:text-white"
+    : "text-stone-600 hover:text-stone-950";
 
-    return (
-        <>
-            <motion.nav
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                    ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-slate-100"
-                    : "bg-transparent"
-                    }`}
+  return (
+    <>
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45 }}
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${navSurface}`}
+      >
+        <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
+          <Link
+            href="/"
+            className={`font-serif text-xl tracking-wide transition-colors ${textColor}`}
+          >
+            Sunaray Gaon
+          </Link>
+
+          <div className="hidden items-center gap-6 lg:flex">
+            {navLinks.map((link) => {
+              const active = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${active ? textColor : linkColor}`}
+                >
+                  {t(link.key)}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="hidden items-center gap-3 lg:flex">
+            <LanguageToggle />
+            <Link
+              href="/partners"
+              className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
+                isHomeHeroMode
+                  ? "border-white/20 bg-white/10 text-white hover:bg-white/16"
+                  : "border-stone-200 bg-stone-950 text-white hover:bg-stone-800"
+              }`}
             >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16 md:h-20">
+              {t("nav.partners") || "Enquire"}
+            </Link>
+          </div>
 
-                        {/* Logo */}
-                        <Link
-                            href="/"
-                            className="font-serif text-lg md:text-xl tracking-wide text-slate-900 hover:text-amber-600 transition-colors"
-                            style={{ fontFamily: "var(--font-serif)" }}
-                        >
-                            Seemana Gaon
-                        </Link>
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageToggle />
+            <button
+              type="button"
+              onClick={() => setMobileOpen((value) => !value)}
+              aria-label="Toggle menu"
+              className={`rounded-xl border px-3 py-2 text-sm font-semibold transition ${
+                isHomeHeroMode
+                  ? "border-white/20 bg-white/10 text-white"
+                  : "border-stone-200 bg-white text-stone-900"
+              }`}
+            >
+              Menu
+            </button>
+          </div>
+        </div>
+      </motion.nav>
 
-                        {/* Desktop Navigation */}
-                        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className="text-xs xl:text-sm font-medium uppercase tracking-wider text-slate-600 hover:text-amber-600 transition-colors relative group"
-                                >
-                                    {t(link.labelKey)}
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all group-hover:w-full" />
-                                </Link>
-                            ))}
-                            <div className="ml-2">
-                                <LanguageToggle />
-                            </div>
-                        </div>
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm lg:hidden"
+            />
 
-                        {/* Mobile: Language + Menu */}
-                        <div className="flex lg:hidden items-center gap-2">
-                            <LanguageToggle />
-                            <button
-                                onClick={() => setMobileOpen(!mobileOpen)}
-                                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
-                                aria-label="Toggle menu"
-                            >
-                                <div className="w-6 h-5 flex flex-col justify-between">
-                                    <motion.span
-                                        animate={{
-                                            rotate: mobileOpen ? 45 : 0,
-                                            y: mobileOpen ? 8 : 0
-                                        }}
-                                        className="block h-0.5 bg-slate-700 rounded-full origin-left"
-                                    />
-                                    <motion.span
-                                        animate={{ opacity: mobileOpen ? 0 : 1 }}
-                                        className="block h-0.5 bg-slate-700 rounded-full"
-                                    />
-                                    <motion.span
-                                        animate={{
-                                            rotate: mobileOpen ? -45 : 0,
-                                            y: mobileOpen ? -8 : 0
-                                        }}
-                                        className="block h-0.5 bg-slate-700 rounded-full origin-left"
-                                    />
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </motion.nav>
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-x-4 top-20 z-50 rounded-[1.75rem] border border-stone-200 bg-white p-5 shadow-[0_18px_50px_rgba(0,0,0,0.12)] lg:hidden"
+            >
+              <div className="space-y-2">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-2xl px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-stone-700 transition hover:bg-stone-100 hover:text-stone-950"
+                  >
+                    {t(link.key)}
+                  </Link>
+                ))}
+              </div>
 
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {mobileOpen && (
-                    <>
-                        {/* Backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setMobileOpen(false)}
-                            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
-                        />
-
-                        {/* Menu Panel */}
-                        <motion.div
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.2 }}
-                            className="fixed top-16 left-0 right-0 bg-white shadow-xl z-40 lg:hidden border-b border-slate-100"
-                        >
-                            <div className="max-w-7xl mx-auto px-4 py-6">
-                                <nav className="flex flex-col gap-1">
-                                    {navLinks.map((link, index) => (
-                                        <motion.div
-                                            key={link.href}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.05 }}
-                                        >
-                                            <Link
-                                                href={link.href}
-                                                className="block py-3 px-4 text-base font-medium text-slate-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
-                                                onClick={() => setMobileOpen(false)}
-                                            >
-                                                {t(link.labelKey)}
-                                            </Link>
-                                        </motion.div>
-                                    ))}
-                                </nav>
-
-                                {/* Mobile CTA */}
-                                <div className="mt-6 pt-6 border-t border-slate-100">
-                                    <Link
-                                        href="/partners"
-                                        className="block w-full py-3 px-4 text-center bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 transition-colors"
-                                        onClick={() => setMobileOpen(false)}
-                                    >
-                                        {t("common.partnerWithUs")}
-                                    </Link>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </>
-    );
+              <div className="mt-4 border-t border-stone-200 pt-4">
+                <Link
+                  href="/partners"
+                  onClick={() => setMobileOpen(false)}
+                  className="block rounded-2xl bg-stone-950 px-4 py-3 text-center text-sm font-semibold uppercase tracking-[0.16em] text-white"
+                >
+                  {t("nav.partners") || "Start an enquiry"}
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
 }

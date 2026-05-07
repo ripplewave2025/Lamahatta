@@ -1,545 +1,632 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Building2,
+  Cable,
+  HeartHandshake,
+  Landmark,
+  Mountain,
+  Orbit,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import {
+  actionLanes,
+  buildTracks,
+  currentNeeds,
+  engagementSteps,
+  galleryImages,
+  strengths,
+  villageOsModules,
+  villageStats,
+} from "@/lib/village-content";
 import { useLanguage } from "@/context/LanguageContext";
-import SocialAccounts from "@/components/SocialAccounts";
+
+const reveal = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function HomeHero() {
-    const { t } = useLanguage();
+  const { t } = useLanguage();
+  return (
+    <>
+      <section className="relative overflow-hidden bg-[#0b1111] text-stone-100">
+        <div className="absolute inset-0">
+          <Image
+            src="/village/kanchenjunga.jpg"
+            alt="Kanchenjunga seen from Sunaray village"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-35"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.24),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.18),transparent_28%),linear-gradient(180deg,rgba(11,17,17,0.3),rgba(11,17,17,0.9))]" />
+        </div>
 
-    // Portals with translated content
-    const portals = [
-        {
-            id: "villagers",
-            titleKey: "opportunities.villagers",
-            subtitleKey: "opportunities.villagers.desc",
-            href: "/hub",
-            color: "from-green-600 to-green-800",
-        },
-        {
-            id: "investors",
-            titleKey: "opportunities.investors",
-            subtitleKey: "opportunities.investors.desc",
-            href: "/economy",
-            color: "from-amber-600 to-amber-800",
-        },
-        {
-            id: "partners",
-            titleKey: "opportunities.partners",
-            subtitleKey: "opportunities.partners.desc",
-            href: "/partners",
-            color: "from-blue-600 to-blue-800",
-        },
-    ];
+        <div className="relative mx-auto grid min-h-screen max-w-7xl gap-14 px-5 pb-16 pt-28 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-10">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={reveal}
+            transition={{ duration: 0.7 }}
+            className="max-w-3xl"
+          >
+            <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-amber-200/90 backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-amber-400" />
+              Lamahatta, Darjeeling
+            </div>
 
-    // Opportunities with translated content
-    const opportunities = [
-        { sectorKey: "gaps.homestay", icon: "🏠" },
-        { sectorKey: "gaps.cafe", icon: "☕" },
-        { sectorKey: "gaps.guide", icon: "🥾" },
-        { sectorKey: "gaps.organic", icon: "🌱" },
-    ];
+            <h1 className="max-w-4xl font-serif text-5xl leading-[0.95] text-white sm:text-6xl lg:text-7xl">
+              {t("hero.main_title")}
+              <span className="mt-2 block bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
+                {t("hero.main_subtitle")}
+              </span>
+            </h1>
 
-    // Active economy with translated content
-    const activeEconomy = [
-        { categoryKey: "economy.food", count: 12 },
-        { categoryKey: "economy.agriculture", count: 8 },
-        { categoryKey: "economy.construction", count: 6 },
-        { categoryKey: "economy.digital", count: 4 },
-    ];
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-stone-200/78 sm:text-xl">
+              Built from real village images, real local needs, and real
+              ambition: a technical hill village with heart, memory, talent,
+              hospitality, and room for builders who want to create something
+              useful.
+            </p>
 
-    return (
-        <>
-            {/* Hero Section with Full Image */}
-            <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* Clean Background Image with Subtle Animation */}
-                <div className="absolute inset-0">
-                    {/* Main Background Image with subtle zoom */}
-                    <motion.div
-                        initial={{ scale: 1.05 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 20, ease: "easeOut" }}
-                        className="absolute inset-0"
-                    >
-                        <Image
-                            src="/sunlight-hero.jpg"
-                            alt="Sunlight piercing through the forest of Lamahatta"
-                            fill
-                            className="object-cover"
-                            priority
-                            sizes="100vw"
-                        />
-                    </motion.div>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link
+                href="#paths"
+                className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-stone-950 transition hover:bg-amber-400"
+              >
+                Explore the platform
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/partners"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/8 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-sm transition hover:border-amber-300 hover:bg-white/12"
+              >
+                Start an enquiry
+              </Link>
+              <Link
+                href="/voices"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-stone-200 transition hover:border-white/30 hover:text-white"
+              >
+                Voice local priorities
+              </Link>
+            </div>
 
-                    {/* Subtle overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {villageStats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-3xl border border-white/10 bg-white/6 px-5 py-5 backdrop-blur-sm"
+                >
+                  <div className="font-serif text-4xl text-amber-300">
+                    {stat.value}
+                  </div>
+                  <div className="mt-2 text-xs uppercase tracking-[0.18em] text-stone-300/70">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-wrap gap-2 text-xs uppercase tracking-[0.16em] text-stone-300/70">
+              {[
+                "Glenburn",
+                "Dabaipani",
+                "Tinchuley",
+                "Lamahatta",
+                "Takdah",
+                "Peshok",
+                "6th Mile",
+                "10th Mile",
+                "11th Mile",
+              ].map((place) => (
+                <span
+                  key={place}
+                  className="rounded-full border border-white/10 bg-black/15 px-3 py-2"
+                >
+                  {place}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="grid gap-5"
+          >
+            <div className="grid gap-5 lg:grid-cols-[1fr_0.92fr]">
+              <div className="flex aspect-[0.9] flex-col justify-end overflow-hidden rounded-[2rem] border border-white/10 bg-[#141d1c] p-8 shadow-2xl shadow-black/20">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-amber-200/90">
+                    Hill network
+                  </p>
+                  <h2 className="mt-3 font-serif text-3xl leading-snug text-white sm:text-4xl">
+                    A village that already sits inside a regional movement
+                    corridor.
+                  </h2>
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                <div className="rounded-[2rem] border border-white/10 bg-[#141d1c] p-6">
+                  <div className="flex items-center gap-3 text-amber-300">
+                    <Orbit className="h-5 w-5" />
+                    <span className="text-xs uppercase tracking-[0.22em]">
+                      Village operating system
+                    </span>
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-stone-200/75">
+                    The goal is not just tourism content. The goal is a useful
+                    public layer for schemes, funds, updates, skills, work,
+                    services, and investments.
+                  </p>
                 </div>
 
-                {/* Content */}
-                <div className="relative z-10 text-center px-6 max-w-5xl">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="mb-4"
-                    >
-                        <span className="inline-block px-4 py-2 bg-amber-500/10 backdrop-blur-md border border-amber-500/30 text-amber-300 text-xs uppercase tracking-[0.3em] rounded-full">
-                            {t("hero.location")}
-                        </span>
-                    </motion.div>
-
-                    <div className="relative inline-block">
-                        {/* Gold Glow Effect behind title */}
-                        <div className="absolute -inset-4 bg-amber-500/20 blur-3xl rounded-full opacity-50"></div>
-
-                        <motion.h1
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1, type: "spring", bounce: 0.5 }}
-                            className="relative text-6xl md:text-8xl lg:text-9xl font-serif mb-6"
-                            style={{ fontFamily: "var(--font-serif)" }}
-                        >
-                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-amber-200 via-yellow-400 to-amber-600 drop-shadow-2xl">
-                                {t("hero.title")}
-                            </span>
-                            {/* Sparkles */}
-                            <motion.span
-                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
-                                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                                className="absolute -top-2 -right-4 text-3xl"
-                            >✨</motion.span>
-                            <motion.span
-                                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
-                                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 2 }}
-                                className="absolute -bottom-2 -left-4 text-2xl"
-                            >✨</motion.span>
-                        </motion.h1>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+                  <div className="rounded-[2rem] border border-white/10 bg-white/8 p-6 backdrop-blur-sm">
+                    <div className="flex items-center gap-3 text-white">
+                      <Sparkles className="h-5 w-5 text-sky-300" />
+                      <h3 className="font-serif text-xl">Heart of gold</h3>
                     </div>
+                    <p className="mt-3 text-sm leading-7 text-stone-200/72">
+                      The village story should feel warm, direct, and ambitious,
+                      not polished into generic tourism language.
+                    </p>
+                  </div>
 
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.3 }}
-                        className="text-xl md:text-2xl text-amber-100/90 font-light max-w-2xl mx-auto mb-8 leading-relaxed"
-                    >
-                        {t("hero.subtitle")}
-                    </motion.p>
-
-                    {/* Stats */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.5 }}
-                        className="flex justify-center gap-8 md:gap-16 mb-12"
-                    >
-                        {[
-                            { num: "22", labelKey: "hero.houses" },
-                            { num: "93", labelKey: "hero.residents" },
-                            { num: "∞", labelKey: "hero.potential" }
-                        ].map((stat) => (
-                            <div key={stat.labelKey} className="text-center group">
-                                <div className="text-4xl md:text-6xl font-serif text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-yellow-600 group-hover:scale-110 transition-transform duration-300">
-                                    {stat.num}
-                                </div>
-                                <div className="text-xs uppercase tracking-widest text-amber-200/60 mt-2">
-                                    {t(stat.labelKey)}
-                                </div>
-                            </div>
-                        ))}
-                    </motion.div>
-
-                    {/* CTAs */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.7 }}
-                        className="flex flex-col sm:flex-row gap-4 justify-center"
-                    >
-                        <Link
-                            href="#opportunities"
-                            className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-sm uppercase tracking-widest hover:from-amber-400 hover:to-yellow-500 transition-all shadow-lg shadow-amber-500/25 font-medium rounded-sm"
-                        >
-                            {t("hero.opportunity")}
-                        </Link>
-                        <Link
-                            href="/why"
-                            className="px-8 py-4 border border-amber-500/30 text-amber-100 text-sm uppercase tracking-widest hover:border-amber-400 hover:text-white hover:bg-amber-500/10 transition-colors rounded-sm"
-                        >
-                            {t("hero.story")}
-                        </Link>
-                    </motion.div>
-
-                    {/* Scroll indicator */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-                    >
-                        <motion.div
-                            animate={{ y: [0, 10, 0] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="text-amber-200/50 text-sm"
-                        >
-                            {t("hero.scroll")}
-                        </motion.div>
-                    </motion.div>
+                  <div className="rounded-[2rem] border border-amber-300/20 bg-amber-500/10 p-6">
+                    <div className="flex items-center gap-3 text-amber-200">
+                      <Mountain className="h-5 w-5" />
+                      <h3 className="font-serif text-xl text-white">
+                        What this site should do
+                      </h3>
+                    </div>
+                    <ul className="mt-4 space-y-3 text-sm text-stone-100/78">
+                      <li>Attract useful investment</li>
+                      <li>Publish the village need-map</li>
+                      <li>Surface talent and local services</li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-                {/* Floating Gold Particles Animation */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    {[...Array(8)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{
-                                x: Math.random() * 100 + "%",
-                                y: Math.random() * 100 + "%",
-                                opacity: 0
-                            }}
-                            animate={{
-                                y: [null, Math.random() * -100 + "%"],
-                                opacity: [0, 0.8, 0]
-                            }}
-                            transition={{
-                                duration: Math.random() * 10 + 10,
-                                repeat: Infinity,
-                                ease: "linear",
-                                delay: Math.random() * 5
-                            }}
-                            className="absolute w-1 h-1 bg-amber-300 rounded-full blur-[1px]"
-                        />
+      <section id="paths" className="bg-[#f4efe4] py-24 text-stone-900">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={reveal}
+            transition={{ duration: 0.55 }}
+            className="max-w-3xl"
+          >
+            <p className="text-xs uppercase tracking-[0.26em] text-amber-700">
+              Three clear paths
+            </p>
+            <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+              A stronger public front door for villagers, outsiders, and talent.
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-stone-700">
+              The site should not confuse people. It should quickly show what
+              they can do here, what the village needs, and where the next
+              conversation starts.
+            </p>
+          </motion.div>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {actionLanes.map((lane, index) => (
+              <motion.div
+                key={lane.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={reveal}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+                className="group overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-[0_25px_50px_rgba(0,0,0,0.06)]"
+              >
+                <div
+                  className={`h-2 bg-gradient-to-r ${lane.accent}`}
+                />
+                <div className="p-7">
+                  <h3 className="font-serif text-2xl text-stone-900">
+                    {lane.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-7 text-stone-600">
+                    {lane.description}
+                  </p>
+                  <ul className="mt-6 space-y-3 text-sm text-stone-800">
+                    {lane.bullets.map((bullet) => (
+                      <li key={bullet} className="flex items-start gap-3">
+                        <span className="mt-1.5 h-2 w-2 rounded-full bg-amber-500" />
+                        <span>{bullet}</span>
+                      </li>
                     ))}
+                  </ul>
+                  <Link
+                    href={lane.href}
+                    className="mt-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-amber-700 transition group-hover:text-amber-600"
+                  >
+                    {lane.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
-            </section>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Opportunities (Portals) */}
-            <section id="opportunities" className="py-20 bg-white">
-                <div className="max-w-6xl mx-auto px-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-12"
-                    >
-                        <h2 className="text-3xl md:text-4xl font-serif text-earth">
-                            {t("opportunities.title")}
-                        </h2>
-                    </motion.div>
+      <section className="bg-white py-24 text-stone-900">
+        <div className="mx-auto grid max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+          <div>
+            <p className="text-xs uppercase tracking-[0.26em] text-amber-700">
+              Why this village stands out
+            </p>
+            <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+              Beautiful place, useful position, and a sharper ambition than the
+              average village pitch.
+            </h2>
+            <p className="mt-5 max-w-xl text-lg leading-8 text-stone-700">
+              Your notes point in the right direction: this should become a
+              practical village platform for governance, services, tourism,
+              training, and local business development.
+            </p>
 
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {portals.map((portal, index) => (
-                            <motion.div
-                                key={portal.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                            >
-                                <Link
-                                    href={portal.href}
-                                    className={`block p-8 bg-gradient-to-br ${portal.color} text-white rounded-lg hover:scale-105 transition-transform duration-300`}
-                                >
-                                    <h3 className="text-2xl font-serif mb-2">{t(portal.titleKey)}</h3>
-                                    <p className="text-white/80 text-sm">{t(portal.subtitleKey)}</p>
-                                    <span className="inline-block mt-4 text-sm">
-                                        {t("opportunities.enter")}
-                                    </span>
-                                </Link>
-                            </motion.div>
-                        ))}
+            <div className="mt-8 overflow-hidden rounded-[2rem] border border-stone-200">
+              <div className="relative aspect-[1.18]">
+                <Image
+                  src="/village/signboard.jpg"
+                  alt="Hospitality construction site in Sunaray"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-5">
+            {strengths.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={reveal}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="rounded-[2rem] border border-stone-200 bg-[#faf7f0] p-6"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="rounded-2xl bg-stone-950 p-3 text-amber-300">
+                    {index === 0 && <Mountain className="h-5 w-5" />}
+                    {index === 1 && <Sparkles className="h-5 w-5" />}
+                    {index === 2 && <HeartHandshake className="h-5 w-5" />}
+                    {index === 3 && <Building2 className="h-5 w-5" />}
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl text-stone-900">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-stone-600">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="needs" className="bg-[#f8fbfb] py-24 text-stone-900">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-xs uppercase tracking-[0.26em] text-amber-700">
+                What people need now
+              </p>
+              <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+                The website should reflect immediate village demand, not abstract
+                branding.
+              </h2>
+            </div>
+            <p className="max-w-xl text-lg leading-8 text-stone-700">
+              Internet, jobs, delivery, health access, training, hangout spaces,
+              and better roads are not side notes. They are the operating
+              priorities.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {currentNeeds.map((need, index) => (
+              <motion.article
+                key={need.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={reveal}
+                transition={{ duration: 0.5, delay: index * 0.04 }}
+                className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-[0_20px_45px_rgba(0,0,0,0.04)]"
+              >
+                <div className="text-[11px] uppercase tracking-[0.22em] text-amber-700">
+                  Priority {String(index + 1).padStart(2, "0")}
+                </div>
+                <h3 className="mt-3 font-serif text-2xl text-stone-900">
+                  {need.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-stone-600">
+                  {need.description}
+                </p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" className="bg-[#0f1716] py-24 text-stone-100">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+          <div className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.26em] text-amber-300">
+              Real village gallery
+            </p>
+            <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+              These are not stock mountains. This is the place itself.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-stone-300/75">
+              The site needs to feel anchored in actual ground conditions:
+              mountain grandeur, village roofs, ridge roads, and visible
+              construction of future hospitality and services.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {galleryImages.map((image, index) => (
+              <motion.figure
+                key={image.src}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={reveal}
+                transition={{ duration: 0.5, delay: index * 0.04 }}
+                className={`overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 ${
+                  index === 0 || index === 1 ? "xl:col-span-2" : ""
+                }`}
+              >
+                <div className="relative aspect-[1.1]">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                    className="object-cover transition duration-700 hover:scale-105"
+                  />
+                </div>
+                <figcaption className="space-y-2 p-5">
+                  <h3 className="font-serif text-xl text-white">{image.alt}</h3>
+                  <p className="text-sm leading-7 text-stone-300/72">
+                    {image.caption}
+                  </p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="build" className="bg-[#f7f2e8] py-24 text-stone-900">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+          <div>
+            <p className="text-xs uppercase tracking-[0.26em] text-amber-700">
+              What can be built here
+            </p>
+            <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+              A village platform should lead to projects, services, and capital
+              movement.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-stone-700">
+              These tracks come directly from your notes: village OS tools,
+              hospitality, training, business circulation, welfare support, and
+              a stronger grants pipeline.
+            </p>
+
+            <div className="mt-8 overflow-hidden rounded-[2rem] border border-stone-200 bg-white">
+              <div className="relative aspect-[1.12]">
+                <Image
+                  src="/village/construction-path.jpg"
+                  alt="Village path and hospitality construction"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            {buildTracks.map((track, index) => (
+              <motion.div
+                key={track.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={reveal}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="rounded-[2rem] border border-stone-200 bg-white p-6"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="rounded-2xl bg-amber-100 p-3 text-amber-800">
+                    {index === 0 && <Landmark className="h-5 w-5" />}
+                    {index === 1 && <Building2 className="h-5 w-5" />}
+                    {index === 2 && <Users className="h-5 w-5" />}
+                    {index === 3 && <Orbit className="h-5 w-5" />}
+                    {index === 4 && <HeartHandshake className="h-5 w-5" />}
+                    {index === 5 && <Cable className="h-5 w-5" />}
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-2xl text-stone-900">
+                      {track.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-stone-600">
+                      {track.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#101717] py-24 text-stone-100">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+          <div>
+            <p className="text-xs uppercase tracking-[0.26em] text-amber-300">
+              Village OS
+            </p>
+            <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+              Make the village legible: track information that actually changes
+              outcomes.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-stone-300/74">
+              This is where Sunaray can become more than a brochure. The site
+              can track schemes, funds, services, outages, schools, health,
+              transport, and citizen-facing records.
+            </p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {villageOsModules.map((module) => (
+                <div
+                  key={module}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-stone-200/76"
+                >
+                  {module}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/6 p-8 backdrop-blur-sm">
+            <p className="text-xs uppercase tracking-[0.24em] text-amber-300">
+              How engagement should work
+            </p>
+            <div className="mt-6 space-y-5">
+              {engagementSteps.map((step, index) => (
+                <div
+                  key={step.title}
+                  className="rounded-[1.75rem] border border-white/10 bg-black/15 p-5"
+                >
+                  <div className="text-[11px] uppercase tracking-[0.22em] text-amber-200/90">
+                    Step {String(index + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="mt-2 font-serif text-2xl text-white">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-stone-300/75">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/voices"
+                className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-400"
+              >
+                Open voices page
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/hub"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-white transition hover:border-white/30"
+              >
+                Enter hub
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="engage" className="bg-white py-24 text-stone-900">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+          <div className="rounded-[2.5rem] bg-[linear-gradient(135deg,#0f1716_0%,#1f2937_45%,#d97706_145%)] p-8 text-white shadow-[0_35px_80px_rgba(0,0,0,0.18)] sm:p-12">
+            <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+              <div>
+                <p className="text-xs uppercase tracking-[0.26em] text-amber-200">
+                  Next move
+                </p>
+                <h2 className="mt-4 font-serif text-4xl sm:text-5xl">
+                  Build something useful here, not just something visible.
+                </h2>
+                <p className="mt-5 max-w-2xl text-lg leading-8 text-white/78">
+                  Villagers should be able to speak. Outsiders should be able to
+                  enquire. Talent should be able to contribute. Investors should
+                  understand what is real, what is needed, and what is already
+                  moving.
+                </p>
+              </div>
+
+              <div className="grid gap-4">
+                <Link
+                  href="/partners"
+                  className="flex items-center justify-between rounded-[1.6rem] bg-white/10 px-5 py-5 text-left transition hover:bg-white/14"
+                >
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.18em] text-amber-200">
+                      Investors and builders
                     </div>
-                </div>
-            </section>
-
-            {/* Location & Map Section */}
-            <section className="py-20 bg-warmgray overflow-hidden">
-                <div className="max-w-6xl mx-auto px-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-12"
-                    >
-                        <span className="text-amber-600 text-xs uppercase tracking-[0.2em]">{t("location.label")}</span>
-                        <h2 className="text-3xl md:text-4xl font-serif text-earth mt-2">
-                            {t("location.title")}
-                        </h2>
-                        <p className="text-muted mt-4">
-                            {t("location.subtitle")}
-                        </p>
-                    </motion.div>
-
-                    <div className="grid md:grid-cols-2 gap-8 items-center">
-                        {/* Satellite Image */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white"
-                        >
-                            <Image
-                                src="/village-satellite.jpg"
-                                alt="Satellite view of Seemana Gaon"
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 text-white">
-                                <p className="text-xs uppercase tracking-widest mb-1">{t("location.satellite")}</p>
-                                <p className="text-sm font-serif">{t("location.houses")}</p>
-                            </div>
-                        </motion.div>
-
-                        {/* Map Embed */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="h-[400px] w-full rounded-2xl overflow-hidden shadow-xl bg-white"
-                        >
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3553.6946688647565!2d88.3499!3d27.0747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDA0JzI4LjkiTiA4OMKwMjEnMDMuNiJF!5e1!3m2!1sen!2sin!4v1625634582918!5m2!1sen!2sin"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                className="transition-all duration-500"
-                            />
-                        </motion.div>
+                    <div className="mt-2 font-serif text-2xl">
+                      Start a project conversation
                     </div>
+                  </div>
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
 
-                    <div className="text-center mt-8">
-                        <a
-                            href="https://maps.app.goo.gl/QqA7aTt1YWLqjKMHA"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-medium border-b border-amber-600/30 hover:border-amber-600 transition-colors pb-1"
-                        >
-                            {t("location.maps")}
-                        </a>
+                <Link
+                  href="/voices"
+                  className="flex items-center justify-between rounded-[1.6rem] bg-white/10 px-5 py-5 text-left transition hover:bg-white/14"
+                >
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.18em] text-amber-200">
+                      Villagers
                     </div>
-                </div>
-            </section>
-
-            {/* Village Life Image Section */}
-            <section className="relative py-32">
-                <div className="absolute inset-0">
-                    <Image
-                        src="/village-life.png"
-                        alt="Village tea stall gathering"
-                        fill
-                        className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/50" />
-                </div>
-                <div className="relative z-10 max-w-3xl mx-auto px-6 text-center text-white">
-                    <motion.blockquote
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="text-2xl md:text-4xl font-serif italic leading-relaxed"
-                    >
-                        &ldquo;{t("life.quote")}&rdquo;
-                    </motion.blockquote>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="mt-6 text-white/60"
-                    >
-                        {t("life.attribution")}
-                    </motion.p>
-                </div>
-            </section>
-
-            {/* Opportunity Gaps */}
-            <section className="py-20 bg-warmgray">
-                <div className="max-w-6xl mx-auto px-6">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <span className="text-amber-600 text-xs uppercase tracking-[0.2em]">
-                                {t("gaps.label")}
-                            </span>
-                            <h2 className="text-3xl md:text-4xl font-serif text-earth mt-2 mb-4">
-                                {t("gaps.title")}
-                            </h2>
-                            <p className="text-muted mb-8">
-                                {t("gaps.subtitle")}
-                            </p>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                {opportunities.map((opp) => (
-                                    <div
-                                        key={opp.sectorKey}
-                                        className="bg-white p-4 border border-border hover:border-amber-400 transition-colors"
-                                    >
-                                        <span className="text-2xl">{opp.icon}</span>
-                                        <h3 className="font-serif text-lg mt-2">{t(opp.sectorKey)}</h3>
-                                        <span className="text-xs text-red-600 uppercase">{t("gaps.status")}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative h-80 md:h-96 rounded-lg overflow-hidden"
-                        >
-                            <Image
-                                src="/homestay.png"
-                                alt="Potential homestay with mountain view"
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-4">
-                                <p className="text-sm text-earth">
-                                    {t("gaps.potential")}
-                                </p>
-                            </div>
-                        </motion.div>
+                    <div className="mt-2 font-serif text-2xl">
+                      Surface the real priorities
                     </div>
-                </div>
-            </section>
+                  </div>
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
 
-            {/* What We Do - Economy */}
-            <section className="py-20 bg-earth text-white">
-                <div className="max-w-6xl mx-auto px-6">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            className="relative h-80 md:h-96 rounded-lg overflow-hidden order-2 md:order-1"
-                        >
-                            <Image
-                                src="/village-economy.png"
-                                alt="Village economic activities"
-                                fill
-                                className="object-cover"
-                            />
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="order-1 md:order-2"
-                        >
-                            <span className="text-amber-400 text-xs uppercase tracking-[0.2em]">
-                                {t("economy.label")}
-                            </span>
-                            <h2 className="text-3xl md:text-4xl font-serif mt-2 mb-4">
-                                {t("economy.title")}
-                            </h2>
-                            <p className="text-white/70 mb-8">
-                                {t("economy.subtitle")}
-                            </p>
-
-                            <div className="space-y-4">
-                                {activeEconomy.map((item) => (
-                                    <div
-                                        key={item.categoryKey}
-                                        className="flex justify-between items-center border-b border-white/10 pb-3"
-                                    >
-                                        <span>{t(item.categoryKey)}</span>
-                                        <span className="text-amber-400">{item.count} {t("economy.active")}</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <Link
-                                href="/economy"
-                                className="inline-block mt-8 px-6 py-3 bg-amber-500 text-earth text-sm uppercase tracking-widest hover:bg-amber-400 transition-colors"
-                            >
-                                {t("economy.view")}
-                            </Link>
-                        </motion.div>
+                <Link
+                  href="/economy"
+                  className="flex items-center justify-between rounded-[1.6rem] bg-white/10 px-5 py-5 text-left transition hover:bg-white/14"
+                >
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.18em] text-amber-200">
+                      Trainers and employers
                     </div>
-                </div>
-            </section>
-
-            {/* The Vision */}
-            <section className="py-20 bg-white">
-                <div className="max-w-4xl mx-auto px-6 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <span className="text-amber-600 text-xs uppercase tracking-[0.2em]">
-                            {t("vision.label")}
-                        </span>
-                        <h2 className="text-3xl md:text-5xl font-serif text-earth mt-2 mb-8">
-                            {t("vision.title")}
-                        </h2>
-                    </motion.div>
-
-                    <div className="grid md:grid-cols-3 gap-8 mb-12">
-                        {[
-                            { num: "01", titleKey: "vision.portal", descKey: "vision.portal.desc" },
-                            { num: "02", titleKey: "vision.hub", descKey: "vision.hub.desc" },
-                            { num: "03", titleKey: "vision.network", descKey: "vision.network.desc" },
-                        ].map((item, i) => (
-                            <motion.div
-                                key={item.num}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className="p-6 border border-border hover:border-amber-400 transition-colors"
-                            >
-                                <span className="text-4xl font-serif text-amber-400">{item.num}</span>
-                                <h3 className="font-serif text-xl mt-4 mb-2">{t(item.titleKey)}</h3>
-                                <p className="text-sm text-muted">{t(item.descKey)}</p>
-                            </motion.div>
-                        ))}
+                    <div className="mt-2 font-serif text-2xl">
+                      Plug talent into real work
                     </div>
-
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="text-xl font-serif text-muted italic"
-                    >
-                        &ldquo;{t("vision.quote")}&rdquo;
-                    </motion.p>
-                </div>
-            </section>
-
-            {/* Social Accounts */}
-            <SocialAccounts />
-
-            {/* CTA */}
-            <section className="py-16 bg-earth">
-                <div className="max-w-4xl mx-auto px-6 text-center">
-                    <h2 className="text-2xl md:text-3xl font-serif text-white mb-8">
-                        {t("cta.title")}
-                    </h2>
-                    <div className="flex flex-wrap justify-center gap-4">
-                        <Link
-                            href="/partners"
-                            className="px-8 py-4 bg-amber-500 text-earth text-sm uppercase tracking-widest hover:bg-amber-400 transition-colors"
-                        >
-                            {t("cta.partner")}
-                        </Link>
-                        <Link
-                            href="/why"
-                            className="px-8 py-4 border border-white/20 text-white text-sm uppercase tracking-widest hover:border-amber-400 transition-colors"
-                        >
-                            {t("cta.story")}
-                        </Link>
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+                  </div>
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }

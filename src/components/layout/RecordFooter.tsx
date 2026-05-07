@@ -1,156 +1,119 @@
 "use client";
 
 import Link from "next/link";
-import { useLanguage } from "@/context/LanguageContext";
 import { motion } from "framer-motion";
 
+const platformLinks = [
+  { href: "/", label: "Home" },
+  { href: "/why", label: "Story" },
+  { href: "/voices", label: "Voices" },
+  { href: "/hub", label: "Hub" },
+];
+
+const actionLinks = [
+  { href: "/economy", label: "Opportunity map" },
+  { href: "/partners", label: "Investor enquiry" },
+  { href: "/village", label: "Village talent" },
+  { href: "/updates", label: "Updates" },
+];
+
 export default function RecordFooter() {
-    const { t } = useLanguage();
+  return (
+    <footer className="bg-[#0f1716] text-stone-100">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1.1fr_0.9fr_0.9fr_1fr]">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-sm"
+          >
+            <p className="text-xs uppercase tracking-[0.24em] text-amber-300">
+              Sunaray Gaon
+            </p>
+            <h3 className="mt-4 font-serif text-3xl text-white">
+              A village platform for work, visibility, and useful growth.
+            </h3>
+            <p className="mt-5 text-sm leading-7 text-stone-300/72">
+              This should become the public face of the village and the internal
+              tool for surfacing needs, talent, services, and practical
+              opportunities.
+            </p>
+          </motion.div>
 
-    return (
-        <footer className="bg-gradient-to-b from-slate-50 to-slate-100 border-t border-slate-200">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Main Footer Content */}
-                <div className="py-12 md:py-16">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.05 }}
+          >
+            <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">
+              Platform
+            </h4>
+            <nav className="mt-5 space-y-3">
+              {platformLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block text-sm text-stone-300/78 transition hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </motion.div>
 
-                        {/* Brand */}
-                        <div className="sm:col-span-2 lg:col-span-1">
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                            >
-                                <h4
-                                    className="text-xl font-semibold text-slate-900 mb-4"
-                                    style={{ fontFamily: "var(--font-serif)" }}
-                                >
-                                    {t("hero.title")}
-                                </h4>
-                                <p className="text-sm text-slate-600 leading-relaxed max-w-xs">
-                                    {t("footer.tagline")}
-                                </p>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">
+              Action
+            </h4>
+            <nav className="mt-5 space-y-3">
+              {actionLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block text-sm text-stone-300/78 transition hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </motion.div>
 
-                                {/* Social / Contact Badge */}
-                                <div className="mt-6 flex items-center gap-3">
-                                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">
-                                        📍 Lamahatta, Darjeeling
-                                    </span>
-                                </div>
-                            </motion.div>
-                        </div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5"
+          >
+            <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-300">
+              Best next entry points
+            </h4>
+            <p className="mt-4 text-sm leading-7 text-stone-300/72">
+              Villagers should head to the hub and voices page. Outsiders should
+              start with opportunity and enquiries. Trainers and employers
+              should use the economy and talent sections.
+            </p>
+            <Link
+              href="/partners"
+              className="mt-5 inline-flex items-center rounded-full bg-amber-500 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-stone-950 transition hover:bg-amber-400"
+            >
+              Contact the village
+            </Link>
+          </motion.div>
+        </div>
 
-                        {/* Navigation */}
-                        <div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 }}
-                            >
-                                <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-4">
-                                    {t("footer.navigate")}
-                                </h5>
-                                <nav className="flex flex-col gap-3">
-                                    <Link
-                                        href="/why"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("nav.why")}
-                                    </Link>
-                                    <Link
-                                        href="/generations"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("nav.change")}
-                                    </Link>
-                                    <Link
-                                        href="/economy"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("nav.economy")}
-                                    </Link>
-                                    <Link
-                                        href="/challenges"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("nav.challenges")}
-                                    </Link>
-                                </nav>
-                            </motion.div>
-                        </div>
-
-                        {/* Opportunities */}
-                        <div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-4">
-                                    {t("opportunities.title")}
-                                </h5>
-                                <nav className="flex flex-col gap-3">
-                                    <Link
-                                        href="/village"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("opportunities.villagers")}
-                                    </Link>
-                                    <Link
-                                        href="/economy"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("opportunities.investors")}
-                                    </Link>
-                                    <Link
-                                        href="/partners"
-                                        className="text-sm text-slate-600 hover:text-amber-600 transition-colors"
-                                    >
-                                        {t("opportunities.partners")}
-                                    </Link>
-                                </nav>
-                            </motion.div>
-                        </div>
-
-                        {/* Stay Connected */}
-                        <div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.3 }}
-                            >
-                                <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-4">
-                                    {t("footer.connected")}
-                                </h5>
-                                <p className="text-sm text-slate-600 mb-4">
-                                    {t("footer.connected.desc")}
-                                </p>
-                                <Link
-                                    href="/updates"
-                                    className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition-colors shadow-sm"
-                                >
-                                    {t("footer.subscribe")}
-                                </Link>
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom Bar */}
-                <div className="py-6 border-t border-slate-200">
-                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <p className="text-xs text-slate-500 text-center sm:text-left">
-                            {t("footer.credit")}
-                        </p>
-                        <p className="text-xs text-slate-400 italic text-center sm:text-right">
-                            {t("footer.unfinished")}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
+        <div className="flex flex-col gap-3 pt-6 text-xs text-stone-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>Sunaray Gaon, Lamahatta, Darjeeling</p>
+          <p>Built as a living record, a village OS, and an opportunity front door.</p>
+        </div>
+      </div>
+    </footer>
+  );
 }

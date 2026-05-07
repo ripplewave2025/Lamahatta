@@ -25,11 +25,13 @@ const translations: Record<Language, Record<string, string>> = {
     EN: {
         // Navigation
         "nav.home": "Home",
-        "nav.why": "Why This Exists",
+        "nav.why": "Story",
         "nav.change": "Change",
-        "nav.economy": "What We Do",
+        "nav.economy": "Opportunity",
         "nav.challenges": "Challenges",
         "nav.voices": "Voices",
+        "nav.village": "Talent",
+        "nav.hub": "Hub",
         "nav.partners": "Partners",
         "nav.updates": "Updates",
 
@@ -44,9 +46,26 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.opportunity": "See the Opportunity",
         "hero.story": "Our Story",
         "hero.join": "Join the Village",
+        "hero.panorama.title": "A Wide Horizon",
+        "hero.panorama.desc": "Every corner of Seemana Gaon is connected by a shared history and breathtaking views of the surrounding mountains.",
+        "hero.main_title": "Sunaray Gaon is not just a village website.",
+        "hero.main_subtitle": "It is the front door to a living village economy.",
 
         // Opportunities Section
-        "opportunities.title": "Opportunities",
+        "opportunities.empty": "No opportunities listed yet.",
+        "opportunities.add": "Add Opportunity",
+        "opportunities.desc": "List jobs, training, contracts, and business needs.",
+
+        // Voices Page
+        "voices.label": "Voices page",
+        "voices.title": "This page should become the village opinion board.",
+        "voices.subtitle": "People should be able to say what is needed, what is working, and what should be built next.",
+        "voices.post_heading": "What should be posted here",
+        "voices.desc": "This page should not be decorative. It should become the place where the village speaks in categories that help action happen.",
+        "voices.topic": "Topic",
+        "voices.quote": "If the village cannot state its needs clearly, other people will define them badly.",
+        "voices.cta.updates": "Go to community updates",
+        "voices.cta.hub": "Enter the hub",
         "opportunities.villagers": "For Villagers",
         "opportunities.villagers.desc": "Access services, schemes & opportunities",
         "opportunities.investors": "For Investors",
@@ -196,16 +215,41 @@ const translations: Record<Language, Record<string, string>> = {
         "partners.messagePlaceholder": "Tell us how you'd like to collaborate...",
         "partners.submit": "Get In Touch",
         "partners.success": "Thank you! We'll get back to you soon.",
+
+        // Dashboard
+        "dashboard.loading": "Loading...",
+        "dashboard.title": "Member Dashboard",
+        "dashboard.adminTitle": "Admin Dashboard",
+        "dashboard.welcome": "Welcome back",
+        "dashboard.signOut": "Sign Out",
+        "dashboard.role.villager": "Role: Worker / Villager",
+        "dashboard.role.admin": "Role: Samaj Head / Admin",
+        "dashboard.editPortfolio": "Edit Your Portfolio",
+        "dashboard.previewTips": "Preview & Tips",
+        "dashboard.tipsDesc": "Your portfolio helps visitors discover your talents. Make sure to:",
+        "dashboard.tip1": "Choose a clear title (e.g., 'Homestay & Local Guide').",
+        "dashboard.tip2": "Write a short but engaging bio.",
+        "dashboard.tip3": "List your key skills or offerings.",
+        "dashboard.tip4": "Update your contact info so people can reach you.",
+        "dashboard.admin.pending": "Pending Approvals",
+        "dashboard.admin.pendingDesc": "Review updates from villagers.",
+        "dashboard.admin.noPending": "No pending items right now.",
+        "dashboard.admin.users": "Manage Users",
+        "dashboard.admin.usersDesc": "View registered villagers.",
+        "dashboard.admin.inquiries": "Investor Inquiries",
+        "dashboard.admin.inquiriesDesc": "Review partnership requests."
     },
 
     NE: {
         // Navigation
         "nav.home": "गृहपृष्ठ",
-        "nav.why": "किन यो अस्तित्वमा छ",
+        "nav.why": "कथा",
         "nav.change": "परिवर्तन",
-        "nav.economy": "हामी के गर्छौं",
+        "nav.economy": "अवसर",
         "nav.challenges": "चुनौतीहरू",
         "nav.voices": "आवाजहरू",
+        "nav.village": "प्रतिभा",
+        "nav.hub": "हब",
         "nav.partners": "साझेदारहरू",
         "nav.updates": "अपडेटहरू",
 
@@ -220,6 +264,10 @@ const translations: Record<Language, Record<string, string>> = {
         "hero.opportunity": "अवसर हेर्नुहोस्",
         "hero.story": "हाम्रो कथा",
         "hero.join": "गाउँमा सामेल हुनुहोस्",
+        "hero.panorama.title": "फराकिलो क्षितिज",
+        "hero.panorama.desc": "सीमा गाउँको हरेक कुना साझा इतिहास र वरपरका पहाडहरूको मनमोहक दृश्यले जोडिएको छ।",
+        "hero.main_title": "सुनरे गाउँ केवल एउटा गाउँको वेबसाइट होइन।",
+        "hero.main_subtitle": "यो एउटा जीवित गाउँले अर्थतन्त्रको मूल ढोका हो।",
 
         // Opportunities
         "opportunities.title": "अवसरहरू",
