@@ -40,24 +40,24 @@ type Scene = {
 
 const SCENES: Scene[] = [
   {
-    eyebrow: "Scene 01 · Arrival",
-    title: "Golden Village OS for Sunaray Gaon.",
-    cta: { label: "Open the hub", href: "/dashboard" },
+    eyebrow: "Lamahatta · Darjeeling",
+    title: "Above the tea, above the clouds — a village wakes online.",
+    cta: { label: "Step inside", href: "/dashboard" },
   },
   {
-    eyebrow: "Scene 02 · Live in the village",
-    title: "Alerts, issues, marketplace, schemes.",
-    cta: { label: "Voices", href: "/voices" },
+    eyebrow: "Today in Sunaray",
+    title: "When the road closes or the water comes back, you'll know first.",
+    cta: { label: "Hear today's voices", href: "/voices" },
   },
   {
-    eyebrow: "Scene 03 · Build with us",
-    title: "Hospitality, training, and trust.",
-    cta: { label: "Read the story", href: "/why" },
+    eyebrow: "What we're building",
+    title: "Homestays, training, healthcare — and reasons for our young people to stay.",
+    cta: { label: "See the plan", href: "/why" },
   },
   {
-    eyebrow: "Scene 04 · Engage",
-    title: "Open this every day. Build what's next.",
-    cta: { label: "Partner with us", href: "/partners" },
+    eyebrow: "Your way in",
+    title: "Bring guests, work, or willing hands. The door is always open.",
+    cta: { label: "Talk to us", href: "/partners" },
   },
 ];
 
@@ -87,7 +87,9 @@ function StaticIntro() {
         alt={INTRO.alt}
         fill
         priority
+        quality={95}
         sizes="100vw"
+        style={{ filter: "contrast(1.04) saturate(1.06)" }}
         className="object-cover"
       />
 
@@ -146,11 +148,12 @@ function PinnedScrub() {
           playsInline
           preload="auto"
           aria-hidden
+          style={{ filter: "contrast(1.05) saturate(1.08)" }}
           className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* Left-side gradient only — keeps the video's own gold text readable on the right. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
+        {/* Soft left-side wash — readable headline on the left, full video detail on the right. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
 
         {SCENES.map((scene, i) => (
           <SceneOverlay
@@ -272,14 +275,14 @@ function ExploreStrip() {
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-300">
-              The whole village, one click away
+              The village, room by room
             </p>
             <h2 className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">
-              Everything that's currently running, behind the four scenes.
+              Pick a door. Step in.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-stone-200/80">
-              The hero is the front door. These are the rooms — daily work the
-              village already does on this site.
+              Whether you live here, grew up here, or just found your way to us —
+              these are the places to start.
             </p>
 
             <div className="mt-8 grid max-w-md grid-cols-3 border-y border-white/15 py-5">
