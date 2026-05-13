@@ -4,6 +4,7 @@ import "./globals.css";
 import RecordNav from "@/components/layout/RecordNav";
 import RecordFooter from "@/components/layout/RecordFooter";
 import { LanguageProvider } from "@/context/LanguageContext";
+import FloatingReportIssue from "@/components/golden-village/FloatingReportIssue";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -18,8 +19,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Seemana Gaon | A Living Record",
-  description: "A living record of a small village in Lamahatta, Darjeeling. 22 houses. 93 people. One story.",
+  title: "Golden Village OS | Sunaray Gaon",
+  description:
+    "A daily operating system for Sunaray Gaon in Lamahatta, Darjeeling: alerts, issues, marketplace, schemes, talent, and partnerships.",
 };
 
 export default function RootLayout({
@@ -33,6 +35,7 @@ export default function RootLayout({
         <LanguageProvider>
           <RecordNav />
           <main>{children}</main>
+          <FloatingReportIssue />
           <RecordFooter />
         </LanguageProvider>
       </body>

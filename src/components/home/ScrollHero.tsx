@@ -1,0 +1,369 @@
+"use client";
+
+// Sunaray Gaon scroll hero — built from the scroll-stop-builder skill.
+// Static intro (sunaraygown.png) → pinned 4-scene scroll-scrub on
+// sunaraygownamazing.mp4 (transcoded with dense keyframes for iOS smoothness).
+
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+  type MotionValue,
+} from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+const INTRO = {
+  image: "/hero/sunaraygown.png",
+  alt: "Sunaray Gaon, Lamahatta",
+  scrollHint: "Scroll to enter",
+};
+
+const VIDEO_SRC = "/hero/sunaraygownamazing.mp4";
+const POSTER_SRC = "/hero/sunaraygownamazing-poster.jpg";
+
+const HERO_STATS = [
+  { value: "22", label: "Households" },
+  { value: "93+", label: "Residents" },
+  { value: "9", label: "Tourism corridors" },
+];
+
+type CTA = { label: string; href: string };
+type Scene = {
+  eyebrow: string;
+  title: string;
+  cta: CTA;
+};
+
+const SCENES: Scene[] = [
+  {
+    eyebrow: "Scene 01 · Arrival",
+    title: "Golden Village OS for Sunaray Gaon.",
+    cta: { label: "Open the hub", href: "/dashboard" },
+  },
+  {
+    eyebrow: "Scene 02 · Live in the village",
+    title: "Alerts, issues, marketplace, schemes.",
+    cta: { label: "Voices", href: "/voices" },
+  },
+  {
+    eyebrow: "Scene 03 · Build with us",
+    title: "Hospitality, training, and trust.",
+    cta: { label: "Read the story", href: "/why" },
+  },
+  {
+    eyebrow: "Scene 04 · Engage",
+    title: "Open this every day. Build what's next.",
+    cta: { label: "Partner with us", href: "/partners" },
+  },
+];
+
+const FADE_IN_PCT = 0.18;
+const FADE_OUT_PCT = 0.18;
+
+export default function ScrollHero() {
+  const reducedMotion = usePrefersReducedMotion();
+
+  return (
+    <>
+      <StaticIntro />
+      {reducedMotion ? <ReducedMotionFallback /> : <PinnedScrub />}
+      <ExploreStrip />
+    </>
+  );
+}
+
+function StaticIntro() {
+  return (
+    <section className="relative h-screen w-full overflow-hidden bg-[#07100f] text-white">
+      {/* H1 in DOM for SEO; the visual headline lives inside the PNG artwork. */}
+      <h1 className="sr-only">Sunaray Gaon — Lamahatta, Darjeeling</h1>
+
+      <Image
+        src={INTRO.image}
+        alt={INTRO.alt}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.7 }}
+        className="absolute inset-x-0 bottom-10 z-10 flex justify-center"
+      >
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-white/80">
+          <span className="h-px w-14 bg-amber-300/80" />
+          {INTRO.scrollHint}
+          <motion.span
+            aria-hidden
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            ↓
+          </motion.span>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+function PinnedScrub() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    const v = videoRef.current;
+    if (!v || !v.duration || Number.isNaN(v.duration)) return;
+    const next = Math.min(v.duration, Math.max(0, p * v.duration));
+    if (Math.abs(v.currentTime - next) > 0.001) {
+      v.currentTime = next;
+    }
+  });
+
+  return (
+    <section
+      ref={containerRef}
+      style={{ height: `${SCENES.length * 100}vh` }}
+      className="relative bg-black"
+    >
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <video
+          ref={videoRef}
+          src={VIDEO_SRC}
+          poster={POSTER_SRC}
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        />
+
+        {/* Left-side gradient only — keeps the video's own gold text readable on the right. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
+
+        {SCENES.map((scene, i) => (
+          <SceneOverlay
+            key={i}
+            scene={scene}
+            index={i}
+            total={SCENES.length}
+            progress={scrollYProgress}
+          />
+        ))}
+
+        <ProgressDots total={SCENES.length} progress={scrollYProgress} />
+      </div>
+    </section>
+  );
+}
+
+function SceneOverlay({
+  scene,
+  index,
+  total,
+  progress,
+}: {
+  scene: Scene;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  const start = index / total;
+  const end = (index + 1) / total;
+  const slot = end - start;
+
+  const opacity = useTransform(
+    progress,
+    [start, start + slot * FADE_IN_PCT, end - slot * FADE_OUT_PCT, end],
+    [0, 1, 1, 0],
+  );
+  const y = useTransform(progress, [start, end], [40, -40]);
+
+  return (
+    <motion.div
+      style={{ opacity, y }}
+      className="absolute inset-0 flex items-center"
+    >
+      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="max-w-xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-300">
+            {scene.eyebrow}
+          </p>
+          <h2 className="mt-5 font-serif text-4xl leading-[1.04] text-white sm:text-5xl">
+            {scene.title}
+          </h2>
+
+          <Link
+            href={scene.cta.href}
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-300"
+          >
+            {scene.cta.label}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function ProgressDots({
+  total,
+  progress,
+}: {
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  return (
+    <div className="pointer-events-none absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
+      {Array.from({ length: total }).map((_, i) => (
+        <Dot key={i} index={i} total={total} progress={progress} />
+      ))}
+    </div>
+  );
+}
+
+function Dot({
+  index,
+  total,
+  progress,
+}: {
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  const start = index / total;
+  const end = (index + 1) / total;
+  const active = useTransform(progress, [start, start + 0.001, end, end + 0.001], [0.3, 1, 1, 0.3]);
+  return (
+    <motion.span
+      style={{ opacity: active }}
+      className="block h-1.5 w-7 bg-amber-300"
+    />
+  );
+}
+
+function ExploreStrip() {
+  const explore = [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Voices", href: "/voices" },
+    { label: "Talent", href: "/village" },
+    { label: "Opportunity", href: "/economy" },
+    { label: "Community Hub", href: "/hub" },
+    { label: "Story", href: "/why" },
+    { label: "Generations", href: "/generations" },
+    { label: "Challenges", href: "/challenges" },
+    { label: "Updates", href: "/updates" },
+    { label: "Partners", href: "/partners" },
+  ];
+  return (
+    <section className="bg-[#07100f] py-20 text-white">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-300">
+              The whole village, one click away
+            </p>
+            <h2 className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">
+              Everything that's currently running, behind the four scenes.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-stone-200/80">
+              The hero is the front door. These are the rooms — daily work the
+              village already does on this site.
+            </p>
+
+            <div className="mt-8 grid max-w-md grid-cols-3 border-y border-white/15 py-5">
+              {HERO_STATS.map((s) => (
+                <div key={s.label} className="pr-4">
+                  <div className="font-serif text-3xl text-amber-300 sm:text-4xl">
+                    {s.value}
+                  </div>
+                  <div className="mt-2 text-[10px] uppercase tracking-[0.18em] text-white/70 sm:text-[11px]">
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-px overflow-hidden bg-white/12 sm:grid-cols-3">
+            {explore.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group flex min-h-24 items-center justify-between bg-white/[0.04] px-5 py-5 transition hover:bg-amber-300 hover:text-stone-950"
+              >
+                <span className="text-sm font-semibold uppercase tracking-[0.16em]">
+                  {item.label}
+                </span>
+                <ArrowRight className="h-4 w-4 text-amber-300 transition group-hover:text-stone-950" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReducedMotionFallback() {
+  return (
+    <section className="relative bg-black text-white">
+      <div className="relative h-screen w-full overflow-hidden">
+        <video
+          src={VIDEO_SRC}
+          poster={POSTER_SRC}
+          muted
+          loop
+          autoPlay
+          playsInline
+          preload="auto"
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+      </div>
+      <div className="mx-auto max-w-5xl space-y-20 px-5 py-24 sm:px-8 lg:px-10">
+        {SCENES.map((scene, i) => (
+          <div key={i}>
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-300">
+              {scene.eyebrow}
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+              {scene.title}
+            </h2>
+            <Link
+              href={scene.cta.href}
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.16em] text-stone-950"
+            >
+              {scene.cta.label}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(m.matches);
+    const fn = (e: MediaQueryListEvent) => setReduced(e.matches);
+    m.addEventListener("change", fn);
+    return () => m.removeEventListener("change", fn);
+  }, []);
+  return reduced;
+}

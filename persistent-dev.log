@@ -1,0 +1,81 @@
+ ⚠ Mismatching @next/swc version, detected: 15.5.7 while Next.js is on 15.5.11. Please ensure these match
+ ⚠ Mismatching @next/swc version, detected: 15.5.7 while Next.js is on 15.5.11. Please ensure these match
+   ▲ Next.js 15.5.11
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.31.165:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 15.4s
+ ○ Compiling / ...
+ ✓ Compiled / in 55s (1550 modules)
+ GET / 200 in 32580ms
+ GET / 200 in 361ms
+ GET / 200 in 4156ms
+ GET / 200 in 6660ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 5.1s (863 modules)
+ GET / 200 in 2905ms
+ GET /favicon.ico 200 in 144ms
+ GET / 200 in 2747ms
+ GET /favicon.ico 200 in 58ms
+ GET / 200 in 1311ms
+ GET /favicon.ico 200 in 359ms
+ ✓ Compiled in 3.3s (1549 modules)
+ ✓ Compiled in 1603ms (1549 modules)
+ GET / 200 in 1324ms
+ GET / 200 in 401ms
+ ○ Compiling /hub ...
+ ✓ Compiled /hub in 19.2s (1654 modules)
+ GET /voices 200 in 21356ms
+ GET /economy 200 in 21366ms
+ GET /village 200 in 21352ms
+ GET /hub 200 in 21353ms
+ GET /why 200 in 21889ms
+ ○ Compiling /partners ...
+ ✓ Compiled /dashboard in 1995ms (938 modules)
+ ✓ Compiled in 3.4s (743 modules)
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\webpack-runtime.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\app\favicon.ico\route.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\require.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\load-components.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\utils.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\swc\options.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\swc\index.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\config.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\next.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\app\favicon.ico\route.js:1:41308)
+    at Object.<anonymous> (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\app\favicon.ico\route.js:1:41358) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/favicon.ico'
+}
+ GET /favicon.ico 500 in 8193ms
+ GET /partners 200 in 8970ms
+ GET /dashboard 200 in 8965ms
+ ⨯ Error: Cannot find module './331.js'
+Require stack:
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\webpack-runtime.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\app\favicon.ico\route.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\require.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\load-components.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\utils.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\swc\options.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\swc\index.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\build\next-config-ts\transpile-config.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\config.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\next.js
+- C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\node_modules\next\dist\server\lib\start-server.js
+    at <unknown> (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\app\page.js:2:43770)
+    at Object.<anonymous> (C:\Users\FaradaysCage007\Desktop\2_PROJECTS\Sunaray_Gown_Digital_Launch\lamahatta-os\.next\server\app\page.js:2:43828) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 9.4s (1935 modules)
+ GET / 500 in 13351ms

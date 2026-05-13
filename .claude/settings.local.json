@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ffmpeg -version)",
+      "Read(//c/Users/FaradaysCage007/.claude/skills//**)",
+      "Bash(mkdir -p public/hero)",
+      "Bash(cp asset/sunaraygown.png public/hero/sunaraygown.png)"
+    ]
+  }
+}
