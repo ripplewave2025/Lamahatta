@@ -1,25 +1,50 @@
 import Link from 'next/link'
-import { ArrowLeft, Users, GraduationCap, Heart, TrendingUp } from 'lucide-react'
+import {
+  ArrowLeft,
+  Users,
+  GraduationCap,
+  Heart,
+  TrendingUp,
+  Briefcase,
+  ArrowRight,
+  Phone,
+} from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getSession } from '@/lib/auth/getProfile'
-import type { Household } from '@/lib/auth/getProfile'
 
 export const dynamic = 'force-dynamic'
 
 const GOLD = '#D4AF37'
 
+type Row = {
+  id: string
+  hh_code: string
+  head_name: string
+  occupation: string | null
+  family_size: number | null
+  notes: string | null
+  status: 'Local' | 'Migrant' | 'Mixed' | null
+  skills: string[]
+  has_elderly: boolean
+  has_youth: boolean
+  head_phone: string | null
+}
+
 export default async function DirectoryPage() {
-  await getSession()
+  const { profile } = await getSession()
+  const isAdmin = profile.role === 'admin'
   const supabase = await createClient()
 
   const { data } = await supabase
     .from('households')
-    .select('*')
+    .select(
+      'id, hh_code, head_name, occupation, family_size, notes, status, skills, has_elderly, has_youth, head_phone',
+    )
     .order('hh_code')
 
-  const households = (data ?? []) as Household[]
+  const households = (data ?? []) as Row[]
 
-  // Stats (matches village.html sections)
+  // ------- Aggregates (mirror village.html maths) -------
   const totalFamilies = households.length
   const totalMembers = households.reduce((sum, h) => sum + (h.family_size ?? 0), 0)
   const elderlyHouseholds = households.filter((h) => h.has_elderly).length
@@ -33,11 +58,9 @@ export default async function DirectoryPage() {
 
   const skillCounts = new Map<string, number>()
   households.forEach((h) =>
-    h.skills.forEach((s) => skillCounts.set(s, (skillCounts.get(s) ?? 0) + 1))
+    h.skills.forEach((s) => skillCounts.set(s, (skillCounts.get(s) ?? 0) + 1)),
   )
-  const topSkills = [...skillCounts.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 8)
+  const topSkills = [...skillCounts.entries()].sort((a, b) => b[1] - a[1])
 
   const occupationCounts = new Map<string, number>()
   households.forEach((h) => {
@@ -46,7 +69,14 @@ export default async function DirectoryPage() {
   })
   const topOccupations = [...occupationCounts.entries()]
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
+    .slice(0, 6)
+
+  // Schools / education signal: pull mentions from notes
+  const educationMentions = households.filter((h) =>
+    /(school|college|class|\+2|study|education|nurse|english|biology|geography|design|hotel management)/i.test(
+      h.notes ?? '',
+    ),
+  ).length
 
   return (
     <div className="min-h-screen bg-[#f8f7f2] px-4 pb-16 pt-28 sm:px-6 lg:px-8">
@@ -65,13 +95,16 @@ export default async function DirectoryPage() {
           >
             Heart of Gold · Golden Square
           </p>
-          <h1 className="font-serif text-4xl font-bold text-stone-900">Village Directory</h1>
+          <h1 className="font-serif text-4xl font-bold text-stone-900">
+            Village Development Dashboard
+          </h1>
           <p className="mt-2 text-stone-600">
-            A transparent record of {totalFamilies} households · ~{totalMembers} people ·
-            community-powered.
+            Transparent · Self-sustaining · Community-powered ·{' '}
+            <strong>{totalFamilies}</strong> households · ~{totalMembers} people
           </p>
         </header>
 
+        {/* ───────── Metric strip ───────── */}
         <section className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
           <Metric icon={<Users className="h-5 w-5" />} label="Households" value={totalFamilies} />
           <Metric icon={<TrendingUp className="h-5 w-5" />} label="Migration rate" value={`${migrationRate}%`} />
@@ -79,79 +112,194 @@ export default async function DirectoryPage() {
           <Metric icon={<GraduationCap className="h-5 w-5" />} label="Youth in education" value={youthHouseholds} />
         </section>
 
-        <section className="mb-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <Panel title="Skills & Human Capital" subtitle="Top skills across all households">
-            <ul className="space-y-2">
-              {topSkills.map(([skill, count]) => (
-                <li key={skill} className="flex items-center justify-between rounded-xl bg-stone-50 px-3 py-2">
-                  <span className="text-sm text-stone-800">{skill}</span>
-                  <span className="rounded-full bg-stone-900 px-2 py-0.5 text-[10px] font-bold text-amber-300">
-                    {count}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </Panel>
-          <Panel title="Economy & Migration" subtitle="Where households sit today">
-            <div className="grid grid-cols-3 gap-3">
-              <StatusTile label="Local" count={local} pct={Math.round((local / totalFamilies) * 100)} />
-              <StatusTile label="Mixed" count={mixed} pct={Math.round((mixed / totalFamilies) * 100)} />
-              <StatusTile label="Migrant" count={migrant} pct={Math.round((migrant / totalFamilies) * 100)} />
+        {/* ───────── 1. Skills & Human Capital ───────── */}
+        <Section
+          icon={<Briefcase className="h-5 w-5" style={{ color: GOLD }} />}
+          title="Skills & Human Capital"
+          subtitle="Our biggest strength — hospitality, creativity & farming expertise"
+        >
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {topSkills.map(([skill, count]) => (
+              <div
+                key={skill}
+                className="flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 px-3 py-2"
+              >
+                <span className="text-sm font-medium text-stone-800">{skill}</span>
+                <span
+                  className="rounded-full px-2 py-0.5 text-[10px] font-bold text-white"
+                  style={{ backgroundColor: GOLD }}
+                >
+                  {count}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {/* ───────── 2. Education & Youth Pipeline ───────── */}
+        <Section
+          icon={<GraduationCap className="h-5 w-5" style={{ color: GOLD }} />}
+          title="Education & Youth Pipeline"
+          subtitle="Lamahatta schools are the backbone — many families have children studying there."
+        >
+          <div className="grid gap-4 sm:grid-cols-3">
+            <BigStat
+              value={youthHouseholds}
+              label="Households with youth currently in education or training"
+            />
+            <BigStat
+              value={educationMentions}
+              label="Households mentioning a school, college, or course in their record"
+            />
+            <BigStat
+              value={`${Math.round((youthHouseholds / totalFamilies) * 100)}%`}
+              label="Of households actively investing in their next generation"
+            />
+          </div>
+        </Section>
+
+        {/* ───────── 3. Elderly Care ───────── */}
+        <Section
+          icon={<Heart className="h-5 w-5" style={{ color: GOLD }} />}
+          title="Elderly Care · Heart of Gold"
+          subtitle={`${elderlyHouseholds} households have elders (60+) living in the village while children work outside`}
+        >
+          <div className="grid gap-4 sm:grid-cols-3">
+            <BigStat value={elderlyHouseholds} label="Households caring for elders today" />
+            <BigStat
+              value={`${Math.round((elderlyHouseholds / totalFamilies) * 100)}%`}
+              label="Of village households shaped by elder-care responsibilities"
+            />
+            <div className="rounded-2xl border border-stone-200 bg-amber-50 p-4 text-sm text-stone-700">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider" style={{ color: GOLD }}>
+                Most needed
+              </p>
+              <ul className="space-y-1 text-stone-700">
+                <li>· Daily companion visits</li>
+                <li>· Medicine delivery</li>
+                <li>· Emergency contact system</li>
+              </ul>
             </div>
-            <div className="mt-4">
+          </div>
+        </Section>
+
+        {/* ───────── 4. Economy & Migration ───────── */}
+        <Section
+          icon={<TrendingUp className="h-5 w-5" style={{ color: GOLD }} />}
+          title="Economy & Migration"
+          subtitle="Where households sit today — local roots, outside earnings, and the mix between them"
+        >
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-stone-500">
+                Status breakdown
+              </p>
+              <div className="grid grid-cols-3 gap-3">
+                <StatusTile label="Local" count={local} pct={Math.round((local / totalFamilies) * 100)} />
+                <StatusTile label="Mixed" count={mixed} pct={Math.round((mixed / totalFamilies) * 100)} />
+                <StatusTile label="Migrant" count={migrant} pct={Math.round((migrant / totalFamilies) * 100)} />
+              </div>
+            </div>
+            <div>
               <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-stone-500">
                 Top occupations
               </p>
               <ul className="space-y-1.5">
                 {topOccupations.map(([o, c]) => (
-                  <li key={o} className="flex items-center justify-between text-sm">
+                  <li key={o} className="flex items-center justify-between rounded-lg bg-stone-50 px-3 py-2 text-sm">
                     <span className="text-stone-800">{o}</span>
                     <span className="text-stone-500">{c}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          </Panel>
-        </section>
+          </div>
+        </Section>
 
-        <section>
+        {/* ───────── 5. Family Directory (full table with notes) ───────── */}
+        <section className="mb-10">
           <h2 className="mb-4 font-serif text-2xl font-bold text-stone-900">Family Directory</h2>
           <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
-            <table className="w-full text-sm">
-              <thead className="bg-stone-100 text-left text-[10px] uppercase tracking-wider text-stone-600">
-                <tr>
-                  <th className="px-4 py-3">Code</th>
-                  <th className="px-4 py-3">Head</th>
-                  <th className="px-4 py-3">Occupation</th>
-                  <th className="px-4 py-3">Family</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Skills</th>
-                </tr>
-              </thead>
-              <tbody>
-                {households.map((h) => (
-                  <tr key={h.id} className="border-t border-stone-100 hover:bg-amber-50/40">
-                    <td className="px-4 py-3 font-mono text-xs text-stone-700">{h.hh_code}</td>
-                    <td className="px-4 py-3 font-semibold text-stone-900">{h.head_name}</td>
-                    <td className="px-4 py-3 text-stone-700">{h.occupation ?? '—'}</td>
-                    <td className="px-4 py-3 text-stone-700">{h.family_size ?? '—'}</td>
-                    <td className="px-4 py-3">
-                      <StatusBadge status={h.status} />
-                    </td>
-                    <td className="px-4 py-3 text-xs text-stone-600">
-                      {h.skills.slice(0, 3).join(', ')}
-                      {h.skills.length > 3 ? ` +${h.skills.length - 3}` : ''}
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-stone-100 text-left text-[10px] uppercase tracking-wider text-stone-600">
+                  <tr>
+                    <th className="px-4 py-3">Code</th>
+                    <th className="px-4 py-3">Head</th>
+                    <th className="px-4 py-3">Occupation</th>
+                    <th className="px-4 py-3">Family</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3">Skills</th>
+                    <th className="px-4 py-3">Notes</th>
+                    {isAdmin && <th className="px-4 py-3">Phone</th>}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {households.map((h) => (
+                    <tr key={h.id} className="border-t border-stone-100 align-top hover:bg-amber-50/40">
+                      <td className="px-4 py-3 font-mono text-xs text-stone-700">{h.hh_code}</td>
+                      <td className="px-4 py-3 font-semibold text-stone-900">{h.head_name}</td>
+                      <td className="px-4 py-3 text-stone-700">{h.occupation ?? '—'}</td>
+                      <td className="px-4 py-3 text-stone-700">{h.family_size ?? '—'}</td>
+                      <td className="px-4 py-3">
+                        <StatusBadge status={h.status} />
+                      </td>
+                      <td className="px-4 py-3 text-xs text-stone-600">
+                        {h.skills.slice(0, 3).join(', ')}
+                        {h.skills.length > 3 ? ` +${h.skills.length - 3}` : ''}
+                      </td>
+                      <td className="px-4 py-3 max-w-md text-xs text-stone-600">{h.notes ?? '—'}</td>
+                      {isAdmin && (
+                        <td className="px-4 py-3 text-xs text-stone-700">
+                          {h.head_phone ? (
+                            <a
+                              href={`tel:${h.head_phone}`}
+                              className="inline-flex items-center gap-1 hover:text-stone-900"
+                            >
+                              <Phone className="h-3 w-3" /> {h.head_phone}
+                            </a>
+                          ) : (
+                            <span className="text-stone-400">—</span>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+        </section>
+
+        {/* ───────── Voices CTA ───────── */}
+        <section
+          className="rounded-[2rem] border border-stone-200 bg-white p-6 sm:p-8"
+          style={{ borderTop: `4px solid ${GOLD}` }}
+        >
+          <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: GOLD }}>
+            Your voice
+          </p>
+          <h2 className="font-serif text-2xl font-bold text-stone-900 sm:text-3xl">
+            What do you think the village needs most right now?
+          </h2>
+          <p className="mt-2 text-stone-600">
+            If the village cannot state its needs clearly, other people will define them badly.
+          </p>
+          <Link
+            href="/voices"
+            className="mt-5 inline-flex items-center gap-2 rounded-full px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:brightness-95"
+            style={{ backgroundColor: GOLD }}
+          >
+            Add your voice
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </section>
       </div>
     </div>
   )
 }
+
+// ─────────── presentational helpers ───────────
 
 function Metric({
   icon,
@@ -173,20 +321,36 @@ function Metric({
   )
 }
 
-function Panel({
+function Section({
+  icon,
   title,
   subtitle,
   children,
 }: {
+  icon: React.ReactNode
   title: string
   subtitle: string
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
-      <h3 className="font-serif text-xl font-bold text-stone-900">{title}</h3>
-      <p className="mb-4 text-xs text-stone-500">{subtitle}</p>
+    <section className="mb-10 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="mb-5 flex items-start gap-3">
+        <div className="rounded-xl bg-amber-50 p-2.5">{icon}</div>
+        <div>
+          <h2 className="font-serif text-2xl font-bold text-stone-900 sm:text-3xl">{title}</h2>
+          <p className="mt-1 text-sm text-stone-600">{subtitle}</p>
+        </div>
+      </div>
       {children}
+    </section>
+  )
+}
+
+function BigStat({ value, label }: { value: number | string; label: string }) {
+  return (
+    <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+      <p className="font-serif text-4xl font-bold text-stone-900">{value}</p>
+      <p className="mt-1 text-xs text-stone-600">{label}</p>
     </div>
   )
 }

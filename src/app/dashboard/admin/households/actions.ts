@@ -63,3 +63,25 @@ export async function promoteToAdmin(userId: string) {
   revalidatePath("/dashboard/admin/households");
   return { ok: true };
 }
+
+/** Admin sets/updates the head's phone number for a household. */
+export async function setHeadPhone(input: {
+  hhCode: string;
+  phone: string;
+}): Promise<{ ok: true } | { ok: false; message: string }> {
+  await requireAdmin();
+  const cleaned = input.phone.trim();
+  const phone = cleaned ? cleaned : null;
+  if (phone && !/^\+?\d[\d\s\-().]{6,}$/.test(phone)) {
+    return { ok: false, message: "That doesn't look like a valid phone number." };
+  }
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("households")
+    .update({ head_phone: phone, updated_at: new Date().toISOString() })
+    .eq("hh_code", input.hhCode);
+  if (error) return { ok: false, message: error.message };
+  revalidatePath("/dashboard/admin/households");
+  revalidatePath("/dashboard/directory");
+  return { ok: true };
+}

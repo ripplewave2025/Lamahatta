@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Mail, Copy, Check } from "lucide-react";
-import { inviteHouseholdHead } from "./actions";
+import { Mail, Copy, Check, Phone } from "lucide-react";
+import { inviteHouseholdHead, setHeadPhone } from "./actions";
 
 type Row = {
   id: string;
@@ -11,6 +11,7 @@ type Row = {
   occupation: string | null;
   family_size: number | null;
   status: string | null;
+  head_phone: string | null;
   linkedHead?: { full_name: string | null; email: string | null } | null;
 };
 
@@ -34,6 +35,7 @@ export default function HouseholdsTable({ rows }: { rows: Row[] }) {
                 {r.occupation ?? "—"} · {r.family_size ?? "?"} members · {r.status ?? "—"}
               </p>
             </div>
+            <PhoneCell hhCode={r.hh_code} initial={r.head_phone} />
             {r.linkedHead ? (
               <span className="rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-800">
                 Linked · {r.linkedHead.full_name ?? "—"}
@@ -170,6 +172,74 @@ function InviteForm({
           Cancel
         </button>
       </div>
+    </div>
+  );
+}
+
+function PhoneCell({ hhCode, initial }: { hhCode: string; initial: string | null }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(initial ?? "");
+  const [saved, setSaved] = useState(initial);
+  const [err, setErr] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+
+  const save = () => {
+    setErr(null);
+    startTransition(async () => {
+      const res = await setHeadPhone({ hhCode, phone: value });
+      if (!res.ok) {
+        setErr(res.message);
+        return;
+      }
+      setSaved(value || null);
+      setEditing(false);
+    });
+  };
+
+  if (!editing) {
+    return (
+      <button
+        type="button"
+        onClick={() => setEditing(true)}
+        className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-700 hover:bg-stone-100"
+        title="Click to set the head's phone number"
+      >
+        <Phone className="h-3 w-3" />
+        {saved || <span className="text-stone-400">Add phone</span>}
+      </button>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <input
+        type="tel"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        autoFocus
+        placeholder="+91 98765 43210"
+        className="w-44 rounded-lg border border-stone-300 bg-white px-2 py-1 text-xs focus:border-stone-900 focus:outline-none"
+      />
+      <button
+        type="button"
+        onClick={save}
+        disabled={pending}
+        className="rounded-md bg-stone-900 px-2 py-1 text-[10px] font-bold uppercase text-white disabled:opacity-60"
+      >
+        {pending ? "…" : "Save"}
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setValue(saved ?? "");
+          setEditing(false);
+          setErr(null);
+        }}
+        className="rounded-md border border-stone-300 px-2 py-1 text-[10px] font-bold uppercase text-stone-700"
+      >
+        ✕
+      </button>
+      {err && <span className="text-[10px] text-red-600">{err}</span>}
     </div>
   );
 }

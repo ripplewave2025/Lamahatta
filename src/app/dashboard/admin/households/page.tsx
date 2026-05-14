@@ -13,6 +13,7 @@ type Row = {
   occupation: string | null
   family_size: number | null
   status: string | null
+  head_phone: string | null
   linkedHead?: { full_name: string | null; email: string | null } | null
 }
 
@@ -22,7 +23,7 @@ export default async function AdminHouseholdsPage() {
 
   const { data: households } = await supabase
     .from('households')
-    .select('id, hh_code, head_name, occupation, family_size, status')
+    .select('id, hh_code, head_name, occupation, family_size, status, head_phone')
     .order('hh_code')
 
   // Pull linked profiles in one shot
