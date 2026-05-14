@@ -1,0 +1,25 @@
+-- Seed the 22 households from Core_data_for_members_login/village.html
+insert into public.households (hh_code, head_name, occupation, family_size, notes, status, skills, has_elderly, has_youth) values
+('HH-01','Indra Da','Farmer (everything)',5,'Male (Army), Female (quit college). Unmarried sister + nephew (class 9, Lamahatta)','Local',array['Farming','All-rounder'],true,true),
+('HH-02','Arbin Da','Chef (Bangalore)',4,'2 male children (3 yrs). Works in Bangalore','Migrant',array['Hospitality','Cooking'],false,false),
+('HH-03','Arun Da','Chef',4,'Brother of Arbin. Children 13 & 15 in Lamahatta Higher Secondary','Local',array['Hospitality','Cooking'],true,true),
+('HH-04','Sila Da (60+)','Pandit',4,'3 married children outside. Grandchildren studying in Lamahatta','Local',array['Religious','Community'],true,true),
+('HH-05','Rajen Da','Everything',4,'Sons 20, 24, 26. One in Bangalore, one hotel management, one waiting Army call','Mixed',array['All-rounder'],false,true),
+('HH-06','Kishan Da','Politics (village representative)',3,'Children 17 & 22 in Lamahatta High School','Local',array['Leadership','Politics'],false,true),
+('HH-07','Dipen Da (Ex-Army)','Small shop',3,'Son 18, ICSE Science, makes phonk music professionally on Instagram','Local',array['Music','Content','Shop'],false,true),
+('HH-08','Roina','Entrepreneur (small shops)',5,'Husband + parents. Children 10 & 12 in primary school','Local',array['Business','Entrepreneur'],true,true),
+('HH-09','Bibek','Bank (Sikkim)',1,'Unmarried, graduated, works in Sikkim bank','Migrant',array['Banking','Finance'],false,false),
+('HH-10','Akka','Chef (Bangalore)',2,'Wife left. Child not in village. Rarely visits','Migrant',array['Hospitality'],false,false),
+('HH-11','Bikash Da','Everything + Animal farm',5,'Elder daughter 25 in Bangalore (English), son political science, younger in college English','Mixed',array['Farming','Animal','All-rounder'],false,true),
+('HH-12','Milan Mama','Entrepreneur',5,'Two daughters married. Son 28 attempting competitive exams. Mother 60+','Local',array['Business'],true,true),
+('HH-13','Ruben Da','Everything',3,'Daughter 3 yrs in primary. Mother 60+','Local',array['All-rounder'],true,false),
+('HH-14','Sagar','Instructional Designer (Online)',2,'Graduated, excellent in critique & design. Mother 60+','Local',array['Design','Online','Tech'],true,false),
+('HH-15','Bijay Da','Driver (Bangalore)',4,'Daughters 21 & 14 studying in Bangalore. Mother 60+','Migrant',array['Driving'],true,true),
+('HH-16','Dilip Da','Hotel semi-cook',6,'2 sons in Bangalore, one +2, one training nurse, one in Lamahatta school. Mother 60+','Mixed',array['Hospitality'],true,true),
+('HH-17','Lauke Da','Chef',4,'Children 12 & 10 in school. Parents 60+','Local',array['Hospitality'],true,true),
+('HH-18','Goray Da','Everything',4,'Children 12 & 13 in Lamahatta school','Local',array['All-rounder','Farming'],false,true),
+('HH-19','Raju Da','Farmer + Everything',4,'Children 15 (class 9) & 18 in Lamahatta','Local',array['Farming'],false,true),
+('HH-20','Sanjay Da','Chef',4,'Children 12 & 6 in school. Mother 60+','Local',array['Hospitality'],true,true),
+('HH-21','Tilak Da (60+)','Driver',6,'Sons: carpenter & teacher (Geography), daughters: English teacher & college Biology','Local',array['Driving','Teaching'],true,true),
+('HH-22','NB (60+)','Farmer',3,'Sons: one in AI (+2), one rickshaw driver in Bangalore','Mixed',array['Farming','AI'],true,true)
+on conflict (hh_code) do nothing;

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageToggle from "@/components/LanguageToggle";
+import AccountPill from "@/components/layout/AccountPill";
 
 const navLinks = [
   { href: "/", key: "nav.home", defaultLabel: "Home" },
@@ -83,6 +84,7 @@ export default function RecordNav() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <LanguageToggle />
+            <AccountPill variant={isHomeHeroMode ? "dark" : "light"} />
             <Link
               href="/partners"
               className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${
@@ -144,7 +146,10 @@ export default function RecordNav() {
                 ))}
               </div>
 
-              <div className="mt-4 border-t border-stone-200 pt-4">
+              <div className="mt-4 space-y-3 border-t border-stone-200 pt-4">
+                <div onClick={() => setMobileOpen(false)}>
+                  <AccountPill variant="light" />
+                </div>
                 <Link
                   href="/partners"
                   onClick={() => setMobileOpen(false)}

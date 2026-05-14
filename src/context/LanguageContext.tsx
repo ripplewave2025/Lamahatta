@@ -201,7 +201,17 @@ const translations: Record<Language, Record<string, string>> = {
         "dashboard.admin.users": "Manage Users",
         "dashboard.admin.usersDesc": "View registered villagers.",
         "dashboard.admin.inquiries": "Investor Inquiries",
-        "dashboard.admin.inquiriesDesc": "Review partnership requests."
+        "dashboard.admin.inquiriesDesc": "Review partnership requests.",
+        "nav.signIn": "Sign In",
+        "account.overview": "Overview",
+        "account.myHousehold": "My Household",
+        "account.myRequests": "Update Requests",
+        "account.directory": "Village Directory",
+        "account.approvals": "Approvals",
+        "account.manageHouseholds": "Manage Households",
+        "account.signOut": "Sign Out",
+        "account.adminRole": "Samaj Head",
+        "account.villagerRole": "Villager"
     },
     NE: {
         "nav.home": "गृहपृष्ठ",
@@ -357,7 +367,17 @@ const translations: Record<Language, Record<string, string>> = {
         "dashboard.admin.users": "प्रयोगकर्ताहरू प्रबन्ध गर्नुहोस्",
         "dashboard.admin.usersDesc": "दर्ता गरिएका गाउँलेहरू हेर्नुहोस्।",
         "dashboard.admin.inquiries": "लगानीकर्ता सोधपुछ",
-        "dashboard.admin.inquiriesDesc": "साझेदारी अनुरोधहरू समीक्षा गर्नुहोस्।"
+        "dashboard.admin.inquiriesDesc": "साझेदारी अनुरोधहरू समीक्षा गर्नुहोस्।",
+        "nav.signIn": "साइन इन",
+        "account.overview": "सिंहावलोकन",
+        "account.myHousehold": "मेरो परिवार",
+        "account.myRequests": "अपडेट अनुरोधहरू",
+        "account.directory": "गाउँ निर्देशिका",
+        "account.approvals": "स्वीकृतिहरू",
+        "account.manageHouseholds": "परिवार व्यवस्थापन",
+        "account.signOut": "साइन आउट",
+        "account.adminRole": "समाज प्रमुख",
+        "account.villagerRole": "गाउँले"
     },
     HI: {
         "nav.home": "होम",
@@ -506,7 +526,17 @@ const translations: Record<Language, Record<string, string>> = {
         "dashboard.admin.users": "उपयोगकर्ताओं का प्रबंधन करें",
         "dashboard.admin.usersDesc": "पंजीकृत ग्रामीणों को देखें।",
         "dashboard.admin.inquiries": "निवेशक पूछताछ",
-        "dashboard.admin.inquiriesDesc": "साझेदारी अनुरोधों की समीक्षा करें।"
+        "dashboard.admin.inquiriesDesc": "साझेदारी अनुरोधों की समीक्षा करें।",
+        "nav.signIn": "साइन इन",
+        "account.overview": "अवलोकन",
+        "account.myHousehold": "मेरा परिवार",
+        "account.myRequests": "अपडेट अनुरोध",
+        "account.directory": "गाँव निर्देशिका",
+        "account.approvals": "स्वीकृतियाँ",
+        "account.manageHouseholds": "परिवार प्रबंधन",
+        "account.signOut": "साइन आउट",
+        "account.adminRole": "समाज प्रमुख",
+        "account.villagerRole": "ग्रामीण"
     },
     BN: {
         "nav.home": "হোম",
@@ -655,7 +685,17 @@ const translations: Record<Language, Record<string, string>> = {
         "dashboard.admin.users": "ব্যবহারকারী পরিচালনা করুন",
         "dashboard.admin.usersDesc": "নিবন্ধিত গ্রামবাসীদের দেখুন।",
         "dashboard.admin.inquiries": "বিনিয়োগকারী অনুসন্ধান",
-        "dashboard.admin.inquiriesDesc": "অংশীদারিত্বের অনুরোধ পর্যালোচনা করুন।"
+        "dashboard.admin.inquiriesDesc": "অংশীদারিত্বের অনুরোধ পর্যালোচনা করুন।",
+        "nav.signIn": "সাইন ইন",
+        "account.overview": "সারসংক্ষেপ",
+        "account.myHousehold": "আমার পরিবার",
+        "account.myRequests": "আপডেট অনুরোধ",
+        "account.directory": "গ্রাম তালিকা",
+        "account.approvals": "অনুমোদন",
+        "account.manageHouseholds": "পরিবার ব্যবস্থাপনা",
+        "account.signOut": "সাইন আউট",
+        "account.adminRole": "সমাজ প্রধান",
+        "account.villagerRole": "গ্রামবাসী"
     }
 };
 
