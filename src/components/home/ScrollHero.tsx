@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
+  useSpring,
   useTransform,
   useMotionValueEvent,
   type MotionValue,
@@ -22,8 +23,10 @@ const INTRO = {
   scrollHint: "Scroll to enter",
 };
 
-const VIDEO_SRC = "/hero/sunaraygownamazing.mp4";
-const POSTER_SRC = "/hero/sunaraygownamazing-poster.jpg";
+// Temporary: trying the new color-graded cut. Revert by switching to
+// "/hero/sunaraygownamazing.mp4" (+ matching poster) if it doesn't land.
+const VIDEO_SRC = "/hero/sunaraygown.mp4";
+const POSTER_SRC = "/hero/sunaraygown-poster.jpg";
 
 const HERO_STATS = [
   { value: "22", label: "Households" },
@@ -78,7 +81,7 @@ export default function ScrollHero() {
 
 function StaticIntro() {
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#07100f] text-white">
+    <section className="relative h-[100svh] w-full overflow-hidden bg-[#07100f] text-white">
       {/* H1 in DOM for SEO; the visual headline lives inside the PNG artwork. */}
       <h1 className="sr-only">Sunaray Gaon — Lamahatta, Darjeeling</h1>
 
@@ -124,11 +127,21 @@ function PinnedScrub() {
     offset: ["start start", "end end"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  useMotionValueEvent(smoothProgress, "change", (p) => {
     const v = videoRef.current;
     if (!v || !v.duration || Number.isNaN(v.duration)) return;
+    
+    // Check if the video is ready enough to scrub without completely blocking
+    if (v.readyState < 2) return;
+    
     const next = Math.min(v.duration, Math.max(0, p * v.duration));
-    if (Math.abs(v.currentTime - next) > 0.001) {
+    if (Math.abs(v.currentTime - next) > 0.005) { // Slightly higher threshold to avoid micro-stutters
       v.currentTime = next;
     }
   });
@@ -139,7 +152,7 @@ function PinnedScrub() {
       style={{ height: `${SCENES.length * 100}vh` }}
       className="relative bg-black"
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         <video
           ref={videoRef}
           src={VIDEO_SRC}
@@ -148,12 +161,14 @@ function PinnedScrub() {
           playsInline
           preload="auto"
           aria-hidden
-          style={{ filter: "contrast(1.05) saturate(1.08)" }}
+          style={{ filter: "contrast(1.06) saturate(1.1)", objectPosition: "center 38%" }}
           className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* Soft left-side wash — readable headline on the left, full video detail on the right. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
+        {/* Mobile: bottom-weighted gradient — keeps headline legible at top
+            without dimming the houses behind. Desktop (sm+): only the left wash. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/35 sm:hidden" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-black/55 via-black/10 to-transparent sm:block" />
 
         {SCENES.map((scene, i) => (
           <SceneOverlay
@@ -203,13 +218,13 @@ function SceneOverlay({
           <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-300">
             {scene.eyebrow}
           </p>
-          <h2 className="mt-5 font-serif text-4xl leading-[1.04] text-white sm:text-5xl">
+          <h2 className="mt-4 font-serif text-3xl leading-[1.06] text-white sm:mt-5 sm:text-4xl sm:leading-[1.04] lg:text-5xl">
             {scene.title}
           </h2>
 
           <Link
             href={scene.cta.href}
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-300"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-300 sm:mt-8 sm:px-6 sm:text-sm"
           >
             {scene.cta.label}
             <ArrowRight className="h-4 w-4" />
@@ -322,7 +337,7 @@ function ExploreStrip() {
 function ReducedMotionFallback() {
   return (
     <section className="relative bg-black text-white">
-      <div className="relative h-screen w-full overflow-hidden">
+      <div className="relative h-[100svh] w-full overflow-hidden">
         <video
           src={VIDEO_SRC}
           poster={POSTER_SRC}
