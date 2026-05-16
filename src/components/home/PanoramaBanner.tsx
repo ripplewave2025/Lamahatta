@@ -11,6 +11,7 @@ type Props = {
     descKey?: string
     objectPosition?: string
     className?: string
+    priority?: boolean
 }
 
 export default function PanoramaBanner({
@@ -20,6 +21,7 @@ export default function PanoramaBanner({
     descKey = "hero.panorama.desc",
     objectPosition = "center",
     className = "mt-24",
+    priority = false,
 }: Props) {
     const { t } = useLanguage()
     return (
@@ -40,7 +42,7 @@ export default function PanoramaBanner({
                     className="object-cover"
                     style={{ objectPosition }}
                     sizes="100vw"
-                    priority
+                    priority={priority}
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent" />
