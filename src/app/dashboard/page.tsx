@@ -19,6 +19,9 @@ import {
   FileCheck,
   PenLine,
   ChevronRight,
+  Heart,
+  GraduationCap,
+  Sparkles,
 } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
@@ -139,17 +142,17 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
       <Band
         eyebrow="What's happening"
         title="In and around the village"
-        subtitle="The things you might come back to check — alerts, what's for sale, jobs going around, schemes you can claim."
+        subtitle="The things you might come back to check — alerts, what's for sale, who needs help today, jobs, and schemes you can claim."
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <FeedCard
             icon={<AlertCircle className="h-5 w-5" />}
             tone="red"
             title="Local alerts"
             badge="Coming soon"
             items={[
-              { tag: 'Water', text: 'No active alerts. Outage reports will appear here.' },
-              { tag: 'Road', text: 'Anyone seeing a road closure can submit it for posting.' },
+              { tag: 'Water', text: 'Outages and supply notices from the Samaj Head will appear here.' },
+              { tag: 'Road', text: 'Closures and repair status, posted by anyone in the village.' },
             ]}
           />
           <FeedCard
@@ -163,13 +166,23 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
             ]}
           />
           <FeedCard
+            icon={<Heart className="h-5 w-5" />}
+            tone="rose"
+            title="Oldcare requests"
+            badge="Heart of Gold"
+            items={[
+              { tag: 'Today', text: 'Elders who need a companion visit, medicine pickup, or a check-in.' },
+              { tag: 'This week', text: 'Standing rota for the daily-companion programme.' },
+            ]}
+          />
+          <FeedCard
             icon={<Briefcase className="h-5 w-5" />}
             tone="sky"
-            title="Local jobs"
+            title="Local jobs & work"
             badge="Coming soon"
             items={[
-              { tag: 'Delivery', text: 'Last-mile delivery to homes off the main road.' },
-              { tag: 'Hospitality', text: 'Homestay help, cooking, guiding for visitors.' },
+              { tag: 'MGNREGA', text: 'Active job-card work, wage status, approved public projects.' },
+              { tag: 'Local', text: 'Delivery to far households, hospitality at homestays, guiding.' },
             ]}
           />
           <FeedCard
@@ -180,6 +193,17 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
             items={[
               { tag: 'PM Kisan', text: 'Farming households — check eligibility & next instalment.' },
               { tag: 'PMAY-G', text: 'Rural housing grants — apply or check status.' },
+              { tag: 'Poverty-free', text: 'Garib Kalyan & SVAMITVA — what your household qualifies for.' },
+            ]}
+          />
+          <FeedCard
+            icon={<Megaphone className="h-5 w-5" />}
+            tone="amber"
+            title="From the Samaj Head"
+            badge="Coming soon"
+            items={[
+              { tag: 'Meeting', text: 'Date & agenda for the next Gram Sabha posted here.' },
+              { tag: 'Decisions', text: 'Decisions, fund allocations, and meeting minutes.' },
             ]}
           />
         </div>
@@ -191,7 +215,7 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
         title="Make this place work for you"
         subtitle="The actions that turn this from a profile page into a village system."
       >
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <ActionCard
             icon={<ShoppingBag className="h-5 w-5" />}
             title="Sell something"
@@ -203,6 +227,20 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
             icon={<FileCheck className="h-5 w-5" />}
             title="Request a certificate"
             body="Residential proof, birth, or other documents from the Samaj Head."
+            disabledLabel="Coming soon"
+            disabled
+          />
+          <ActionCard
+            icon={<Heart className="h-5 w-5" />}
+            title="Offer help to an elder"
+            body="Sign up as a daily companion, do a medicine run, or sponsor care."
+            disabledLabel="Heart of Gold programme — soon"
+            disabled
+          />
+          <ActionCard
+            icon={<GraduationCap className="h-5 w-5" />}
+            title="Join a training"
+            body="English · Hospitality · Computer · Content creation · Entrepreneurship."
             disabledLabel="Coming soon"
             disabled
           />
@@ -225,7 +263,7 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
 
       {/* ───────── BAND 3: YOUR STUFF ───────── */}
       <Band eyebrow="Your stuff" title="What's yours, at a glance" subtitle="Personal context — the things specific to you and your household.">
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {household ? (
             <CompactHouseholdCard household={household} />
           ) : (
@@ -248,6 +286,14 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
             title="Certificate requests"
             count={0}
             sub="Backend coming soon"
+            disabled
+          />
+
+          <CountCard
+            icon={<Sparkles className="h-5 w-5" />}
+            title="My benefits"
+            count={0}
+            sub="Group health insurance · property cover · perks — coming soon"
             disabled
           />
         </div>
@@ -318,7 +364,7 @@ function FeedCard({
   items,
 }: {
   icon: React.ReactNode
-  tone: 'red' | 'amber' | 'sky' | 'emerald'
+  tone: 'red' | 'amber' | 'sky' | 'emerald' | 'rose'
   title: string
   badge?: string
   items: { tag: string; text: string }[]
@@ -328,6 +374,7 @@ function FeedCard({
     amber: 'bg-amber-50 text-amber-700',
     sky: 'bg-sky-50 text-sky-700',
     emerald: 'bg-emerald-50 text-emerald-700',
+    rose: 'bg-rose-50 text-rose-700',
   }
   return (
     <div className="rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm">
