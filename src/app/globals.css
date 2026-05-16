@@ -745,6 +745,26 @@
   }
 }
 
+/* ==========================================================================
+   Hero scene gold title — static gradient with shadow for legibility on
+   busy video backgrounds (mountain peaks, snow, sunsets).
+   ========================================================================== */
+.hero-gold-title {
+  background-image: linear-gradient(
+    180deg,
+    #ffe892 0%,
+    #f5d97a 35%,
+    #d6a734 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* layered shadow: dark separation + soft amber glow */
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 18px rgba(255, 200, 80, 0.18));
+}
+
 /* Mobile-First Responsive Grid Helpers */
 @media (max-width: 639px) {
   .mobile-stack {

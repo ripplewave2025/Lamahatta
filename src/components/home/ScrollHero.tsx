@@ -171,10 +171,10 @@ function SceneOverlay({
     >
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="max-w-xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-300">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
             {scene.eyebrow}
           </p>
-          <h2 className="mt-4 font-serif text-3xl leading-[1.06] text-white sm:mt-5 sm:text-4xl sm:leading-[1.04] lg:text-5xl">
+          <h2 className="hero-gold-title mt-4 font-serif text-3xl leading-[1.06] sm:mt-5 sm:text-4xl sm:leading-[1.04] lg:text-5xl">
             {scene.title}
           </h2>
 
@@ -324,10 +324,10 @@ function ReducedMotionFallback() {
       <div className="mx-auto max-w-5xl space-y-20 px-5 py-24 sm:px-8 lg:px-10">
         {SCENES.map((scene, i) => (
           <div key={i}>
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-300">
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
               {scene.eyebrow}
             </p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+            <h2 className="hero-gold-title mt-4 font-serif text-4xl leading-tight sm:text-5xl">
               {scene.title}
             </h2>
             {scene.cta && (
