@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/why", key: "nav.why", defaultLabel: "Story" },
   { href: "/voices", key: "nav.voices", defaultLabel: "Voices" },
   { href: "/economy", key: "nav.economy", defaultLabel: "Opportunity" },
+  { href: "/services", key: "nav.services", defaultLabel: "Services" },
   { href: "/village", key: "nav.village", defaultLabel: "Talent" },
   { href: "/hub", key: "nav.hub", defaultLabel: "Hub" },
 ];
