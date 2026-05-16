@@ -132,11 +132,11 @@ function PinnedScrub() {
             scene={scene}
             index={i}
             total={SCENES.length}
-            progress={scrollYProgress}
+            progress={smoothProgress}
           />
         ))}
 
-        <ProgressDots total={SCENES.length} progress={scrollYProgress} />
+        <ProgressDots total={SCENES.length} progress={smoothProgress} />
       </div>
     </section>
   );
@@ -162,19 +162,29 @@ function SceneOverlay({
     [start, start + slot * FADE_IN_PCT, end - slot * FADE_OUT_PCT, end],
     [0, 1, 1, 0],
   );
-  const y = useTransform(progress, [start, end], [40, -40]);
+  const y = useTransform(progress, [start, end], [28, -28]);
+  const scale = useTransform(
+    progress,
+    [start, start + slot * FADE_IN_PCT, end - slot * FADE_OUT_PCT, end],
+    [0.98, 1, 1, 1.01],
+  );
 
   return (
     <motion.div
-      style={{ opacity, y }}
+      style={{ opacity, y, scale }}
       className="absolute inset-0 flex items-center"
     >
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="max-w-xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+        <div className="relative max-w-xl">
+          {/* Localized scrim — protects text from bright video frames without dimming the whole shot */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_45%,rgba(0,0,0,0)_85%)] blur-[2px]"
+          />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
             {scene.eyebrow}
           </p>
-          <h2 className="hero-gold-title mt-4 font-serif text-3xl leading-[1.06] sm:mt-5 sm:text-4xl sm:leading-[1.04] lg:text-5xl">
+          <h2 className="mt-4 font-serif text-3xl leading-[1.06] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] sm:mt-5 sm:text-4xl sm:leading-[1.04] lg:text-5xl">
             {scene.title}
           </h2>
 
@@ -323,11 +333,15 @@ function ReducedMotionFallback() {
       </div>
       <div className="mx-auto max-w-5xl space-y-20 px-5 py-24 sm:px-8 lg:px-10">
         {SCENES.map((scene, i) => (
-          <div key={i}>
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+          <div key={i} className="relative">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_45%,rgba(0,0,0,0)_85%)] blur-[2px]"
+            />
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
               {scene.eyebrow}
             </p>
-            <h2 className="hero-gold-title mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+            <h2 className="mt-4 font-serif text-4xl leading-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] sm:text-5xl">
               {scene.title}
             </h2>
             {scene.cta && (
