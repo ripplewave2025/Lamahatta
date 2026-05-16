@@ -5,6 +5,7 @@ import RecordNav from "@/components/layout/RecordNav";
 import RecordFooter from "@/components/layout/RecordFooter";
 import { LanguageProvider } from "@/context/LanguageContext";
 import FloatingReportIssue from "@/components/golden-village/FloatingReportIssue";
+import Snow from "@/components/effects/Snow";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -37,6 +38,7 @@ export default function RootLayout({
           <main>{children}</main>
           <FloatingReportIssue />
           <RecordFooter />
+          <Snow />
         </LanguageProvider>
       </body>
     </html>

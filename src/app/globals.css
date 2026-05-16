@@ -711,6 +711,40 @@
   }
 }
 
+/* ==========================================================================
+   Brand wordmark — ornate gold with slow shimmer
+   ========================================================================== */
+.brand-gold-text {
+  background-image: linear-gradient(
+    100deg,
+    #b88a2a 0%,
+    #f5d97a 25%,
+    #fff5c2 45%,
+    #f5d97a 65%,
+    #b88a2a 100%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+  animation: brand-shimmer 7s ease-in-out infinite;
+}
+
+@keyframes brand-shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-gold-text {
+    animation: none;
+  }
+}
+
 /* Mobile-First Responsive Grid Helpers */
 @media (max-width: 639px) {
   .mobile-stack {

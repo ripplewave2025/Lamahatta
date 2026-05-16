@@ -246,7 +246,12 @@ function ExploreStrip() {
     <section className="bg-[#07100f] py-20 text-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <p className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-300">
               The village, room by room
             </p>
@@ -270,20 +275,27 @@ function ExploreStrip() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-2 gap-px overflow-hidden bg-white/12 sm:grid-cols-3">
-            {explore.map((item) => (
-              <Link
+            {explore.map((item, i) => (
+              <motion.div
                 key={item.href}
-                href={item.href}
-                className="group flex min-h-24 items-center justify-between bg-white/[0.04] px-5 py-5 transition hover:bg-amber-300 hover:text-stone-950"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: i * 0.04, ease: "easeOut" }}
               >
-                <span className="text-sm font-semibold uppercase tracking-[0.16em]">
-                  {item.label}
-                </span>
-                <ArrowRight className="h-4 w-4 text-amber-300 transition group-hover:text-stone-950" />
-              </Link>
+                <Link
+                  href={item.href}
+                  className="group flex min-h-24 items-center justify-between bg-white/[0.04] px-5 py-5 transition duration-300 hover:-translate-y-0.5 hover:bg-amber-300 hover:text-stone-950"
+                >
+                  <span className="text-sm font-semibold uppercase tracking-[0.16em]">
+                    {item.label}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-amber-300 transition group-hover:translate-x-1 group-hover:text-stone-950" />
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>

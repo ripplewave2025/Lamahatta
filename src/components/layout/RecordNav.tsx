@@ -61,9 +61,25 @@ export default function RecordNav() {
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
           <Link
             href="/"
-            className={`font-serif text-xl tracking-wide transition-colors ${textColor}`}
+            aria-label="Sunaray Gaon — home"
+            className="group relative inline-flex items-baseline gap-2"
           >
-            Sunaray Gaon
+            <span
+              className="font-serif text-xl tracking-wide brand-gold-text transition-transform duration-300 group-hover:scale-[1.04] sm:text-[1.4rem]"
+              style={{
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+              }}
+            >
+              Sunaray
+            </span>
+            <span
+              className={`font-serif text-[0.78rem] uppercase tracking-[0.32em] transition-colors duration-300 group-hover:text-amber-300 ${
+                isHomeHeroMode ? "text-white/80" : "text-stone-600"
+              }`}
+            >
+              Gaon
+            </span>
           </Link>
 
           <div className="hidden items-center gap-6 lg:flex">
@@ -74,9 +90,14 @@ export default function RecordNav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${active ? textColor : linkColor}`}
+                  className={`group relative text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${active ? textColor : linkColor}`}
                 >
                   {t(link.key)}
+                  <span
+                    className={`pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left bg-amber-300 transition-transform duration-300 ease-out ${
+                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
                 </Link>
               );
             })}
