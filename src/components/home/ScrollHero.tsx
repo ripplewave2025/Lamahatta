@@ -31,29 +31,30 @@ type CTA = { label: string; href: string };
 type Scene = {
   eyebrow: string;
   title: string;
-  cta: CTA;
+  cta?: CTA;
 };
 
 const SCENES: Scene[] = [
   {
     eyebrow: "Lamahatta · Darjeeling",
-    title: "Above the tea, above the clouds — a village wakes online.",
-    cta: { label: "Step inside", href: "/dashboard" },
+    title: "The last village waiting. Not anymore.",
   },
   {
-    eyebrow: "Today in Sunaray",
-    title: "When the road closes or the water comes back, you'll know first.",
-    cta: { label: "Hear today's voices", href: "/voices" },
+    eyebrow: "What we live with",
+    title: "No roads. No tap water. No internet that holds.",
   },
   {
-    eyebrow: "What we're building",
-    title: "Homestays, training, healthcare — and reasons for our young people to stay.",
-    cta: { label: "See the plan", href: "/why" },
+    eyebrow: "What we're doing",
+    title: "So we're building it ourselves.",
   },
   {
-    eyebrow: "Your way in",
-    title: "Bring guests, work, or willing hands. The door is always open.",
-    cta: { label: "Talk to us", href: "/partners" },
+    eyebrow: "Starting with the basics",
+    title: "Roads. Solar. Water. Internet.",
+  },
+  {
+    eyebrow: "Sunaraygaon — India's first self-sustaining village",
+    title: "Will you help us build it?",
+    cta: { label: "Partner with us", href: "/partners" },
   },
 ];
 
@@ -177,13 +178,15 @@ function SceneOverlay({
             {scene.title}
           </h2>
 
-          <Link
-            href={scene.cta.href}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-300 sm:mt-8 sm:px-6 sm:text-sm"
-          >
-            {scene.cta.label}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          {scene.cta && (
+            <Link
+              href={scene.cta.href}
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-300 sm:mt-8 sm:px-6 sm:text-sm"
+            >
+              {scene.cta.label}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          )}
         </div>
       </div>
     </motion.div>
@@ -315,13 +318,15 @@ function ReducedMotionFallback() {
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
               {scene.title}
             </h2>
-            <Link
-              href={scene.cta.href}
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.16em] text-stone-950"
-            >
-              {scene.cta.label}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            {scene.cta && (
+              <Link
+                href={scene.cta.href}
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.16em] text-stone-950"
+              >
+                {scene.cta.label}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
           </div>
         ))}
       </div>
