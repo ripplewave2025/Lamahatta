@@ -9,7 +9,6 @@ import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/context/LanguageContext";
 
 type AccountState =
-  | { status: "loading" }
   | { status: "signedOut" }
   | { status: "signedIn"; name: string; role: "villager" | "admin"; pendingCount?: number };
 
@@ -20,7 +19,9 @@ interface AccountPillProps {
 export default function AccountPill({ variant = "dark" }: AccountPillProps) {
   const router = useRouter();
   const { t } = useLanguage();
-  const [state, setState] = useState<AccountState>({ status: "loading" });
+  // Render Sign In immediately. If a session exists, useEffect will swap to the
+  // name dropdown once getUser() resolves. Avoids the "breathing skeleton" on every page load.
+  const [state, setState] = useState<AccountState>({ status: "signedOut" });
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -82,15 +83,6 @@ export default function AccountPill({ variant = "dark" }: AccountPillProps) {
     router.push("/");
     router.refresh();
   };
-
-  if (state.status === "loading") {
-    return (
-      <div
-        className={`h-9 w-20 animate-pulse rounded-full ${variant === "dark" ? "bg-white/30" : "bg-stone-200"
-          }`}
-      />
-    );
-  }
 
   if (state.status === "signedOut") {
     return (
