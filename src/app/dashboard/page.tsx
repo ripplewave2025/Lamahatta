@@ -148,11 +148,13 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
           <FeedCard
             icon={<AlertCircle className="h-5 w-5" />}
             tone="red"
-            title="Local alerts"
+            title="Village status & alerts"
             badge="Coming soon"
             items={[
-              { tag: 'Water', text: 'Outages and supply notices from the Samaj Head will appear here.' },
-              { tag: 'Road', text: 'Closures and repair status, posted by anyone in the village.' },
+              { tag: 'Water', text: 'Tank in place; piped supply awaited under Jal Jeevan Mission.' },
+              { tag: 'Roads', text: 'Kaccha for now — pucca-road requests on the Gram Sabha list (PMGSY).' },
+              { tag: 'Community hall', text: 'Existing space — needs activation for programmes & weddings.' },
+              { tag: 'Public ground', text: 'Open for football, festivals, drying crops. Park planned next to it.' },
             ]}
           />
           <FeedCard
