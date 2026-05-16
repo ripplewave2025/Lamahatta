@@ -34,7 +34,7 @@ export default function PartnersIndexPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
-            className="mt-5 max-w-3xl font-serif text-4xl leading-[1.05] sm:text-5xl lg:text-6xl"
+            className="mt-5 max-w-3xl font-serif text-4xl leading-[1.05] text-white sm:text-5xl lg:text-6xl"
           >
             Help us build India's first
             <span className="block bg-gradient-to-r from-amber-200 via-amber-300 to-amber-400 bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(245,158,11,0.35)]">
