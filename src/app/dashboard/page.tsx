@@ -13,8 +13,12 @@ import {
   MapPin,
   AlertCircle,
   Megaphone,
-  GraduationCap,
-  Sparkles,
+  ShoppingBag,
+  Briefcase,
+  Award,
+  FileCheck,
+  PenLine,
+  ChevronRight,
 } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
@@ -49,7 +53,7 @@ export default async function Dashboard() {
       </header>
 
       <main className="mx-auto max-w-6xl">
-        {isAdmin ? <AdminHome userId={user.id} /> : <VillagerHome userId={user.id} household={household} />}
+        {isAdmin ? <AdminHome /> : <VillagerHome userId={user.id} household={household} />}
       </main>
     </div>
   )
@@ -57,7 +61,7 @@ export default async function Dashboard() {
 
 // ─────────────────────── Admin ───────────────────────
 
-async function AdminHome({ userId: _userId }: { userId: string }) {
+async function AdminHome() {
   const supabase = await createClient()
   const { count: pending } = await supabase
     .from('household_update_requests')
@@ -103,291 +107,377 @@ async function AdminHome({ userId: _userId }: { userId: string }) {
 
 // ─────────────────────── Villager ───────────────────────
 
-type RequestSummary = {
-  pending: number
-  approved: number
-  rejected: number
-  latest: { field_name: string; new_value: string; status: string; created_at: string }[]
-}
-
 async function VillagerHome({ userId, household }: { userId: string; household: Household | null }) {
   const supabase = await createClient()
-  const { data: myRequests } = await supabase
+  const { count: pendingCount } = await supabase
     .from('household_update_requests')
-    .select('field_name, new_value, status, created_at')
+    .select('*', { count: 'exact', head: true })
     .eq('requested_by', userId)
-    .order('created_at', { ascending: false })
+    .eq('status', 'pending')
 
-  const reqs = (myRequests ?? []) as RequestSummary['latest']
-  const summary: RequestSummary = {
-    pending: reqs.filter((r) => r.status === 'pending').length,
-    approved: reqs.filter((r) => r.status === 'approved').length,
-    rejected: reqs.filter((r) => r.status === 'rejected').length,
-    latest: reqs.slice(0, 3),
-  }
+  const { count: totalRequests } = await supabase
+    .from('household_update_requests')
+    .select('*', { count: 'exact', head: true })
+    .eq('requested_by', userId)
 
   return (
-    <div className="space-y-10">
-      {/* Unlinked banner */}
+    <div className="space-y-12">
       {!household && (
         <div className="flex items-start gap-3 rounded-[2rem] border border-amber-200 bg-amber-50 p-6 text-amber-900">
           <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0" />
           <div className="space-y-1 text-sm">
             <p className="font-semibold">Your account isn&apos;t linked to a household yet.</p>
             <p className="text-amber-900/85">
-              The Samaj Head needs to assign your household code (HH-01 … HH-22). Reach out to them or check
-              back after they&apos;ve linked you. You can still browse the Village Directory below.
+              The Samaj Head needs to assign your household code (HH-01 … HH-22). Reach out to them, or browse
+              the rest of the dashboard in the meantime.
             </p>
           </div>
         </div>
       )}
 
-      {/* Household card */}
-      {household && <HouseholdCard household={household} />}
+      {/* ───────── BAND 1: WHAT'S HAPPENING ───────── */}
+      <Band
+        eyebrow="What's happening"
+        title="In and around the village"
+        subtitle="The things you might come back to check — alerts, what's for sale, jobs going around, schemes you can claim."
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          <FeedCard
+            icon={<AlertCircle className="h-5 w-5" />}
+            tone="red"
+            title="Local alerts"
+            badge="Coming soon"
+            items={[
+              { tag: 'Water', text: 'No active alerts. Outage reports will appear here.' },
+              { tag: 'Road', text: 'Anyone seeing a road closure can submit it for posting.' },
+            ]}
+          />
+          <FeedCard
+            icon={<ShoppingBag className="h-5 w-5" />}
+            tone="amber"
+            title="Marketplace"
+            badge="Coming next"
+            items={[
+              { tag: 'Sell', text: 'List what you grow, cook, or make. Set your own price.' },
+              { tag: 'Buy', text: 'See what your neighbours are offering today.' },
+            ]}
+          />
+          <FeedCard
+            icon={<Briefcase className="h-5 w-5" />}
+            tone="sky"
+            title="Local jobs"
+            badge="Coming soon"
+            items={[
+              { tag: 'Delivery', text: 'Last-mile delivery to homes off the main road.' },
+              { tag: 'Hospitality', text: 'Homestay help, cooking, guiding for visitors.' },
+            ]}
+          />
+          <FeedCard
+            icon={<Award className="h-5 w-5" />}
+            tone="emerald"
+            title="Schemes you may qualify for"
+            badge="Coming soon"
+            items={[
+              { tag: 'PM Kisan', text: 'Farming households — check eligibility & next instalment.' },
+              { tag: 'PMAY-G', text: 'Rural housing grants — apply or check status.' },
+            ]}
+          />
+        </div>
+      </Band>
 
-      {/* Update requests strip */}
-      <RequestsStrip summary={summary} />
+      {/* ───────── BAND 2: THINGS YOU CAN DO ───────── */}
+      <Band
+        eyebrow="Things you can do"
+        title="Make this place work for you"
+        subtitle="The actions that turn this from a profile page into a village system."
+      >
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ActionCard
+            icon={<ShoppingBag className="h-5 w-5" />}
+            title="Sell something"
+            body="List a product or service with a price."
+            disabledLabel="Marketplace coming next"
+            disabled
+          />
+          <ActionCard
+            icon={<FileCheck className="h-5 w-5" />}
+            title="Request a certificate"
+            body="Residential proof, birth, or other documents from the Samaj Head."
+            disabledLabel="Coming soon"
+            disabled
+          />
+          <ActionCard
+            icon={<FileText className="h-5 w-5" />}
+            title="Update your household"
+            body="Found something out of date? Propose a change."
+            href={household ? '/dashboard/household' : undefined}
+            disabledLabel="Link your household first"
+            disabled={!household}
+          />
+          <ActionCard
+            icon={<PenLine className="h-5 w-5" />}
+            title="Add your voice"
+            body="Tell the village what you think is needed."
+            href="/voices"
+          />
+        </div>
+      </Band>
 
-      {/* Tutorials & Training (placeholder) */}
-      <PlaceholderStrip
-        icon={<GraduationCap className="h-5 w-5" style={{ color: GOLD }} />}
-        title="Tutorials & Training"
-        subtitle="Guides from the Samaj Head — using this site, government schemes, schools and more"
-        cards={[
-          { title: 'How to update your household record', tag: 'Site', body: 'Step-by-step on submitting an update request.' },
-          { title: 'PM Kisan & state farming schemes', tag: 'Schemes', body: 'What you qualify for and how to register.' },
-          { title: 'Lamahatta schools — admission window', tag: 'Education', body: 'Dates, documents, and who to talk to.' },
-        ]}
-        comingSoon
-      />
+      {/* ───────── BAND 3: YOUR STUFF ───────── */}
+      <Band eyebrow="Your stuff" title="What's yours, at a glance" subtitle="Personal context — the things specific to you and your household.">
+        <div className="grid gap-4 lg:grid-cols-3">
+          {household ? (
+            <CompactHouseholdCard household={household} />
+          ) : (
+            <div className="rounded-2xl border border-stone-200 bg-white p-5 text-sm text-stone-600">
+              No household linked yet.
+            </div>
+          )}
 
-      {/* Announcements (placeholder) */}
-      <PlaceholderStrip
-        icon={<Megaphone className="h-5 w-5" style={{ color: GOLD }} />}
-        title="From the Samaj Head"
-        subtitle="Announcements, meeting notes, and decisions the village should know about"
-        cards={[
-          { title: 'Next village meeting', tag: 'Meeting', body: 'Date & agenda will be posted here.' },
-          { title: 'Water tank repair update', tag: 'Infrastructure', body: 'Status of ongoing work in the village.' },
-          { title: 'Elderly care roster', tag: 'Heart of Gold', body: 'Daily companions and medicine delivery rota.' },
-        ]}
-        comingSoon
-      />
+          <CountCard
+            icon={<FileText className="h-5 w-5" />}
+            title="Update requests"
+            count={totalRequests ?? 0}
+            sub={pendingCount ? `${pendingCount} pending review` : 'None pending'}
+            href="/dashboard/requests"
+            cta="View"
+          />
 
-      {/* CTAs */}
-      <section className="grid gap-4 sm:grid-cols-2">
-        <CtaCard
-          icon={<FileText className="h-5 w-5" />}
-          title="Request an update"
-          body="Found something wrong about your household? Propose a change — the Samaj Head reviews each one."
-          href="/dashboard/household"
-          cta="Open your household"
-          disabled={!household}
-        />
-        <CtaCard
-          icon={<BookOpen className="h-5 w-5" />}
-          title="Village Directory"
-          body="See the Heart of Gold view — skills, education, elderly care, economy, and the family directory."
-          href="/dashboard/directory"
-          cta="Explore"
-        />
+          <CountCard
+            icon={<FileCheck className="h-5 w-5" />}
+            title="Certificate requests"
+            count={0}
+            sub="Backend coming soon"
+            disabled
+          />
+        </div>
+
+        <div className="mt-4">
+          <Link
+            href="/dashboard/directory"
+            className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-stone-800 transition hover:bg-stone-100"
+          >
+            <BookOpen className="h-3.5 w-3.5" /> Visit the Village Directory
+            <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </Band>
+
+      {/* ───────── Footer note ───────── */}
+      <section className="rounded-[2rem] border border-stone-200 bg-white p-6">
+        <div className="flex items-start gap-3">
+          <div className="rounded-xl bg-amber-50 p-2.5">
+            <Megaphone className="h-5 w-5" style={{ color: GOLD }} />
+          </div>
+          <div className="text-sm text-stone-700">
+            <p className="font-semibold text-stone-900">This dashboard is growing with the village.</p>
+            <p className="mt-1 text-stone-600">
+              Most of the strips above show <em>what&apos;s coming</em>. The marketplace lands next, so neighbours can
+              sell what they grow, cook, or make. If something on this page would be useful to you sooner, tell the
+              Samaj Head and they&apos;ll prioritise it.
+            </p>
+          </div>
+        </div>
       </section>
     </div>
   )
 }
 
-function HouseholdCard({ household }: { household: Household }) {
+// ─────────────────────── Building blocks ───────────────────────
+
+function Band({
+  eyebrow,
+  title,
+  subtitle,
+  children,
+}: {
+  eyebrow: string
+  title: string
+  subtitle: string
+  children: React.ReactNode
+}) {
   return (
-    <section
-      className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8"
-      style={{ borderTop: `4px solid ${GOLD}` }}
-    >
-      <div className="mb-5 flex flex-wrap items-center gap-3">
-        <span className="rounded-full bg-stone-900 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-amber-300">
-          {household.hh_code}
-        </span>
-        <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-stone-500">
-          <MapPin className="h-3 w-3" /> Sunaraygoan · Lamahatta
-        </span>
-        {needsAttention(household) && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-800">
-            <Sparkles className="h-3 w-3" /> Needs a review
+    <section>
+      <header className="mb-5">
+        <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: GOLD }}>
+          {eyebrow}
+        </p>
+        <h2 className="font-serif text-2xl font-bold text-stone-900 sm:text-3xl">{title}</h2>
+        <p className="mt-1 max-w-2xl text-sm text-stone-600">{subtitle}</p>
+      </header>
+      {children}
+    </section>
+  )
+}
+
+function FeedCard({
+  icon,
+  tone,
+  title,
+  badge,
+  items,
+}: {
+  icon: React.ReactNode
+  tone: 'red' | 'amber' | 'sky' | 'emerald'
+  title: string
+  badge?: string
+  items: { tag: string; text: string }[]
+}) {
+  const toneRing: Record<string, string> = {
+    red: 'bg-red-50 text-red-700',
+    amber: 'bg-amber-50 text-amber-700',
+    sky: 'bg-sky-50 text-sky-700',
+    emerald: 'bg-emerald-50 text-emerald-700',
+  }
+  return (
+    <div className="rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm">
+      <div className="mb-3 flex items-center gap-3">
+        <div className={`rounded-xl p-2 ${toneRing[tone]}`}>{icon}</div>
+        <h3 className="flex-1 font-serif text-lg font-bold text-stone-900">{title}</h3>
+        {badge && (
+          <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-600">
+            {badge}
           </span>
         )}
       </div>
-
-      <h2 className="font-serif text-3xl font-bold text-stone-900">{household.head_name}</h2>
-      <p className="mt-1 text-stone-600">{household.occupation ?? '—'}</p>
-
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Field label="Family size" value={household.family_size?.toString() ?? '—'} />
-        <Field label="Status" value={household.status ?? '—'} />
-        <Field label="Elderly (60+)" value={household.has_elderly ? 'Yes' : 'No'} />
-        <Field label="Youth in education" value={household.has_youth ? 'Yes' : 'No'} />
-      </div>
-
-      <div className="mt-4">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-stone-500">Skills</p>
-        <p className="mt-1 text-sm text-stone-800">
-          {household.skills.length ? household.skills.join(', ') : '—'}
-        </p>
-      </div>
-
-      <div className="mt-4">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-stone-500">Notes</p>
-        <p className="mt-1 text-sm text-stone-700">{household.notes ?? '—'}</p>
-      </div>
-
-      <Link
-        href="/dashboard/household"
-        className="mt-6 inline-flex items-center gap-2 rounded-full px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:brightness-95"
-        style={{ backgroundColor: GOLD }}
-      >
-        Open your household
-        <ArrowRight className="h-4 w-4" />
-      </Link>
-    </section>
-  )
-}
-
-function RequestsStrip({ summary }: { summary: RequestSummary }) {
-  const total = summary.pending + summary.approved + summary.rejected
-  return (
-    <section className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="rounded-xl bg-amber-50 p-2.5">
-            <FileText className="h-5 w-5" style={{ color: GOLD }} />
-          </div>
-          <div>
-            <h3 className="font-serif text-2xl font-bold text-stone-900">Your update requests</h3>
-            <p className="text-sm text-stone-600">{total === 0 ? 'No requests yet.' : `${total} total · ${summary.pending} pending`}</p>
-          </div>
-        </div>
-        {total > 0 && (
-          <Link
-            href="/dashboard/requests"
-            className="inline-flex items-center gap-2 rounded-full border border-stone-300 px-4 py-2 text-xs font-bold uppercase tracking-wider text-stone-800 hover:bg-stone-100"
-          >
-            View all
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-        )}
-      </div>
-
-      {total === 0 ? (
-        <p className="rounded-2xl border-2 border-dashed border-stone-200 bg-stone-50 p-6 text-center text-sm text-stone-600">
-          When you propose a change to your household, it&apos;ll appear here as <strong>pending</strong> until the
-          Samaj Head reviews it.
-        </p>
-      ) : (
-        <>
-          <div className="mb-4 flex gap-2">
-            <Pill tone="amber" count={summary.pending} label="Pending" />
-            <Pill tone="emerald" count={summary.approved} label="Approved" />
-            <Pill tone="red" count={summary.rejected} label="Rejected" />
-          </div>
-          <ul className="space-y-2">
-            {summary.latest.map((r, i) => (
-              <li key={i} className="flex items-center justify-between rounded-xl bg-stone-50 px-4 py-2.5 text-sm">
-                <div>
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-stone-500">{r.field_name}</span>
-                  <span className="ml-2 text-stone-800">→ {r.new_value}</span>
-                </div>
-                <StatusBadge status={r.status} />
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </section>
-  )
-}
-
-function PlaceholderStrip({
-  icon,
-  title,
-  subtitle,
-  cards,
-  comingSoon,
-}: {
-  icon: React.ReactNode
-  title: string
-  subtitle: string
-  cards: { title: string; tag: string; body: string }[]
-  comingSoon?: boolean
-}) {
-  return (
-    <section className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
-      <div className="mb-5 flex items-start gap-3">
-        <div className="rounded-xl bg-amber-50 p-2.5">{icon}</div>
-        <div className="flex-1">
-          <div className="flex items-center gap-3">
-            <h3 className="font-serif text-2xl font-bold text-stone-900">{title}</h3>
-            {comingSoon && (
-              <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-600">
-                Coming soon
-              </span>
-            )}
-          </div>
-          <p className="text-sm text-stone-600">{subtitle}</p>
-        </div>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-3">
-        {cards.map((c, i) => (
-          <div key={i} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
-            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider" style={{ color: GOLD }}>
-              {c.tag}
-            </p>
-            <p className="mb-2 font-semibold text-stone-900">{c.title}</p>
-            <p className="text-xs text-stone-600">{c.body}</p>
-          </div>
+      <ul className="space-y-2">
+        {items.map((it, i) => (
+          <li key={i} className="rounded-xl bg-stone-50 px-3 py-2 text-sm">
+            <span className="mr-2 inline-block rounded bg-stone-200 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-700">
+              {it.tag}
+            </span>
+            <span className="text-stone-700">{it.text}</span>
+          </li>
         ))}
-      </div>
-    </section>
+      </ul>
+    </div>
   )
 }
 
-function CtaCard({
+function ActionCard({
   icon,
   title,
   body,
+  href,
+  disabled,
+  disabledLabel,
+}: {
+  icon: React.ReactNode
+  title: string
+  body: string
+  href?: string
+  disabled?: boolean
+  disabledLabel?: string
+}) {
+  const card = (
+    <div
+      className={`flex h-full flex-col rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm transition ${
+        disabled ? '' : 'hover:border-stone-400 hover:shadow-md'
+      }`}
+    >
+      <div className="mb-3 inline-flex w-fit rounded-xl bg-amber-50 p-2.5" style={{ color: GOLD }}>
+        {icon}
+      </div>
+      <h3 className="mb-1 font-serif text-lg font-bold text-stone-900">{title}</h3>
+      <p className="mb-4 flex-1 text-sm text-stone-600">{body}</p>
+      {disabled ? (
+        <span className="inline-flex items-center justify-center rounded-xl bg-stone-100 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-stone-500">
+          {disabledLabel ?? 'Coming soon'}
+        </span>
+      ) : (
+        <span
+          className="inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider text-stone-950"
+          style={{ backgroundColor: GOLD }}
+        >
+          Open <ArrowRight className="h-3.5 w-3.5" />
+        </span>
+      )}
+    </div>
+  )
+  if (disabled || !href) return <div>{card}</div>
+  return <Link href={href}>{card}</Link>
+}
+
+function CompactHouseholdCard({ household }: { household: Household }) {
+  return (
+    <div
+      className="flex h-full flex-col rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm"
+      style={{ borderTop: `4px solid ${GOLD}` }}
+    >
+      <div className="mb-2 flex items-center gap-2">
+        <span className="rounded-full bg-stone-900 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-amber-300">
+          {household.hh_code}
+        </span>
+        <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-stone-500">
+          <MapPin className="h-3 w-3" /> Sunaraygoan
+        </span>
+      </div>
+      <h3 className="font-serif text-xl font-bold text-stone-900">{household.head_name}</h3>
+      <p className="mb-3 text-sm text-stone-600">{household.occupation ?? '—'}</p>
+      <div className="mb-4 flex flex-wrap gap-1.5">
+        <Tag>{household.status ?? '—'}</Tag>
+        <Tag>{household.family_size ?? '—'} members</Tag>
+        {household.has_elderly && <Tag>Elderly</Tag>}
+        {household.has_youth && <Tag>Youth</Tag>}
+      </div>
+      <Link
+        href="/dashboard/household"
+        className="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-stone-100 px-3 py-2 text-xs font-bold uppercase tracking-wider text-stone-800 transition hover:bg-stone-200"
+      >
+        Open my household <ArrowRight className="h-3.5 w-3.5" />
+      </Link>
+    </div>
+  )
+}
+
+function CountCard({
+  icon,
+  title,
+  count,
+  sub,
   href,
   cta,
   disabled,
 }: {
   icon: React.ReactNode
   title: string
-  body: string
-  href: string
-  cta: string
+  count: number
+  sub: string
+  href?: string
+  cta?: string
   disabled?: boolean
 }) {
-  const inner = (
-    <div
-      className={`flex h-full flex-col rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm transition ${
-        disabled ? 'opacity-60' : 'hover:border-stone-400'
-      }`}
-    >
+  return (
+    <div className="flex h-full flex-col rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm">
       <div className="mb-3 inline-flex w-fit rounded-xl bg-amber-50 p-2.5" style={{ color: GOLD }}>
         {icon}
       </div>
-      <h3 className="mb-1 font-serif text-xl font-bold text-stone-900">{title}</h3>
-      <p className="mb-5 flex-1 text-sm text-stone-600">{body}</p>
-      <span
-        className="inline-flex items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-xs font-bold uppercase tracking-wider text-white"
-        style={disabled ? { backgroundColor: '#a8a29e' } : undefined}
-      >
-        {cta}
-        <ArrowRight className="h-4 w-4" />
-      </span>
+      <h3 className="mb-1 font-serif text-lg font-bold text-stone-900">{title}</h3>
+      <p className="mb-1 font-serif text-3xl font-bold text-stone-900">{count}</p>
+      <p className="mb-4 flex-1 text-xs text-stone-500">{sub}</p>
+      {disabled || !href ? (
+        <span className="inline-flex items-center justify-center rounded-xl bg-stone-100 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-stone-500">
+          Coming soon
+        </span>
+      ) : (
+        <Link
+          href={href}
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-stone-100 px-3 py-2 text-xs font-bold uppercase tracking-wider text-stone-800 hover:bg-stone-200"
+        >
+          {cta ?? 'View'} <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+      )}
     </div>
   )
-  if (disabled) return <div>{inner}</div>
-  return <Link href={href}>{inner}</Link>
 }
 
-// ─────────────────────── shared ───────────────────────
+function Tag({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-700">
+      {children}
+    </span>
+  )
+}
 
 function StatCard({
   icon,
@@ -430,48 +520,6 @@ function StatCard({
   )
 }
 
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl bg-stone-50 px-3 py-2">
-      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-stone-500">{label}</p>
-      <p className="mt-0.5 text-sm font-semibold text-stone-900">{value || '—'}</p>
-    </div>
-  )
-}
-
-function Pill({ tone, count, label }: { tone: 'amber' | 'emerald' | 'red'; count: number; label: string }) {
-  const cls =
-    tone === 'amber'
-      ? 'bg-amber-100 text-amber-800'
-      : tone === 'emerald'
-      ? 'bg-emerald-100 text-emerald-800'
-      : 'bg-red-100 text-red-700'
-  return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${cls}`}>
-      <strong className="font-mono text-xs">{count}</strong> {label}
-    </span>
-  )
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const cls =
-    status === 'approved'
-      ? 'bg-emerald-100 text-emerald-800'
-      : status === 'rejected'
-      ? 'bg-red-100 text-red-700'
-      : 'bg-amber-100 text-amber-800'
-  return (
-    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${cls}`}>
-      {status}
-    </span>
-  )
-}
-
 function firstName(s: string): string {
   return s.split(/[\s@]/)[0]
-}
-
-function needsAttention(h: Household): boolean {
-  // Soft hint: surface a 'needs a review' chip if the record looks thin.
-  return !h.occupation || !h.notes || h.family_size == null || h.skills.length === 0
 }
