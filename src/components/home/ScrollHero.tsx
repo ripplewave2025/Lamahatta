@@ -5,7 +5,6 @@
 // sunaraygownamazing.mp4 (transcoded with dense keyframes for iOS smoothness).
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
@@ -16,12 +15,6 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-
-const INTRO = {
-  image: "/hero/sunaraygown.png",
-  alt: "Sunaray Gaon, Lamahatta",
-  scrollHint: "Scroll to enter",
-};
 
 // Temporary: trying the new color-graded cut. Revert by switching to
 // "/hero/sunaraygownamazing.mp4" (+ matching poster) if it doesn't land.
@@ -72,49 +65,11 @@ export default function ScrollHero() {
 
   return (
     <>
-      <StaticIntro />
+      {/* H1 lives in the DOM for SEO; the visual headline is the video scrub itself. */}
+      <h1 className="sr-only">Sunaray Gaon — Lamahatta, Darjeeling</h1>
       {reducedMotion ? <ReducedMotionFallback /> : <PinnedScrub />}
       <ExploreStrip />
     </>
-  );
-}
-
-function StaticIntro() {
-  return (
-    <section className="relative h-[100svh] w-full overflow-hidden bg-[#07100f] text-white">
-      {/* H1 in DOM for SEO; the visual headline lives inside the PNG artwork. */}
-      <h1 className="sr-only">Sunaray Gaon — Lamahatta, Darjeeling</h1>
-
-      <Image
-        src={INTRO.image}
-        alt={INTRO.alt}
-        fill
-        priority
-        quality={95}
-        sizes="100vw"
-        style={{ filter: "contrast(1.04) saturate(1.06)" }}
-        className="object-cover"
-      />
-
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.7 }}
-        className="absolute inset-x-0 bottom-10 z-10 flex justify-center"
-      >
-        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-white/80">
-          <span className="h-px w-14 bg-amber-300/80" />
-          {INTRO.scrollHint}
-          <motion.span
-            aria-hidden
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            ↓
-          </motion.span>
-        </div>
-      </motion.div>
-    </section>
   );
 }
 

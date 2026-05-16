@@ -86,7 +86,7 @@ export default function AccountPill({ variant = "dark" }: AccountPillProps) {
   if (state.status === "loading") {
     return (
       <div
-        className={`h-9 w-20 animate-pulse rounded-full ${variant === "dark" ? "bg-white/10" : "bg-stone-200"
+        className={`h-9 w-20 animate-pulse rounded-full ${variant === "dark" ? "bg-white/30" : "bg-stone-200"
           }`}
       />
     );
@@ -97,7 +97,7 @@ export default function AccountPill({ variant = "dark" }: AccountPillProps) {
       <Link
         href="/auth"
         className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${variant === "dark"
-            ? "border-white/20 bg-white/10 text-white hover:bg-white/16"
+            ? "border-white/80 bg-white/95 text-stone-900 hover:bg-white"
             : "border-stone-200 bg-white text-stone-900 hover:bg-stone-100"
           }`}
       >
@@ -115,7 +115,7 @@ export default function AccountPill({ variant = "dark" }: AccountPillProps) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         className={`flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] transition ${variant === "dark"
-            ? "border-white/20 bg-white/10 text-white hover:bg-white/16"
+            ? "border-white/80 bg-white/95 text-stone-900 hover:bg-white"
             : "border-stone-200 bg-white text-stone-900 hover:bg-stone-100"
           }`}
       >
