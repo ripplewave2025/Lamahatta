@@ -201,7 +201,7 @@ export default function SunlightHub() {
                     <div className="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
                         <div
                             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                            style={{ backgroundImage: "url('/images/village-path.jpg')" }}
+                            style={{ backgroundImage: "url('/images/village-path_sunligh_enchroching.jpg')" }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 

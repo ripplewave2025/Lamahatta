@@ -77,30 +77,99 @@ export default function ScrollHero() {
 function PinnedScrub() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const targetTimeRef = useRef(0);
+  const [degraded, setDegraded] = useState(false);
+  const isTouch = useIsTouch();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
+  // Desktop gets an eased spring. Touch devices scrub 1:1 with the finger —
+  // spring lag stacked on slow mobile video seeks reads as "broken".
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
+  const progress = isTouch ? scrollYProgress : smoothProgress;
 
-  useMotionValueEvent(smoothProgress, "change", (p) => {
+  // Force mobile browsers to actually buffer the video. iOS Safari and
+  // Android Chrome ignore preload="auto" and sit at HAVE_METADATA until the
+  // video is played — so currentTime scrubbing silently does nothing.
+  // Also drops to the looping fallback on Save-Data / slow connections.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    let cancelled = false;
+
+    const conn = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }
+    ).connection;
+    if (conn?.saveData || /(^|-)2g$|^3g$/.test(conn?.effectiveType ?? "")) {
+      setDegraded(true);
+      return;
+    }
+
+    const kick = v.play();
+    if (kick && typeof kick.then === "function") {
+      kick
+        .then(() => {
+          if (cancelled) return;
+          v.pause();
+          v.currentTime = 0;
+        })
+        .catch(() => v.load());
+    }
+
+    const onError = () => {
+      if (!cancelled) setDegraded(true);
+    };
+    v.addEventListener("error", onError);
+
+    // If the video can't get ready enough to scrub, fall back to the loop.
+    const probe = window.setTimeout(() => {
+      if (!cancelled && v.readyState < 2) setDegraded(true);
+    }, 5000);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(probe);
+      v.removeEventListener("error", onError);
+    };
+  }, []);
+
+  // The scroll handler only records the target time — cheap and synchronous.
+  useMotionValueEvent(progress, "change", (p) => {
     const v = videoRef.current;
     if (!v || !v.duration || Number.isNaN(v.duration)) return;
-    
-    // Check if the video is ready enough to scrub without completely blocking
-    if (v.readyState < 2) return;
-    
-    const next = Math.min(v.duration, Math.max(0, p * v.duration));
-    if (Math.abs(v.currentTime - next) > 0.005) { // Slightly higher threshold to avoid micro-stutters
-      v.currentTime = next;
-    }
+    targetTimeRef.current = Math.min(v.duration, Math.max(0, p * v.duration));
   });
+
+  // A rAF loop applies the seek, and skips any frame where the decoder is
+  // still mid-seek — so a fast flick can't pile up seeks the phone can't
+  // service, which is what causes the stutter.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    let raf = 0;
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      if (!v.duration || Number.isNaN(v.duration) || v.readyState < 2) return;
+      if (v.seeking) return;
+      const target = targetTimeRef.current;
+      if (Math.abs(v.currentTime - target) > 0.02) {
+        v.currentTime = target;
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  if (degraded) return <ReducedMotionFallback />;
 
   return (
     <section
@@ -132,11 +201,11 @@ function PinnedScrub() {
             scene={scene}
             index={i}
             total={SCENES.length}
-            progress={smoothProgress}
+            progress={progress}
           />
         ))}
 
-        <ProgressDots total={SCENES.length} progress={smoothProgress} />
+        <ProgressDots total={SCENES.length} progress={progress} />
       </div>
     </section>
   );
@@ -244,6 +313,7 @@ function ExploreStrip() {
     { label: "Dashboard", href: "/dashboard" },
     { label: "Voices", href: "/voices" },
     { label: "Talent", href: "/village" },
+    { label: "Gallery", href: "/gallery" },
     { label: "Opportunity", href: "/economy" },
     { label: "Community Hub", href: "/hub" },
     { label: "Story", href: "/why" },
@@ -358,6 +428,14 @@ function ReducedMotionFallback() {
       </div>
     </section>
   );
+}
+
+function useIsTouch() {
+  const [touch, setTouch] = useState(false);
+  useEffect(() => {
+    setTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+  return touch;
 }
 
 function usePrefersReducedMotion() {

@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/economy", key: "nav.economy", defaultLabel: "Opportunity" },
   { href: "/services", key: "nav.services", defaultLabel: "Services" },
   { href: "/village", key: "nav.village", defaultLabel: "Talent" },
+  { href: "/gallery", key: "nav.gallery", defaultLabel: "Gallery" },
   { href: "/hub", key: "nav.hub", defaultLabel: "Hub" },
 ];
 
