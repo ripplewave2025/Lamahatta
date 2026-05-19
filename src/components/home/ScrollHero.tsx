@@ -8,13 +8,14 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
+  AnimatePresence,
   useScroll,
   useSpring,
   useTransform,
   useMotionValueEvent,
   type MotionValue,
 } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 // Temporary: trying the new color-graded cut. Revert by switching to
 // "/hero/sunaraygownamazing.mp4" (+ matching poster) if it doesn't land.
@@ -205,8 +206,52 @@ function PinnedScrub() {
         ))}
 
         <ProgressDots total={SCENES.length} progress={progress} />
+        <ScrollHint />
       </div>
     </section>
+  );
+}
+
+// A gentle "Scroll" cue for first-time visitors — shows on load, then fades
+// out after a few seconds or as soon as the user starts scrolling.
+function ScrollHint() {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setVisible(false), 5000);
+    const onScroll = () => {
+      if (window.scrollY > 40) setVisible(false);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="pointer-events-none absolute bottom-24 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
+        >
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            Scroll
+          </span>
+          <motion.span
+            animate={{ y: [0, 7, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/5 backdrop-blur-sm"
+          >
+            <ChevronDown className="h-4 w-4 text-white/80" />
+          </motion.span>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
