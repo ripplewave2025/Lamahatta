@@ -98,18 +98,20 @@ function PinnedScrub() {
   // Force mobile browsers to actually buffer the video. iOS Safari and
   // Android Chrome ignore preload="auto" and sit at HAVE_METADATA until the
   // video is played — so currentTime scrubbing silently does nothing.
-  // Also drops to the looping fallback on Save-Data / slow connections.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     let cancelled = false;
 
+    // Only fall back for an explicit Save-Data request. We deliberately do
+    // NOT degrade on a slow connection or slow buffer — the pinned text
+    // still scroll-animates over the poster, and the video catches up once
+    // ready. Killing the whole effect just because buffering is slow is
+    // worse than waiting a beat for it.
     const conn = (
-      navigator as Navigator & {
-        connection?: { saveData?: boolean; effectiveType?: string };
-      }
+      navigator as Navigator & { connection?: { saveData?: boolean } }
     ).connection;
-    if (conn?.saveData || /(^|-)2g$|^3g$/.test(conn?.effectiveType ?? "")) {
+    if (conn?.saveData) {
       setDegraded(true);
       return;
     }
@@ -125,19 +127,14 @@ function PinnedScrub() {
         .catch(() => v.load());
     }
 
+    // Only a genuine decode/network error drops to the looping fallback.
     const onError = () => {
       if (!cancelled) setDegraded(true);
     };
     v.addEventListener("error", onError);
 
-    // If the video can't get ready enough to scrub, fall back to the loop.
-    const probe = window.setTimeout(() => {
-      if (!cancelled && v.readyState < 2) setDegraded(true);
-    }, 5000);
-
     return () => {
       cancelled = true;
-      window.clearTimeout(probe);
       v.removeEventListener("error", onError);
     };
   }, []);
@@ -159,7 +156,9 @@ function PinnedScrub() {
     const tick = () => {
       raf = requestAnimationFrame(tick);
       if (!v.duration || Number.isNaN(v.duration) || v.readyState < 2) return;
-      if (v.seeking) return;
+      // Skip while the force-buffer play() is still running, or mid-seek —
+      // both would fight the scrub.
+      if (!v.paused || v.seeking) return;
       const target = targetTimeRef.current;
       if (Math.abs(v.currentTime - target) > 0.02) {
         v.currentTime = target;
