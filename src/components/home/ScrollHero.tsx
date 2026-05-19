@@ -265,7 +265,7 @@ function ExploreStrip() {
             <p className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-300">
               The village, room by room
             </p>
-            <h2 className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">
+            <h2 className="mt-4 font-serif text-3xl leading-tight text-white sm:text-4xl">
               Pick a door. Step in.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-stone-200/80">
