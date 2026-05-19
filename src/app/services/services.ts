@@ -1,7 +1,7 @@
 // Single source of truth for the services Sunaray Gaon offers.
 // Edit copy here; the index + detail routes pick it up automatically.
 
-import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
 import {
   ChefHat,
   Laptop,
@@ -32,7 +32,7 @@ export type ServiceCategory =
 
 export type Service = {
   slug: ServiceSlug;
-  icon: LucideIcon;
+  icon: ComponentType<any>;
   category: ServiceCategory;
   title: string;
   short: string; // 1-line teaser for the card

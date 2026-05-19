@@ -58,9 +58,22 @@ const Footer = () => {
             </div>
 
             <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p className="text-white/20 text-[10px] uppercase tracking-widest">
-                    © 2026 Sunaray Gown Digital. All Rights Reserved.
-                </p>
+                <div className="flex flex-col gap-2">
+                    <p className="text-white/20 text-[10px] uppercase tracking-widest">
+                        © 2026 Sunaray Gown Digital. All Rights Reserved.
+                    </p>
+                    <p className="text-white/40 text-[10px] uppercase tracking-widest">
+                        Made with ❤️ by{" "}
+                        <Link 
+                            href="https://portfolio2026feb.vercel.app/" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-white/60 hover:text-accent transition-colors font-medium underline underline-offset-4 decoration-white/20 hover:decoration-accent"
+                        >
+                            Upesh
+                        </Link>
+                    </p>
+                </div>
                 <div className="flex gap-8">
                     <Link href="#" className="text-white/20 text-[10px] uppercase tracking-widest hover:text-white">Privacy Policy</Link>
                     <Link href="#" className="text-white/20 text-[10px] uppercase tracking-widest hover:text-white">Terms of Service</Link>

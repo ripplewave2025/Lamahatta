@@ -1,7 +1,7 @@
 // Single source of truth for the five partner paths.
 // Edit copy here; the routes pick it up automatically.
 
-import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
 import { Building2, Landmark, Sprout, Heart, HandHeart, Mountain } from "lucide-react";
 
 export type PartnerSlug =
@@ -14,7 +14,7 @@ export type PartnerSlug =
 
 export type PartnerPath = {
   slug: PartnerSlug;
-  icon: LucideIcon;
+  icon: ComponentType<any>;
   eyebrow: string;
   title: string;
   shortTitle: string;

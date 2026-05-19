@@ -110,7 +110,20 @@ export default function RecordFooter() {
         </div>
 
         <div className="flex flex-col gap-3 pt-6 text-xs text-stone-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>Sunaray Gaon, Lamahatta, Darjeeling</p>
+          <div>
+            <p>Sunaray Gaon, Lamahatta, Darjeeling</p>
+            <p className="mt-1 text-stone-500">
+              Made with ❤️ by{" "}
+              <Link
+                href="https://portfolio2026feb.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-stone-400 hover:text-amber-300 transition underline underline-offset-4 decoration-stone-600 hover:decoration-amber-300"
+              >
+                Upesh
+              </Link>
+            </p>
+          </div>
           <p>Built as a living record, a village OS, and an opportunity front door.</p>
         </div>
       </div>
