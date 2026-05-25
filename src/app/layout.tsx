@@ -6,6 +6,7 @@ import RecordFooter from "@/components/layout/RecordFooter";
 import { LanguageProvider } from "@/context/LanguageContext";
 import FloatingReportIssue from "@/components/golden-village/FloatingReportIssue";
 import Snow from "@/components/effects/Snow";
+import { Analytics } from "@vercel/analytics/next";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -40,6 +41,7 @@ export default function RootLayout({
           <RecordFooter />
           <Snow />
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
