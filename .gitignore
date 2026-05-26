@@ -44,3 +44,19 @@ next-env.d.ts
 /Core_data_for_members_login/
 /core_visions_and_researrch/
 /dev-server.log
+
+
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Large raw media files & local cache
+public/images/video_of_mountain.mp4
+public/images/original.png
+public/images/mountain.mp4
+public/images/.trashed-*
+.restore-point/
+*.patch
+
+

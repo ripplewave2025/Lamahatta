@@ -16,46 +16,47 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Temporary: trying the new color-graded cut. Revert by switching to
 // "/hero/sunaraygownamazing.mp4" (+ matching poster) if it doesn't land.
-const VIDEO_SRC = "/hero/sunaraygown.mp4";
-const POSTER_SRC = "/hero/sunaraygown-poster.jpg";
+const VIDEO_SRC = "/hero/sunaraygown-crf21.mp4";
+const POSTER_SRC = "/hero/sunaraygown-crf21-poster.jpg";
 
 const HERO_STATS = [
-  { value: "22", label: "Households" },
-  { value: "93+", label: "Residents" },
-  { value: "9", label: "Tourism corridors" },
+  { value: "22", labelKey: "scrollhero.stats.households", defaultLabel: "Households" },
+  { value: "93+", labelKey: "scrollhero.stats.residents", defaultLabel: "Residents" },
+  { value: "9", labelKey: "scrollhero.stats.corridors", defaultLabel: "Tourism corridors" },
 ];
 
-type CTA = { label: string; href: string };
+type CTA = { labelKey: string; href: string };
 type Scene = {
-  eyebrow: string;
-  title: string;
+  eyebrowKey: string;
+  titleKey: string;
   cta?: CTA;
 };
 
 const SCENES: Scene[] = [
   {
-    eyebrow: "Lamahatta · Darjeeling",
-    title: "The last village waiting. Not anymore.",
+    eyebrowKey: "scrollhero.scene0.eyebrow",
+    titleKey: "scrollhero.scene0.title",
   },
   {
-    eyebrow: "What we live with",
-    title: "No roads. No tap water. No internet that holds.",
+    eyebrowKey: "scrollhero.scene1.eyebrow",
+    titleKey: "scrollhero.scene1.title",
   },
   {
-    eyebrow: "What we're doing",
-    title: "So we're building it ourselves.",
+    eyebrowKey: "scrollhero.scene2.eyebrow",
+    titleKey: "scrollhero.scene2.title",
   },
   {
-    eyebrow: "Starting with the basics",
-    title: "Roads. Solar. Water. Internet.",
+    eyebrowKey: "scrollhero.scene3.eyebrow",
+    titleKey: "scrollhero.scene3.title",
   },
   {
-    eyebrow: "Sunaraygaon — India's first self-sustaining village",
-    title: "Will you help us build it?",
-    cta: { label: "Partner with us", href: "/partners" },
+    eyebrowKey: "scrollhero.scene4.eyebrow",
+    titleKey: "scrollhero.scene4.title",
+    cta: { labelKey: "scrollhero.scene4.cta", href: "/partners" },
   },
 ];
 
@@ -216,6 +217,7 @@ function PinnedScrub() {
 // out after a few seconds or as soon as the user starts scrolling.
 function ScrollHint() {
   const [visible, setVisible] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const timer = window.setTimeout(() => setVisible(false), 5000);
@@ -240,7 +242,7 @@ function ScrollHint() {
           className="pointer-events-none absolute bottom-24 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
         >
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-            Scroll
+            {t("scrollhero.scroll") || "Scroll"}
           </span>
           <motion.span
             animate={{ y: [0, 7, 0] }}
@@ -266,6 +268,7 @@ function SceneOverlay({
   total: number;
   progress: MotionValue<number>;
 }) {
+  const { t } = useLanguage();
   const start = index / total;
   const end = (index + 1) / total;
   const slot = end - start;
@@ -295,10 +298,10 @@ function SceneOverlay({
             className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_45%,rgba(0,0,0,0)_85%)] blur-[2px]"
           />
           <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-amber-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
-            {scene.eyebrow}
+            {t(scene.eyebrowKey)}
           </p>
           <h2 className="mt-4 font-serif text-3xl leading-[1.06] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] sm:mt-5 sm:text-4xl sm:leading-[1.04] lg:text-5xl">
-            {scene.title}
+            {t(scene.titleKey)}
           </h2>
 
           {scene.cta && (
@@ -306,7 +309,7 @@ function SceneOverlay({
               href={scene.cta.href}
               className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-stone-950 transition hover:bg-amber-300 sm:mt-8 sm:px-6 sm:text-sm"
             >
-              {scene.cta.label}
+              {t(scene.cta.labelKey)}
               <ArrowRight className="h-4 w-4" />
             </Link>
           )}
@@ -353,18 +356,19 @@ function Dot({
 }
 
 function ExploreStrip() {
+  const { t } = useLanguage();
   const explore = [
-    { label: "Dashboard", href: "/dashboard" },
-    { label: "Voices", href: "/voices" },
-    { label: "Talent", href: "/village" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Opportunity", href: "/economy" },
-    { label: "Community Hub", href: "/hub" },
-    { label: "Story", href: "/why" },
-    { label: "Generations", href: "/generations" },
-    { label: "Challenges", href: "/challenges" },
-    { label: "Updates", href: "/updates" },
-    { label: "Partners", href: "/partners" },
+    { labelKey: "account.overview", defaultLabel: "Dashboard", href: "/dashboard" },
+    { labelKey: "nav.voices", defaultLabel: "Voices", href: "/voices" },
+    { labelKey: "nav.village", defaultLabel: "Talent", href: "/village" },
+    { labelKey: "nav.gallery", defaultLabel: "Gallery", href: "/gallery" },
+    { labelKey: "nav.economy", defaultLabel: "Opportunity", href: "/economy" },
+    { labelKey: "nav.hub", defaultLabel: "Community Hub", href: "/hub" },
+    { labelKey: "nav.why", defaultLabel: "Story", href: "/why" },
+    { labelKey: "nav.change", defaultLabel: "Change", href: "/generations" },
+    { labelKey: "nav.challenges", defaultLabel: "Challenges", href: "/challenges" },
+    { labelKey: "nav.updates", defaultLabel: "Updates", href: "/updates" },
+    { labelKey: "nav.partners", defaultLabel: "Partners", href: "/partners" },
   ];
   return (
     <section className="bg-[#07100f] py-20 text-white">
@@ -377,24 +381,23 @@ function ExploreStrip() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <p className="text-xs font-semibold uppercase tracking-[0.26em] text-amber-300">
-              The village, room by room
+              {t("scrollhero.pickdoor.eyebrow")}
             </p>
             <h2 className="mt-4 font-serif text-3xl leading-tight text-white sm:text-4xl">
-              Pick a door. Step in.
+              {t("scrollhero.pickdoor.title")}
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-stone-200/80">
-              Whether you live here, grew up here, or just found your way to us —
-              these are the places to start.
+              {t("scrollhero.pickdoor.desc")}
             </p>
 
             <div className="mt-8 grid max-w-md grid-cols-3 border-y border-white/15 py-5">
               {HERO_STATS.map((s) => (
-                <div key={s.label} className="pr-4">
+                <div key={s.labelKey} className="pr-4">
                   <div className="font-serif text-3xl text-amber-300 sm:text-4xl">
                     {s.value}
                   </div>
                   <div className="mt-2 text-[10px] uppercase tracking-[0.18em] text-white/70 sm:text-[11px]">
-                    {s.label}
+                    {t(s.labelKey) || s.defaultLabel}
                   </div>
                 </div>
               ))}
@@ -415,7 +418,7 @@ function ExploreStrip() {
                   className="group flex min-h-24 items-center justify-between bg-white/[0.04] px-5 py-5 transition duration-300 hover:-translate-y-0.5 hover:bg-amber-300 hover:text-stone-950"
                 >
                   <span className="text-sm font-semibold uppercase tracking-[0.16em]">
-                    {item.label}
+                    {t(item.labelKey) || item.defaultLabel}
                   </span>
                   <ArrowRight className="h-4 w-4 text-amber-300 transition group-hover:translate-x-1 group-hover:text-stone-950" />
                 </Link>
@@ -429,6 +432,7 @@ function ExploreStrip() {
 }
 
 function ReducedMotionFallback() {
+  const { t } = useLanguage();
   return (
     <section className="relative bg-black text-white">
       <div className="relative h-[100svh] w-full overflow-hidden">
@@ -453,17 +457,17 @@ function ReducedMotionFallback() {
               className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_45%,rgba(0,0,0,0)_85%)] blur-[2px]"
             />
             <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
-              {scene.eyebrow}
+              {t(scene.eyebrowKey)}
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] sm:text-5xl">
-              {scene.title}
+              {t(scene.titleKey)}
             </h2>
             {scene.cta && (
               <Link
                 href={scene.cta.href}
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.16em] text-stone-950"
               >
-                {scene.cta.label}
+                {t(scene.cta.labelKey)}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             )}

@@ -4,7 +4,8 @@
       "Bash(ffmpeg -version)",
       "Read(//c/Users/FaradaysCage007/.claude/skills//**)",
       "Bash(mkdir -p public/hero)",
-      "Bash(cp asset/sunaraygown.png public/hero/sunaraygown.png)"
+      "Bash(cp asset/sunaraygown.png public/hero/sunaraygown.png)",
+      "mcp__claude_ai_Vercel__list_deployments"
     ]
   }
 }
