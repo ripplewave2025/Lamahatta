@@ -1,6 +1,6 @@
 export const villageStats = [
   { value: "22", label: "Households" },
-  { value: "93+", label: "Residents" },
+  { value: "103", label: "Residents (2026 survey)" },
   { value: "9", label: "Nearby tourism corridors" },
 ];
 

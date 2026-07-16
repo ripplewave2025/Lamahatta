@@ -25,7 +25,7 @@ const POSTER_SRC = "/hero/sunaraygown-crf21-poster.jpg";
 
 const HERO_STATS = [
   { value: "22", labelKey: "scrollhero.stats.households", defaultLabel: "Households" },
-  { value: "93+", labelKey: "scrollhero.stats.residents", defaultLabel: "Residents" },
+  { value: "103", labelKey: "scrollhero.stats.residents", defaultLabel: "Residents" },
   { value: "9", labelKey: "scrollhero.stats.corridors", defaultLabel: "Tourism corridors" },
 ];
 
@@ -360,7 +360,7 @@ function ExploreStrip() {
   const explore = [
     { labelKey: "account.overview", defaultLabel: "Dashboard", href: "/dashboard" },
     { labelKey: "nav.voices", defaultLabel: "Voices", href: "/voices" },
-    { labelKey: "nav.village", defaultLabel: "Talent", href: "/village" },
+    { labelKey: "nav.data", defaultLabel: "Data", href: "/data" },
     { labelKey: "nav.gallery", defaultLabel: "Gallery", href: "/gallery" },
     { labelKey: "nav.economy", defaultLabel: "Opportunity", href: "/economy" },
     { labelKey: "nav.hub", defaultLabel: "Community Hub", href: "/hub" },

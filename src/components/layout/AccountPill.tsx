@@ -30,38 +30,49 @@ export default function AccountPill({ variant = "dark" }: AccountPillProps) {
     let active = true;
 
     const load = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!active) return;
-      if (!user) {
-        setState({ status: "signedOut" });
-        return;
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!active) return;
+        if (!user) {
+          setState({ status: "signedOut" });
+          return;
+        }
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("full_name, role")
+          .eq("id", user.id)
+          .single();
+
+        const name = profile?.full_name || user.email?.split("@")[0] || "Member";
+        const role: "villager" | "admin" = profile?.role === "admin" ? "admin" : "villager";
+
+        let pendingCount: number | undefined;
+        if (role === "admin") {
+          const { count } = await supabase
+            .from("household_update_requests")
+            .select("*", { count: "exact", head: true })
+            .eq("status", "pending");
+          pendingCount = count ?? 0;
+        }
+
+        if (active) setState({ status: "signedIn", name, role, pendingCount });
+      } catch {
+        // Offline / missing Supabase env — keep signed-out UI, never crash the page.
+        if (active) setState({ status: "signedOut" });
       }
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("full_name, role")
-        .eq("id", user.id)
-        .single();
-
-      const name = profile?.full_name || user.email?.split("@")[0] || "Member";
-      const role: "villager" | "admin" = profile?.role === "admin" ? "admin" : "villager";
-
-      let pendingCount: number | undefined;
-      if (role === "admin") {
-        const { count } = await supabase
-          .from("household_update_requests")
-          .select("*", { count: "exact", head: true })
-          .eq("status", "pending");
-        pendingCount = count ?? 0;
-      }
-
-      if (active) setState({ status: "signedIn", name, role, pendingCount });
     };
 
     load();
-    const { data: sub } = supabase.auth.onAuthStateChange(() => load());
+    let unsub = () => {};
+    try {
+      const { data: sub } = supabase.auth.onAuthStateChange(() => load());
+      unsub = () => sub.subscription.unsubscribe();
+    } catch {
+      /* ignore */
+    }
     return () => {
       active = false;
-      sub.subscription.unsubscribe();
+      unsub();
     };
   }, []);
 

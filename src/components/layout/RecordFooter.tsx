@@ -34,7 +34,7 @@ const localTranslations: Record<Language, {
     actionLinks: [
       { href: "/economy", label: "Opportunity map" },
       { href: "/partners", label: "Investor enquiry" },
-      { href: "/village", label: "Village talent" },
+      { href: "/data", label: "Village data" },
       { href: "/updates", label: "Updates" },
     ]
   },
@@ -56,7 +56,7 @@ const localTranslations: Record<Language, {
     actionLinks: [
       { href: "/economy", label: "अवसर नक्सा" },
       { href: "/partners", label: "लगानीकर्ता सोधपुछ" },
-      { href: "/village", label: "गाउँको प्रतिभा" },
+      { href: "/data", label: "गाउँको डाटा" },
       { href: "/updates", label: "अपडेटहरू" },
     ]
   },
@@ -78,7 +78,7 @@ const localTranslations: Record<Language, {
     actionLinks: [
       { href: "/economy", label: "अवसर मानचित्र" },
       { href: "/partners", label: "निवेशक पूछताछ" },
-      { href: "/village", label: "गाँव की प्रतिभा" },
+      { href: "/data", label: "गाँव का डेटा" },
       { href: "/updates", label: "अपडेट" },
     ]
   },
@@ -100,7 +100,7 @@ const localTranslations: Record<Language, {
     actionLinks: [
       { href: "/economy", label: "সুযোগের মানচিত্র" },
       { href: "/partners", label: "বিনিয়োগকারী অনুসন্ধান" },
-      { href: "/village", label: "গ্রামের প্রতিভা" },
+      { href: "/data", label: "গ্রামের ডেটা" },
       { href: "/updates", label: "আপডেট" },
     ]
   }

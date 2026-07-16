@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Sunaray Gaon · Village Data",
+    "ward": "Ward 16, Lamahatta Busty",
+    "region": "Lamahatta, Darjeeling, West Bengal",
+    "samaj": "Bishwakarma Samaj",
+    "survey_year": 2026,
+    "summary": "A living count of who lives here, how people work, who is studying, and where infrastructure still needs work."
+  },
+  "kpis": {
+    "households": 22,
+    "population": 103,
+    "out_station_workers": 20,
+    "adult_illiteracy_40plus": 29,
+    "illiteracy_marked_no": 39,
+    "functional_taps": 0,
+    "elderly_signal_households": 14,
+    "students_children": 32,
+    "local_workers": 18,
+    "religion": {
+      "Hindu": 14,
+      "Unknown": 1,
+      "Christian": 7
+    },
+    "subcaste": {
+      "Gadhaily": 11,
+      "Sinchury": 5,
+      "Unknown": 1,
+      "Sasankar": 2,
+      "Lamgadhay": 3
+    }
+  },
+  "occupation_distribution": {
+    "Students & children": 32,
+    "Home & care work": 23,
+    "Working outside the hills": 20,
+    "Local work & farming": 18,
+    "Govt, army & teaching": 5,
+    "Other": 5
+  },
+  "age_distribution": {
+    "Children (0–15)": 20,
+    "Youth (16–35)": 43,
+    "Middle age (36–50)": 29,
+    "Elders (50+)": 8,
+    "Age not recorded": 3
+  },
+  "privacy": {
+    "policy": "Public page shows rates and government delivery only. Person names stay with the Samaj / logged-in members.",
+    "person_level_data": "not_public"
+  },
+  "demands_of_state": [
+    {
+      "title": "Publish Jal Jeevan FHTC list for this ward",
+      "why": "Tank exists; 0% working taps. Name the contractor, source, and completion date."
+    },
+    {
+      "title": "Publish road / PMGSY status for the access mile",
+      "why": "Incomplete road is a tax on every scheme, school day, and medical trip."
+    },
+    {
+      "title": "Publish MGNREGA job-card coverage and person-days this FY",
+      "why": "Without local wages, out-migration is forced. Opacity hides whether work was created or only claimed."
+    },
+    {
+      "title": "Publish pension & widow beneficiary list (Gram Sabha board)",
+      "why": "Elders stay when youth leave. Money must reach passbooks, not middlemen."
+    },
+    {
+      "title": "Publish PM-KISAN and PMAY-G beneficiary status for this GP",
+      "why": "Eligibility without a public list is where corruption lives."
+    },
+    {
+      "title": "Upload Gram Sabha minutes and works photos with dates",
+      "why": "Completed-on-paper, broken-on-ground is the classic leak. Photos + dates close it."
+    }
+  ]
+}
