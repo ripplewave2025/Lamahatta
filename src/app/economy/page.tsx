@@ -224,6 +224,12 @@ export default function EconomyPage() {
                                 >
                                     {status === "loading" ? t("investor.sending") : t("investor.submit")}
                                 </button>
+                                <p className="text-center text-[11px] text-white/40">
+                                    We store this enquiry to respond.{" "}
+                                    <a href="/privacy" className="underline hover:text-amber-300">
+                                        Privacy Policy
+                                    </a>
+                                </p>
                                 {status === "error" && (
                                     <p className="text-red-400 text-sm text-center">{t("investor.error")}</p>
                                 )}

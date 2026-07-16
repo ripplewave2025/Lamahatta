@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft, Send, CheckCircle, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 interface Question {
@@ -244,6 +245,13 @@ export default function Survey() {
                     </motion.button>
                 )}
             </div>
+
+            <p className="mt-6 text-center text-[11px] text-white/40">
+                Answers are stored to improve village services.{" "}
+                <Link href="/privacy" className="underline hover:text-accent">
+                    Privacy Policy
+                </Link>
+            </p>
         </div>
     );
 }

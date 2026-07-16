@@ -10,7 +10,7 @@ import {
   Phone,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
-import { getSession } from '@/lib/auth/getProfile'
+import { requireAdmin } from '@/lib/auth/getProfile'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,8 +31,10 @@ type Row = {
 }
 
 export default async function DirectoryPage() {
-  const { profile } = await getSession()
-  const isAdmin = profile.role === 'admin'
+  // Full directory is admin-only (household RLS: own row or admin).
+  // Public scorecard uses aggregates without names.
+  await requireAdmin()
+  const isAdmin = true
   const supabase = await createClient()
 
   const { data } = await supabase

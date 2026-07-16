@@ -65,4 +65,7 @@ public/images/.trashed-*
 /data_from_the_internet/**/*.xlsx
 /data_from_the_internet/**/*.csv
 
+# Person-level census (names) — keep offline; public board uses village-public.json
+/src/data/village-census.json
+
 

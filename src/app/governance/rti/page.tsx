@@ -63,11 +63,16 @@ export default function RtiTrackerPage() {
 
         <div className="mt-10 space-y-8">
           {list.map((f) => {
-            const due =
-              f.receipt_status === "received" && f.filed_on
-                ? addDays(f.filed_on, f.due_days)
+            const clockStart =
+              f.receipt_status === "received" && (f.received_on || f.filed_on)
+                ? (f.received_on as string | null) || f.filed_on
                 : null;
+            const due = clockStart ? addDays(clockStart, f.due_days) : null;
             const drafted = new Date(f.filed_on + "T12:00:00");
+            const daysLeft =
+              due != null
+                ? Math.ceil((due.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+                : null;
 
             return (
               <article
@@ -81,6 +86,11 @@ export default function RtiTrackerPage() {
                   <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-600">
                     {f.act}
                   </span>
+                  {f.receipt_no && (
+                    <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-800">
+                      Receipt {f.receipt_no}
+                    </span>
+                  )}
                   <span className="inline-flex items-center gap-1 rounded-full border border-stone-200 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-500">
                     <Shield className="h-3 w-3" />
                     Meta only
@@ -113,11 +123,24 @@ export default function RtiTrackerPage() {
                     <dt className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
                       Statutory due
                     </dt>
-                    <dd className="mt-1 flex items-center gap-1.5 font-medium text-stone-900">
-                      <Clock className="h-4 w-4 text-amber-600" />
-                      {due
-                        ? formatDate(due)
-                        : "Starts when PIO receipt is logged (~30 days)"}
+                    <dd className="mt-1 flex flex-col gap-0.5 font-medium text-stone-900">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="h-4 w-4 text-amber-600" />
+                        {due
+                          ? formatDate(due)
+                          : "Starts when PIO receipt is logged (~30 days)"}
+                      </span>
+                      {daysLeft != null && (
+                        <span
+                          className={`text-xs font-bold ${
+                            daysLeft < 0 ? "text-red-600" : "text-stone-500"
+                          }`}
+                        >
+                          {daysLeft < 0
+                            ? `${Math.abs(daysLeft)} days overdue — first appeal window`
+                            : `${daysLeft} days left on SLA`}
+                        </span>
+                      )}
                     </dd>
                   </div>
                 </dl>
@@ -125,6 +148,15 @@ export default function RtiTrackerPage() {
                 <p className="mt-4 rounded-xl border border-amber-100 bg-amber-50/80 px-3 py-2 text-xs text-stone-700">
                   {f.receipt_note}
                 </p>
+
+                {"how_to_start_clock" in f &&
+                  Array.isArray((f as { how_to_start_clock?: string[] }).how_to_start_clock) && (
+                    <ol className="mt-3 list-decimal space-y-1 pl-5 text-xs text-stone-500">
+                      {(f as { how_to_start_clock: string[] }).how_to_start_clock.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ol>
+                  )}
 
                 <h3 className="mt-8 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-stone-500">
                   <FileText className="h-4 w-4" />

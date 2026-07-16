@@ -75,8 +75,13 @@ async function AdminHome() {
     .from('households')
     .select('*', { count: 'exact', head: true })
 
+  const { count: newEnquiries } = await supabase
+    .from('contact_requests')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'new')
+
   return (
-    <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <section className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
       <StatCard
         icon={<Clock className="h-5 w-5" />}
         tone="amber"
@@ -94,6 +99,15 @@ async function AdminHome() {
         caption="Manage records & invite household heads"
         href="/dashboard/admin/households"
         cta="Manage"
+      />
+      <StatCard
+        icon={<FileText className="h-5 w-5" />}
+        tone="amber"
+        title="New enquiries"
+        value={newEnquiries ?? 0}
+        caption="Partner · service · investor forms"
+        href="/dashboard/admin/enquiries"
+        cta="Open inbox"
       />
       <StatCard
         icon={<BookOpen className="h-5 w-5" />}
@@ -300,12 +314,19 @@ async function VillagerHome({ userId, household }: { userId: string; household: 
           />
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 flex flex-wrap gap-3">
           <Link
-            href="/dashboard/directory"
+            href="/dashboard/household"
             className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-stone-800 transition hover:bg-stone-100"
           >
-            <BookOpen className="h-3.5 w-3.5" /> Visit the Village Directory
+            <BookOpen className="h-3.5 w-3.5" /> Your household record
+            <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
+          <Link
+            href="/data"
+            className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-stone-800 transition hover:bg-stone-100"
+          >
+            Public village scorecard
             <ChevronRight className="h-3.5 w-3.5" />
           </Link>
         </div>

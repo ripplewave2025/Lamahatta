@@ -10,9 +10,17 @@
       "copy_to": "PIO, Office of the BDO, Rangli Rangliot Block, Takdah",
       "filed_on": "2026-07-16",
       "receipt_status": "application_prepared",
-      "receipt_note": "Draft dated 16.07.2026. Update when diary / speed-post / email acknowledgement is received — statutory clock runs from PIO receipt.",
+      "receipt_no": null,
+      "received_on": null,
+      "receipt_note": "Application dated 16.07.2026. When you get diary / speed-post / email ack, set receipt_no + received_on in src/data/rti-filings.json (or admin later) — statutory 30-day clock runs from PIO receipt, not draft date.",
       "due_days": 30,
       "status": "drafted",
+      "how_to_start_clock": [
+        "File with GP PIO (and keep BDO copy).",
+        "Save diary number, speed-post tracking, or email acknowledgement.",
+        "Edit rti-filings.json: status=filed, receipt_status=received, receipt_no=..., received_on=YYYY-MM-DD.",
+        "Redeploy / refresh — /rti shows due date automatically."
+      ],
       "public_summary": "Requests ward-wise works and expenditure, Gram Sabha minutes, water/FHTC status for Sunaray (Simana) Gaon, asset register, abandoned and held-up works on eGramSwaraj, and whether any record endorses a social boycott — all as public records of the Gram Panchayat.",
       "points": [
         {

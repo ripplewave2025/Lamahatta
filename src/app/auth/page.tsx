@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import AuthButton from '@/components/AuthButton'
 
 export default function AuthPage() {
@@ -14,6 +15,17 @@ export default function AuthPage() {
 
             <div className="bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-xl shadow-2xl">
                 <AuthButton />
+                <p className="mt-6 max-w-sm text-center text-[11px] leading-relaxed text-white/40">
+                    By creating an account you agree to our{" "}
+                    <Link href="/terms" className="text-amber-400/90 underline">
+                        Terms
+                    </Link>{" "}
+                    and{" "}
+                    <Link href="/privacy" className="text-amber-400/90 underline">
+                        Privacy Policy
+                    </Link>
+                    . Phone signup uses a password (no OTP).
+                </p>
             </div>
         </div>
     )

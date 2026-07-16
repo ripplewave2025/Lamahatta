@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, CheckCircle, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 export default function Newsletter() {
@@ -147,7 +148,11 @@ export default function Newsletter() {
             </form>
 
             <p className="text-white/40 text-xs mt-4 text-center">
-                Receive updates about govt schemes, online portals & village opportunities
+                Receive updates about govt schemes, online portals & village opportunities.
+                We store your email to send updates.{" "}
+                <Link href="/privacy" className="text-white/55 underline hover:text-accent">
+                    Privacy Policy
+                </Link>
             </p>
         </motion.div>
     );
