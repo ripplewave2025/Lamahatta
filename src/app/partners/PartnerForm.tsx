@@ -144,6 +144,14 @@ export default function PartnerForm({ partnerType, submitLabel }: Props) {
         </p>
       )}
 
+      <p className="mt-4 text-[11px] leading-relaxed text-stone-500">
+        We store this enquiry so the Samaj can respond. See our{" "}
+        <a href="/privacy" className="font-semibold text-stone-700 underline">
+          Privacy Policy
+        </a>
+        .
+      </p>
+
       <style jsx>{`
         :global(.input) {
           width: 100%;

@@ -1,0 +1,116 @@
+{
+  "source": {
+    "system": "Local Government Directory (LGD), Government of India",
+    "folder": "data_from_the_internet/",
+    "pulled_approx": "2026-06-12",
+    "state_dump": "West Bengal (State Code 19)",
+    "note": "Full statewide XLS dumps stay offline. This file is the extracted identity for Sunaray / Lamahatta only."
+  },
+  "hierarchy": {
+    "country": "India",
+    "state": { "name": "West Bengal", "code": "19" },
+    "district": { "name": "Darjeeling", "code": "309", "census_2011": "327" },
+    "block": { "name": "Rangli Rangliot", "code": "2869" },
+    "panchayat_samiti": {
+      "name": "Rongli-Rongliot",
+      "localbody_type": "Panchayat Samiti",
+      "localbody_type_code": "2",
+      "code": "260948",
+      "parent_code": "260940"
+    },
+    "gram_panchayat": {
+      "name": "Lamahatta",
+      "localbody_type": "Gram Panchayat",
+      "localbody_type_code": "3",
+      "code": "261054",
+      "version": "1",
+      "parent_code": "260948",
+      "lgd_match_rti": true
+    },
+    "district_parent_label_in_lgd": "Gorkhaland Territorial Administration",
+    "sibling_gps_under_same_ps": [
+      { "code": "261053", "name": "Labdah" },
+      { "code": "261054", "name": "Lamahatta" },
+      { "code": "261055", "name": "Maneydara" },
+      { "code": "261056", "name": "Pubang-Rampuria" },
+      { "code": "261057", "name": "Rangli" },
+      { "code": "261058", "name": "Ressep" },
+      { "code": "261059", "name": "Rongchong" },
+      { "code": "261060", "name": "Singrimatam" },
+      { "code": "261061", "name": "Tackling-I" }
+    ],
+    "pri_wards_lamahatta_gp": [
+      { "ward_code": "3247005", "number": "I", "name": "LAMAHATTA-I" },
+      { "ward_code": "3247006", "number": "II", "name": "LAMAHATTA-II" },
+      { "ward_code": "3247007", "number": "III", "name": "LAMAHATTA-III" },
+      { "ward_code": "3247008", "number": "IV", "name": "LAMAHATTA-IV" },
+      { "ward_code": "3247009", "number": "V", "name": "LAMAHATTA-V" },
+      { "ward_code": "3247010", "number": "VI", "name": "LAMAHATTA-VI" },
+      { "ward_code": "3247011", "number": "VII", "name": "LAMAHATTA-VII" },
+      { "ward_code": "3247012", "number": "VIII", "name": "LAMAHATTA-VIII" },
+      { "ward_code": "3247013", "number": "IX", "name": "LAMAHATTA-IX" },
+      { "ward_code": "3247014", "number": "X", "name": "LAMAHATTA-X" }
+    ],
+    "villages_mapped_to_lamahatta_gp": [
+      { "census_code": "306206", "name": "Lapchu Khasmahal" },
+      { "census_code": "306194", "name": "Lapchu Tea Garden" },
+      { "census_code": "306195", "name": "Peshok Tea Garden" },
+      { "census_code": "306209", "name": "Tukdah" }
+    ],
+    "ward_field": {
+      "name": "Ward No. 16 (field / RTI usage)",
+      "local_name_aliases": ["Sunaray Gaon", "Simana Gaon", "Seemana Gaon", "Lamahatta Busty (Ward 16)"],
+      "note": "LGD PRI wards for this GP are Roman I–X (LAMAHATTA-I … X), not Arabic '16'. 'Ward 16' is likely a local / GTA / informal number — map Sunaray to the correct PRI ward (I–X) on the ground before hard-coding. 'Simana' in LGD also appears under other GPs (e.g. Sukhia-Simana); do not confuse with Sunaray."
+    }
+  },
+  "keys_for_apis": {
+    "lgd_gp_code": "261054",
+    "lgd_block_code": "2869",
+    "lgd_district_code": "309",
+    "state_code": "19",
+    "use_for": [
+      "eGramSwaraj / Meri Panchayat lookups",
+      "RTI addressing (already on Lamahatta GP RTI)",
+      "JJM / scheme dashboards by GP or block",
+      "Future automated scrape keys — never scrape without rate limits + cache"
+    ]
+  },
+  "files_in_data_from_the_internet": [
+    {
+      "file": "districtofSpecificState*.xls",
+      "role": "District codes for WB"
+    },
+    {
+      "file": "blockofspecificState*.xls",
+      "role": "Block codes (Rangli Rangliot = 2869)"
+    },
+    {
+      "file": "subDistrictofSpecificState*.xls",
+      "role": "Subdistrict / tehsil layer"
+    },
+    {
+      "file": "priLbSpecificState*.xls",
+      "role": "PRI local bodies — GP Lamahatta 261054, PS 260948"
+    },
+    {
+      "file": "priWards*.xls",
+      "role": "Ward master for all PRI bodies (large)"
+    },
+    {
+      "file": "villageGramPanchayatMapping*.xls",
+      "role": "Village ↔ GP mapping (large)"
+    },
+    {
+      "file": "villageofSpecificState*.xls",
+      "role": "Village census codes for WB (large)"
+    },
+    {
+      "file": "allBlockStateWithCoveredVillage*.xls",
+      "role": "Block coverage of villages (very large)"
+    },
+    {
+      "file": "ulb* / tlb* / uLBWard*",
+      "role": "Urban local bodies — not primary for this rural GP"
+    }
+  ]
+}

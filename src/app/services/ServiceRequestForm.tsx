@@ -145,6 +145,14 @@ export default function ServiceRequestForm({ serviceSlug, submitLabel }: Props) 
         </p>
       )}
 
+      <p className="mt-4 text-[11px] leading-relaxed text-stone-500">
+        We store this request so we can quote and follow up. See our{" "}
+        <a href="/privacy" className="font-semibold text-stone-700 underline">
+          Privacy Policy
+        </a>
+        .
+      </p>
+
       <style jsx>{`
         :global(.srv-input) {
           width: 100%;

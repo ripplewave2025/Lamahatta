@@ -59,4 +59,10 @@ public/images/.trashed-*
 .restore-point/
 *.patch
 
+# Statewide LGD / portal dumps (multi‑MB SpreadsheetML) — keep offline
+# Extracted identity lives in src/data/lgd-identity.json
+/data_from_the_internet/**/*.xls
+/data_from_the_internet/**/*.xlsx
+/data_from_the_internet/**/*.csv
+
 

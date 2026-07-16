@@ -1,0 +1,82 @@
+{
+  "filings": [
+    {
+      "id": "rti-lgp-2026-001",
+      "title": "Lamahatta Gram Panchayat — works, water, assets, minutes",
+      "act": "RTI Act, 2005 · Section 6(1)",
+      "applicant_role": "Citizen / resident (public filing by platform operator)",
+      "to_office": "PIO / Secretary–Executive Assistant, Lamahatta Gram Panchayat",
+      "lgd_gp_code": "261054",
+      "copy_to": "PIO, Office of the BDO, Rangli Rangliot Block, Takdah",
+      "filed_on": "2026-07-16",
+      "receipt_status": "application_prepared",
+      "receipt_note": "Draft dated 16.07.2026. Update when diary / speed-post / email acknowledgement is received — statutory clock runs from PIO receipt.",
+      "due_days": 30,
+      "status": "drafted",
+      "public_summary": "Requests ward-wise works and expenditure, Gram Sabha minutes, water/FHTC status for Sunaray (Simana) Gaon, asset register, abandoned and held-up works on eGramSwaraj, and whether any record endorses a social boycott — all as public records of the Gram Panchayat.",
+      "points": [
+        {
+          "n": 1,
+          "title": "Ward-wise development works & schemes (16 Aug 2023 → filing date)",
+          "maps_to": ["Works transparency", "Sanction vs spend"]
+        },
+        {
+          "n": 2,
+          "title": "Ward of elected member & works in that ward",
+          "maps_to": ["Local representative accountability"]
+        },
+        {
+          "n": 3,
+          "title": "GP & Gram Sabha minutes / resolutions (incl. SDG 9 Themes ~Oct 2025)",
+          "maps_to": ["Gram Sabha transparency"]
+        },
+        {
+          "n": 4,
+          "title": "Any record of social boycott (bahishkar) endorsement",
+          "maps_to": ["Human rights · public order records"]
+        },
+        {
+          "n": 5,
+          "title": "Complaints about boycott / non-assistance orders + action taken",
+          "maps_to": ["Complaint disposal"]
+        },
+        {
+          "n": 6,
+          "title": "Drinking water schemes & FHTC list for Sunaray (Simana) Gaon",
+          "maps_to": ["Jal Jeevan / 0% taps scorecard"]
+        },
+        {
+          "n": 7,
+          "title": "Complete Asset Register (ownership, location, funding)",
+          "maps_to": ["Asset integrity"]
+        },
+        {
+          "n": 8,
+          "title": "Abandoned / zero-expenditure works & fund whereabouts",
+          "maps_to": ["Fund utilisation"]
+        },
+        {
+          "n": 9,
+          "title": "Held-up / incomplete works on eGramSwaraj / Meri Panchayat",
+          "maps_to": ["Delay & non-completion"]
+        }
+      ],
+      "answer_matrix": [
+        { "n": 1, "state": "awaiting" },
+        { "n": 2, "state": "awaiting" },
+        { "n": 3, "state": "awaiting" },
+        { "n": 4, "state": "awaiting" },
+        { "n": 5, "state": "awaiting" },
+        { "n": 6, "state": "awaiting" },
+        { "n": 7, "state": "awaiting" },
+        { "n": 8, "state": "awaiting" },
+        { "n": 9, "state": "awaiting" }
+      ],
+      "privacy": {
+        "publish_full_pdf": false,
+        "publish_meta": true,
+        "note": "Public site shows titles, office, dates, status only. Full application PDF and any reply PDFs stay offline or redacted until legal check."
+      }
+    }
+  ]
+}

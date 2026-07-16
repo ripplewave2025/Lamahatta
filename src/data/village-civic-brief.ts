@@ -34,6 +34,15 @@ const workingAgeBand = youth + middle;
 /** Broad dependent pool: children + 50+ (proxy, not official dependency ratio) */
 const dependentBand = children + elders;
 
+const occ = census.occupation_distribution as Record<string, number>;
+const homeCare = occ["Home & care work"] ?? 0;
+const formalPublic = occ["Govt, army & teaching"] ?? 0;
+const otherOcc = occ["Other"] ?? 0;
+/** People not counted as students/children — economic + care base */
+const nonStudentPop = Math.max(1, pop - students);
+/** Rough “in labour market” = outside + local + formal + other (excludes unpaid home & students) */
+const marketLabour = outside + localWork + formalPublic + otherOcc;
+
 export const rates = {
   population: pop,
   households: hh,
@@ -74,6 +83,66 @@ export const rates = {
   carePressureIndex: workingAgeBand
     ? Math.round((dependentBand / workingAgeBand) * 100) / 100
     : 0,
+
+  /**
+   * Income-structure proxies (no rupee survey yet).
+   * Great analyst rule: publish composition rates, not invented salaries.
+   */
+  homeCareCount: homeCare,
+  homeCareShareOfPeople: rate(homeCare, pop, 1),
+  homeCareShareOfNonStudents: rate(homeCare, nonStudentPop, 1),
+  formalPublicCount: formalPublic,
+  formalPublicShareOfPeople: rate(formalPublic, pop, 1),
+  formalPublicShareOfMarketLabour: rate(formalPublic, marketLabour || 1, 1),
+  marketLabourCount: marketLabour,
+  marketLabourShareOfPeople: rate(marketLabour, pop, 1),
+  /** Of people in market labour, share earning outside the hills (remittance-linked) */
+  remittanceLinkedShareOfMarketLabour: rate(outside, marketLabour || 1, 1),
+  /** Of non-students, share whose occupation is outside (proxy dependency on external wages) */
+  externalWageDependencyOfNonStudents: rate(outside, nonStudentPop, 1),
+  /** Of non-students, share in unpaid home/care (not cash income in survey) */
+  unpaidCareShareOfNonStudents: rate(homeCare, nonStudentPop, 1),
+  /** Local production / labour share of market labour */
+  localShareOfMarketLabour: rate(localWork, marketLabour || 1, 1),
+};
+
+/**
+ * Community equity frame — operator-stated Bishwakarma Samaj context.
+ * Does not claim individual caste certificates are on file in this dataset.
+ */
+export const communityEquity = {
+  samaj: census.meta.samaj,
+  categoryLabel: "Scheduled Caste (SC) community context",
+  statement:
+    "This settlement organises as Bishwakarma Samaj. Operators state the community is Scheduled Caste (SC) for scheme targeting and equity analysis. This page does not publish individual caste certificates.",
+  cohortHouseholds: hh,
+  cohortPeople: pop,
+  /** If community-wide SC context holds, eligible cohort for SC-targeted schemes ≈ whole village */
+  scTargetedCohortShareOfHouseholds: 100,
+  scTargetedCohortShareOfPeople: 100,
+  deliveryHonesty:
+    "Eligibility is not delivery. Until GP/Block publish SC scholarship, hostel, skill, and housing beneficiary lists for this GP, enrollment rate = unknown — not 0 and not 100.",
+  whatAnalystPublishes: [
+    "Cohort size (homes/people under Samaj survey)",
+    "Livelihood composition rates (cash vs unpaid vs remittance)",
+    "Infrastructure failure rates that hit SC rural pockets hardest (water, road, signal)",
+    "Scheme opacity count for SC + universal rural schemes",
+  ],
+  whatAnalystRefuses: [
+    "Invented average household income in ₹ without a wage survey",
+    "Claiming every certificate is verified in this dataset",
+    "Publishing names next to SC labels",
+  ],
+};
+
+/** Occupation shares as income-structure stack (population %) */
+export const incomeStructureBars: Record<string, number> = {
+  "Students & children (not yet earning)": students,
+  "Unpaid home & care work": homeCare,
+  "Wages outside the hills (remittance-linked)": outside,
+  "Local work & farming (local cash/kind)": localWork,
+  "Govt / army / teaching (formal public)": formalPublic,
+  Other: otherOcc,
 };
 
 export type DutyStatus = "failing" | "partial" | "ok" | "unknown";
@@ -256,6 +325,24 @@ export const schemes: SchemeRow[] = [
     analystNote:
       "With 1 in 5 people working outside, dead signal is a tax on remittances, scheme OTPs, and tele-medicine.",
   },
+  {
+    scheme: "SC scholarships / hostels / skill (post-matric & state)",
+    plain: "Education and skill support targeted to Scheduled Caste students.",
+    whoItIsFor: `Community cohort ~${pop} people / ${hh} homes (Samaj SC context)`,
+    villageStatus: "unknown",
+    rateOrSignal: "Enrollment % not in 2026 occupation sheet",
+    analystNote:
+      "Analyst move: publish how many students in the pipeline vs how many on scholarship lists — not slogans. Demand Block education cell list for this GP.",
+  },
+  {
+    scheme: "Stand-Up India / SC enterprise credit (eligible cohort)",
+    plain: "Credit pathways for SC entrepreneurs where criteria fit.",
+    whoItIsFor: "Local entrepreneurs / return migrants with bankable plans",
+    villageStatus: "unknown",
+    rateOrSignal: "No public loan-sanction list for this GP",
+    analystNote:
+      "High out-station chef/driver skills are human capital. Without local credit + road + water, talent exits. Opacity of credit delivery is the scorecard.",
+  },
 ];
 
 export const panchayatExplainer = {
@@ -290,6 +377,8 @@ export const analystMethod = {
     "Rates beat raw counts. “39 people without literacy” becomes clearer as ~38% of the village.",
     "Separate hard failures (0% taps) from unknown rates (PM-KISAN enrollment not in survey). Unknown is not success.",
     "Migration is a pressure gauge: high outside work + elder homes = care and pension risk.",
+    "Income: we publish livelihood composition %, not fake average salaries. Remittance share of market labour is the clean proxy until a wage survey exists.",
+    "SC equity: community cohort size is known; certificate-level verification and scheme enrollment still need public lists from the Block/GP.",
     "Panchayat scorecards should use public administrative data next (eGramSwaraj, JJM dashboard, MGNREGA MIS) — this page starts with what the village already measured.",
   ],
 };
@@ -308,16 +397,28 @@ export const headlineFindings = [
     tone: "warn" as const,
   },
   {
-    label: "Working outside hills",
-    value: `${rates.outStationShareOfPeople}%`,
-    detail: `${outside} people · ${rates.outStationShareOfWorkingAge}% of ages 16–50`,
+    label: "External wage dependency",
+    value: `${rates.externalWageDependencyOfNonStudents}%`,
+    detail: `of non-students work outside · ${outside} people`,
     tone: "warn" as const,
   },
   {
-    label: "Homes with elders 60+",
-    value: `${rates.elderlyHouseholdShare}%`,
-    detail: `${elderHh} of ${hh} households`,
+    label: "Remittance share of market labour",
+    value: `${rates.remittanceLinkedShareOfMarketLabour}%`,
+    detail: `${outside} of ${marketLabour} in cash/market occupations`,
     tone: "warn" as const,
+  },
+  {
+    label: "Unpaid care (non-students)",
+    value: `${rates.unpaidCareShareOfNonStudents}%`,
+    detail: `${homeCare} people in home/care occupations`,
+    tone: "warn" as const,
+  },
+  {
+    label: "Formal public jobs",
+    value: `${rates.formalPublicShareOfPeople}%`,
+    detail: `${formalPublic} in govt / army / teaching`,
+    tone: "ok" as const,
   },
   {
     label: "In school / training",
@@ -326,9 +427,9 @@ export const headlineFindings = [
     tone: "ok" as const,
   },
   {
-    label: "Avg. household size",
-    value: String(rates.avgHouseholdSize),
-    detail: `${pop} people ÷ ${hh} homes`,
-    tone: "ok" as const,
+    label: "Homes with elders 60+",
+    value: `${rates.elderlyHouseholdShare}%`,
+    detail: `${elderHh} of ${hh} households`,
+    tone: "warn" as const,
   },
 ];

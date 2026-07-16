@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   CircleDashed,
   EyeOff,
+  FileText,
   Gavel,
   HelpCircle,
   MapPin,
@@ -16,9 +17,13 @@ import {
   XCircle,
 } from "lucide-react";
 import census from "@/data/village-public.json";
+import lgd from "@/data/lgd-identity.json";
+import rti from "@/data/rti-filings.json";
 import {
   analystMethod,
+  communityEquity,
   headlineFindings,
+  incomeStructureBars,
   panchayatDuties,
   panchayatExplainer,
   rates,
@@ -37,6 +42,8 @@ const GOLD = "#D4AF37";
 
 export default function DataPage() {
   const { meta, occupation_distribution, age_distribution, privacy, demands_of_state } = census;
+  const rti0 = rti.filings[0];
+  const h = lgd.hierarchy;
 
   return (
     <div className="min-h-screen bg-[#f4efe4]">
@@ -77,6 +84,11 @@ export default function DataPage() {
             <MapPin className="h-4 w-4 text-amber-400" />
             {meta.region}
           </p>
+          <p className="mt-4 max-w-2xl font-mono text-[11px] leading-relaxed text-stone-500">
+            LGD · {h.state.name} ({h.state.code}) · {h.district.name} ({h.district.code}) ·{" "}
+            {h.block.name} ({h.block.code}) · GP {h.gram_panchayat.name}{" "}
+            <span className="text-amber-300/90">{h.gram_panchayat.code}</span>
+          </p>
         </div>
       </header>
 
@@ -85,7 +97,16 @@ export default function DataPage() {
         <section className="flex flex-col gap-3 rounded-2xl border border-stone-300 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <div className="flex items-start gap-3">
             <Shield className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
-            <p className="text-sm leading-relaxed text-stone-700">{privacy.policy}</p>
+            <p className="text-sm leading-relaxed text-stone-700">
+              {privacy.policy}{" "}
+              <Link href="/privacy" className="font-semibold text-amber-900 underline">
+                Privacy Policy
+              </Link>
+              {" · "}
+              <Link href="/terms" className="font-semibold text-amber-900 underline">
+                Terms
+              </Link>
+            </p>
           </div>
           <Link
             href="/auth"
@@ -95,14 +116,51 @@ export default function DataPage() {
           </Link>
         </section>
 
+        {/* RTI flight clock */}
+        {rti0 && (
+          <section className="rounded-[1.5rem] border border-stone-300 bg-stone-950 p-6 text-stone-100 shadow-sm sm:p-8">
+            <div className="flex flex-wrap items-center gap-2">
+              <FileText className="h-5 w-5 text-amber-400" />
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
+                RTI telemetry
+              </p>
+              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-stone-300">
+                {rti0.status}
+              </span>
+            </div>
+            <h2 className="mt-3 font-serif text-2xl font-bold text-white sm:text-3xl">
+              {rti0.title}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-stone-400">{rti0.public_summary}</p>
+            <p className="mt-3 text-xs text-stone-500">
+              Application date {rti0.filed_on} · GP LGD {rti0.lgd_gp_code} · Clock starts on PIO
+              receipt (not draft date alone)
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                href="/rti"
+                className="inline-flex items-center justify-center rounded-full bg-amber-400 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-stone-950 transition hover:bg-amber-300"
+              >
+                Open RTI tracker · 9 questions
+              </Link>
+              <Link
+                href="/governance/rti"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-stone-200 transition hover:border-amber-400/50"
+              >
+                Full path /governance/rti
+              </Link>
+            </div>
+          </section>
+        )}
+
         {/* 1. Headline rates */}
         <section>
           <SectionHead
             eyebrow="01 · Rates that matter"
             title="What we can prove without naming anyone"
-            sub="Percentages first. These are the numbers a block office or Gram Sabha cannot wave away."
+            sub="Percentages first — water, literacy, income structure proxies, care pressure. No invented salaries."
           />
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {headlineFindings.map((f) => (
               <div
                 key={f.label}
@@ -124,6 +182,68 @@ export default function DataPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* SC community + income structure */}
+        <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <Card
+            title="Community equity (SC context)"
+            subtitle={`${communityEquity.samaj} · cohort rates, not certificate dumps`}
+          >
+            <p className="text-sm leading-relaxed text-stone-600">
+              {communityEquity.statement}
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <RateTile
+                label="SC-targeted cohort (homes)"
+                value={`${communityEquity.scTargetedCohortShareOfHouseholds}%`}
+                hint={`${communityEquity.cohortHouseholds} households in survey`}
+              />
+              <RateTile
+                label="SC-targeted cohort (people)"
+                value={`${communityEquity.scTargetedCohortShareOfPeople}%`}
+                hint={`${communityEquity.cohortPeople} people counted`}
+              />
+            </div>
+            <p className="mt-4 rounded-xl border border-amber-100 bg-amber-50/80 px-3 py-2 text-xs leading-relaxed text-stone-700">
+              {communityEquity.deliveryHonesty}
+            </p>
+            <ul className="mt-3 space-y-1 text-xs text-stone-500">
+              {communityEquity.whatAnalystPublishes.map((w) => (
+                <li key={w}>· {w}</li>
+              ))}
+            </ul>
+          </Card>
+          <Card
+            title="Income structure (proxy rates)"
+            subtitle="Livelihood composition — not average ₹ income (we refuse to invent it)"
+          >
+            <BarChart data={incomeStructureBars} color={GOLD} />
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <RateTile
+                label="External wage dep. (non-students)"
+                value={`${rates.externalWageDependencyOfNonStudents}%`}
+                hint="share whose job is outside the hills"
+                danger
+              />
+              <RateTile
+                label="Of market labour, outside"
+                value={`${rates.remittanceLinkedShareOfMarketLabour}%`}
+                hint="remittance-linked share of cash work"
+                danger
+              />
+              <RateTile
+                label="Unpaid care (non-students)"
+                value={`${rates.unpaidCareShareOfNonStudents}%`}
+                hint="home/care occupations"
+              />
+              <RateTile
+                label="Formal public jobs (pop.)"
+                value={`${rates.formalPublicShareOfPeople}%`}
+                hint="govt / army / teaching"
+              />
+            </div>
+          </Card>
         </section>
 
         {/* Method */}

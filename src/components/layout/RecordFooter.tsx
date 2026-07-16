@@ -211,6 +211,20 @@ export default function RecordFooter() {
                 Upesh
               </Link>
             </p>
+            <nav className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] uppercase tracking-[0.14em] text-stone-500">
+              <Link href="/privacy" className="hover:text-amber-300">
+                Privacy
+              </Link>
+              <Link href="/terms" className="hover:text-amber-300">
+                Terms
+              </Link>
+              <Link href="/data" className="hover:text-amber-300">
+                Data
+              </Link>
+              <Link href="/rti" className="hover:text-amber-300">
+                RTI
+              </Link>
+            </nav>
           </div>
           <p>{t.footerTagline}</p>
         </div>
