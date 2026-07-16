@@ -203,7 +203,7 @@ export default function RecordFooter() {
             <p className="mt-1 text-stone-500">
               Made with ❤️ by{" "}
               <Link
-                href="https://portfolio2026feb.vercel.app/"
+                href="https://portfolio-next-fawn-five.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-stone-400 hover:text-amber-300 transition underline underline-offset-4 decoration-stone-600 hover:decoration-amber-300"

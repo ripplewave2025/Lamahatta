@@ -65,7 +65,7 @@ const Footer = () => {
                     <p className="text-white/40 text-[10px] uppercase tracking-widest">
                         Made with ❤️ by{" "}
                         <Link 
-                            href="https://portfolio2026feb.vercel.app/" 
+                            href="https://portfolio-next-fawn-five.vercel.app/" 
                             target="_blank" 
                             rel="noopener noreferrer" 
                             className="text-white/60 hover:text-accent transition-colors font-medium underline underline-offset-4 decoration-white/20 hover:decoration-accent"
