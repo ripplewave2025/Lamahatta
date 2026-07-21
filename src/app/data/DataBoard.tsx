@@ -48,67 +48,40 @@ import {
   works,
 } from "@/data/metrics-registry";
 import { BarChart, DonutChart } from "./DataCharts";
+import { useLanguage } from "@/context/LanguageContext";
 
 const GOLD = "#D4AF37";
 
 type TabId = "simple" | "charts" | "rights" | "check" | "papers";
 
-const TABS: {
-  id: TabId;
-  label: string;
-  short: string;
-  hint: string;
-  icon: typeof Home;
-}[] = [
-  {
-    id: "simple",
-    label: "See village",
-    short: "Home",
-    hint: "Big picture — red means problem",
-    icon: Home,
-  },
-  {
-    id: "charts",
-    label: "Pictures",
-    short: "Charts",
-    hint: "Numbers as charts — no names",
-    icon: BarChart3,
-  },
-  {
-    id: "rights",
-    label: "Your rights",
-    short: "Rights",
-    hint: "What you can ask the panchayat",
-    icon: Scale,
-  },
-  {
-    id: "check",
-    label: "Check work",
-    short: "Work",
-    hint: "Water, road, schemes — is it done?",
-    icon: Wrench,
-  },
-  {
-    id: "papers",
-    label: "Papers / RTI",
-    short: "Papers",
-    hint: "RTI status · login for full track",
-    icon: FileText,
-  },
+const TAB_META: { id: TabId; icon: typeof Home }[] = [
+  { id: "simple", icon: Home },
+  { id: "charts", icon: BarChart3 },
+  { id: "rights", icon: Scale },
+  { id: "check", icon: Wrench },
+  { id: "papers", icon: FileText },
 ];
 
 function tabFromHash(): TabId {
   if (typeof window === "undefined") return "simple";
   const h = window.location.hash.replace("#", "");
-  if (TABS.some((t) => t.id === h)) return h as TabId;
+  if (TAB_META.some((t) => t.id === h)) return h as TabId;
   return "simple";
 }
 
 export default function DataBoard() {
+  const { t } = useLanguage();
   const [tab, setTab] = useState<TabId>("simple");
   const baseId = useId();
   const { meta, occupation_distribution, age_distribution, privacy, demands_of_state } = census;
   const rti0 = rti.filings[0];
+
+  const tabs = TAB_META.map((metaTab) => ({
+    ...metaTab,
+    short: t(`data.tab.${metaTab.id}.short`),
+    label: t(`data.tab.${metaTab.id}.label`),
+    hint: t(`data.tab.${metaTab.id}.hint`),
+  }));
 
   useEffect(() => {
     setTab(tabFromHash());
@@ -129,18 +102,16 @@ export default function DataBoard() {
       {/* How to use — plain words for low literacy */}
       <section
         className="rounded-2xl border-2 border-amber-300 bg-amber-50 p-4 sm:p-5"
-        aria-label="How to use this page"
+        aria-label={t("data.howto.title")}
       >
-        <p className="text-base font-bold text-stone-900 sm:text-lg">
-          How to read this page (simple)
-        </p>
+        <p className="text-base font-bold text-stone-900 sm:text-lg">{t("data.howto.title")}</p>
         <ul className="mt-3 grid gap-2 text-sm text-stone-800 sm:grid-cols-2 sm:text-base">
           <li className="flex items-start gap-2 rounded-xl bg-white/80 px-3 py-2">
             <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
               !
             </span>
             <span>
-              <strong className="text-red-800">Red</strong> = not working / big problem
+              <strong className="text-red-800">{t("data.howto.red")}</strong>
             </span>
           </li>
           <li className="flex items-start gap-2 rounded-xl bg-white/80 px-3 py-2">
@@ -148,7 +119,7 @@ export default function DataBoard() {
               ~
             </span>
             <span>
-              <strong className="text-amber-900">Yellow</strong> = half done / we do not know yet
+              <strong className="text-amber-900">{t("data.howto.yellow")}</strong>
             </span>
           </li>
           <li className="flex items-start gap-2 rounded-xl bg-white/80 px-3 py-2">
@@ -156,64 +127,68 @@ export default function DataBoard() {
               ✓
             </span>
             <span>
-              <strong className="text-emerald-800">Green</strong> = working
+              <strong className="text-emerald-800">{t("data.howto.green")}</strong>
             </span>
           </li>
           <li className="flex items-start gap-2 rounded-xl bg-white/80 px-3 py-2">
             <EyeShield />
             <span>
-              <strong>No names</strong> of people — only village numbers
+              <strong>{t("data.howto.names")}</strong>
             </span>
           </li>
         </ul>
-        <p className="mt-3 text-sm text-stone-600">
-          Tap a big button below. Start with <strong>See village</strong>. Ask a neighbour to read if
-          needed — the colours still show the truth.
-        </p>
+        <p className="mt-3 text-sm text-stone-600">{t("data.howto.tap")}</p>
       </section>
 
-      {/* Tab navbar — large touch targets */}
+      {/* Desktop / tablet sticky top tabs */}
       <nav
-        className="sticky top-16 z-30 -mx-1 rounded-2xl border border-stone-300 bg-white/95 p-2 shadow-md backdrop-blur sm:top-20"
-        aria-label="Village data sections"
+        className="sticky top-16 z-30 -mx-1 hidden rounded-2xl border border-stone-300 bg-white/95 p-2 shadow-md backdrop-blur sm:top-20 sm:block"
+        aria-label={t("data.tabs.choose")}
       >
         <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-wider text-stone-500">
-          Choose a section
+          {t("data.tabs.choose")}
         </p>
         <div
           role="tablist"
-          aria-label="Data board tabs"
-          className="grid grid-cols-5 gap-1.5 sm:gap-2"
+          aria-label={t("data.tabs.choose")}
+          className="grid grid-cols-5 gap-2"
         >
-          {TABS.map((t) => {
-            const Icon = t.icon;
-            const active = tab === t.id;
+          {tabs.map((tabItem) => {
+            const Icon = tabItem.icon;
+            const active = tab === tabItem.id;
             return (
               <button
-                key={t.id}
+                key={tabItem.id}
                 type="button"
                 role="tab"
-                id={`${baseId}-tab-${t.id}`}
+                id={`${baseId}-tab-${tabItem.id}`}
                 aria-selected={active}
-                aria-controls={`${baseId}-panel-${t.id}`}
-                onClick={() => go(t.id)}
-                className={`flex min-h-[4.25rem] flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 text-center transition sm:min-h-[4.75rem] sm:px-2 ${
+                aria-controls={`${baseId}-panel-${tabItem.id}`}
+                onClick={() => go(tabItem.id)}
+                className={`flex min-h-[4.75rem] flex-col items-center justify-center gap-1 rounded-xl px-2 py-2 text-center transition ${
                   active
                     ? "bg-stone-950 text-amber-300 shadow-inner"
                     : "bg-stone-50 text-stone-700 hover:bg-amber-50"
                 }`}
               >
-                <Icon className={`h-6 w-6 sm:h-7 sm:w-7 ${active ? "text-amber-300" : "text-amber-700"}`} />
-                <span className="text-[10px] font-bold leading-tight sm:text-xs">{t.short}</span>
-                <span className="hidden text-[10px] leading-tight opacity-80 sm:block">{t.label}</span>
+                <Icon
+                  className={`h-7 w-7 ${active ? "text-amber-300" : "text-amber-700"}`}
+                />
+                <span className="text-xs font-bold leading-tight">{tabItem.short}</span>
+                <span className="text-[10px] leading-tight opacity-80">{tabItem.label}</span>
               </button>
             );
           })}
         </div>
         <p className="mt-2 px-2 text-xs text-stone-500" aria-live="polite">
-          {TABS.find((t) => t.id === tab)?.hint}
+          {tabs.find((x) => x.id === tab)?.hint}
         </p>
       </nav>
+
+      {/* Mobile: section chips (compact) above content */}
+      <p className="text-center text-xs font-medium text-stone-500 sm:hidden" aria-live="polite">
+        {tabs.find((x) => x.id === tab)?.label} — {tabs.find((x) => x.id === tab)?.hint}
+      </p>
 
       {/* Privacy strip */}
       <section className="flex flex-col gap-3 rounded-2xl border border-stone-300 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
@@ -222,11 +197,11 @@ export default function DataBoard() {
           <p className="text-sm leading-relaxed text-stone-700">
             {privacy.policy}{" "}
             <Link href="/privacy" className="font-semibold text-amber-900 underline">
-              Privacy Policy
+              {t("data.privacy")}
             </Link>
             {" · "}
             <Link href="/terms" className="font-semibold text-amber-900 underline">
-              Terms
+              {t("data.terms")}
             </Link>
           </p>
         </div>
@@ -235,7 +210,7 @@ export default function DataBoard() {
           className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full border border-stone-300 bg-stone-50 px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-stone-800 transition hover:bg-stone-100"
         >
           <Lock className="h-3.5 w-3.5" />
-          Login · private directory
+          {t("data.login")}
         </Link>
       </section>
 
@@ -244,7 +219,7 @@ export default function DataBoard() {
         role="tabpanel"
         id={`${baseId}-panel-${tab}`}
         aria-labelledby={`${baseId}-tab-${tab}`}
-        className="space-y-8 pb-24 sm:pb-8"
+        className="space-y-8 pb-28 sm:pb-8"
       >
         {tab === "simple" && (
           <SimpleTab
@@ -269,10 +244,41 @@ export default function DataBoard() {
         {tab === "papers" && <PapersTab rti0={rti0} surveyYear={meta.survey_year} />}
       </div>
 
-      <p className="text-center text-xs text-stone-500">
+      <p className="pb-4 text-center text-xs text-stone-500 sm:pb-0">
         Sunaray Gaon · Lamahatta GP {auditBoardMeta.lgd} · Survey {meta.survey_year} · Audit{" "}
-        {auditBoardMeta.asOf} · No person names · Citizen RTI rights included
+        {auditBoardMeta.asOf} · {t("data.footer")}
       </p>
+
+      {/* Mobile bottom tab bar — thumb zone */}
+      <nav
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-300 bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur sm:hidden"
+        aria-label={t("data.tabs.choose")}
+      >
+        <div role="tablist" className="mx-auto grid max-w-lg grid-cols-5 gap-0.5 px-1 py-1.5">
+          {tabs.map((tabItem) => {
+            const Icon = tabItem.icon;
+            const active = tab === tabItem.id;
+            return (
+              <button
+                key={tabItem.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                aria-label={tabItem.label}
+                onClick={() => go(tabItem.id)}
+                className={`flex min-h-[3.75rem] flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1.5 transition ${
+                  active ? "bg-stone-950 text-amber-300" : "text-stone-600 active:bg-stone-100"
+                }`}
+              >
+                <Icon className={`h-6 w-6 ${active ? "text-amber-300" : "text-amber-700"}`} />
+                <span className="max-w-full truncate text-[10px] font-bold leading-tight">
+                  {tabItem.short}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
@@ -298,39 +304,45 @@ function SimpleTab({
   onOpenCheck: () => void;
   onOpenCharts: () => void;
 }) {
+  const { t } = useLanguage();
+
+  const waterDetail = t("data.simple.water.detail")
+    .replace("{taps}", String(rates.functionalTaps))
+    .replace("{homes}", String(rates.households));
+
   const bigCards = [
     {
-      title: "Water at home",
-      plain: "Tap water that works",
+      title: t("data.simple.water.title"),
+      plain: t("data.simple.water.plain"),
       value: `${rates.functionalTapRate}%`,
-      detail: `${rates.functionalTaps} of ${rates.households} homes have a working tap`,
+      detail: waterDetail,
       tone: "bad" as const,
       icon: Droplets,
       onMore: onOpenCheck,
     },
     {
-      title: "Phone / internet",
-      plain: "Can you use the phone?",
-      value: "Bad",
-      detail: "Signal is weak. Hard for bank OTP and remittance.",
+      title: t("data.simple.phone.title"),
+      plain: t("data.simple.phone.plain"),
+      value: t("data.simple.phone.value"),
+      detail: t("data.simple.phone.detail"),
       tone: "bad" as const,
       icon: Phone,
       onMore: onOpenCheck,
     },
     {
-      title: "Road",
-      plain: "Can you walk / drive in?",
-      value: "Not done",
-      detail: "About 1 mile of bad road still blocks easy access.",
+      title: t("data.simple.road.title"),
+      plain: t("data.simple.road.plain"),
+      value: t("data.simple.road.value"),
+      detail: t("data.simple.road.detail"),
       tone: "bad" as const,
       icon: Route,
       onMore: onOpenCheck,
     },
     {
-      title: "Solar / lights",
-      plain: "Public solar assets",
+      title: t("data.simple.solar.title"),
+      plain: t("data.simple.solar.plain"),
       value: "?",
-      detail: "Not counted yet. Unknown is not “OK”.",
+      detail: t("data.simple.solar.detail"),
       tone: "warn" as const,
       icon: Sun,
       onMore: onOpenCheck,
@@ -340,9 +352,9 @@ function SimpleTab({
   return (
     <div className="space-y-8">
       <SectionHead
-        eyebrow="Big picture"
-        title="Is the village getting what it needs?"
-        sub="Four large cards. Red = problem. Tap a card for more detail."
+        eyebrow={t("data.simple.eyebrow")}
+        title={t("data.simple.title")}
+        sub={t("data.simple.sub")}
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -384,7 +396,7 @@ function SimpleTab({
               </p>
               <p className="mt-2 text-sm leading-relaxed text-stone-700 sm:text-base">{c.detail}</p>
               <p className="mt-3 text-xs font-bold uppercase tracking-wider text-stone-500">
-                Tap for full check →
+                {t("data.simple.tapMore")}
               </p>
             </button>
           );
@@ -393,20 +405,20 @@ function SimpleTab({
 
       <div className="grid gap-3 sm:grid-cols-3">
         <QuickJump
-          title="Your rights"
-          text="You can ask the panchayat for lists and works."
+          title={t("data.simple.jump.rights")}
+          text={t("data.simple.jump.rights.desc")}
           onClick={onOpenRights}
           icon={Scale}
         />
         <QuickJump
-          title="Pictures / charts"
-          text="See who works outside, age, literacy."
+          title={t("data.simple.jump.charts")}
+          text={t("data.simple.jump.charts.desc")}
           onClick={onOpenCharts}
           icon={BarChart3}
         />
         <QuickJump
-          title="Papers & login"
-          text="RTI status. Login to open full tracker."
+          title={t("data.simple.jump.papers")}
+          text={t("data.simple.jump.papers.desc")}
           onClick={onOpenPapers}
           icon={FileText}
         />
@@ -414,21 +426,29 @@ function SimpleTab({
 
       <div className="rounded-[1.5rem] border border-stone-200 bg-white p-5 shadow-sm sm:p-6">
         <p className="text-xs font-bold uppercase tracking-wider text-stone-500">
-          Village size (no names)
+          {t("data.simple.size")}
         </p>
         <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <RateTile label="Homes" value={String(rates.households)} hint="households" />
-          <RateTile label="People" value={String(rates.population)} hint="counted" />
           <RateTile
-            label="Work outside"
+            label={t("data.simple.homes")}
+            value={String(rates.households)}
+            hint={t("data.simple.households")}
+          />
+          <RateTile
+            label={t("data.simple.people")}
+            value={String(rates.population)}
+            hint={t("data.simple.counted")}
+          />
+          <RateTile
+            label={t("data.simple.outside")}
             value={`${rates.outStationShareOfPeople}%`}
-            hint={`${rates.outStationWorkers} people`}
+            hint={`${rates.outStationWorkers}`}
             danger
           />
           <RateTile
-            label="No formal literacy"
+            label={t("data.simple.literacy")}
             value={`${rates.noLiteracyRate}%`}
-            hint={`${rates.noLiteracyCount} people`}
+            hint={`${rates.noLiteracyCount}`}
             danger
           />
         </div>
@@ -438,21 +458,22 @@ function SimpleTab({
 }
 
 function StatusBlob({ tone }: { tone: "bad" | "warn" | "ok" }) {
+  const { t } = useLanguage();
   if (tone === "bad")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-        <XCircle className="h-3.5 w-3.5" /> Problem
+        <XCircle className="h-3.5 w-3.5" /> {t("data.status.problem")}
       </span>
     );
   if (tone === "warn")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-stone-900">
-        <HelpCircle className="h-3.5 w-3.5" /> Unknown
+        <HelpCircle className="h-3.5 w-3.5" /> {t("data.status.unknown")}
       </span>
     );
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-      <CheckCircle2 className="h-3.5 w-3.5" /> OK
+      <CheckCircle2 className="h-3.5 w-3.5" /> {t("data.status.ok")}
     </span>
   );
 }
