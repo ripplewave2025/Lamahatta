@@ -154,6 +154,12 @@ export type PanchayatDuty = {
   rateLabel: string;
   evidence: string;
   whoShouldAct: string;
+  /** RTI question numbers on rti-lgp-2026-001 that map to this duty */
+  rtiPointIds?: number[];
+  /** Keys into audit-sources.json */
+  sourceIds?: string[];
+  /** Citizen right to know (statutory / disclosure) for this duty */
+  citizenRight?: string;
 };
 
 /**
@@ -170,6 +176,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     evidence:
       "Tank for the ward built ~1 year ago; source still not connected. Zero live FHTCs in survey ground record.",
     whoShouldAct: "Gram Panchayat + PHED / Jal Jeevan implementing agency",
+    rtiPointIds: [6],
+    sourceIds: ["survey-2026", "jjm-ejal", "rti-act"],
+    citizenRight: "Right to FHTC / drinking-water scheme lists for this habitation.",
   },
   {
     duty: "Roads & paths",
@@ -180,6 +189,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     evidence:
       "Site challenges record: main access road incomplete; multiple village walking paths unsafe. PMGSY-style pucca request is a live Gram Sabha item, not a finished road.",
     whoShouldAct: "Gram Panchayat + PWD / PMGSY rural roads",
+    rtiPointIds: [1, 2, 9],
+    sourceIds: ["pmgsy-omms", "egramswaraj", "rti-act"],
+    citizenRight: "Right to ward-wise road works, expenditure, and held-up status.",
   },
   {
     duty: "Livelihoods & MGNREGA work",
@@ -190,6 +202,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     evidence:
       "Survey occupations show heavy out-station work (Bangalore, Sikkim, Bihar, Manipur). Local MGNREGA / public-work status is not yet published household-by-household on this platform.",
     whoShouldAct: "Gram Panchayat (job cards, works) + Block office",
+    rtiPointIds: [1],
+    sourceIds: ["nrega-mis", "egramswaraj", "rti-act"],
+    citizenRight: "Right to job-card coverage and person-days (no Aadhaar on public board).",
   },
   {
     duty: "Education support",
@@ -199,6 +214,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     rateLabel: `${rates.studentsShare}% in education · ${rates.noLiteracyRate}% marked no formal literacy`,
     evidence: `${students} students/children; ${illit} people Literacy=No (${adultIllit40} of them age 40+). Schools exist nearby; adult literacy + form help is the gap.`,
     whoShouldAct: "Panchayat + school SMC + ICDS / adult education partners",
+    rtiPointIds: [3],
+    sourceIds: ["rti-act", "survey-2026"],
+    citizenRight: "Right to know education-support and scholarship lists published for this GP.",
   },
   {
     duty: "Elder & social care",
@@ -209,6 +227,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     evidence:
       "High out-migration + multi-home elder flags (widow / bedridden / alone). No public rota or pension-delivery dashboard yet.",
     whoShouldAct: "Gram Panchayat + Samaj + health sub-centre",
+    rtiPointIds: [1],
+    sourceIds: ["rti-act", "survey-2026"],
+    citizenRight: "Right to public pension / widow beneficiary lists on the Gram Sabha board.",
   },
   {
     duty: "Connectivity (internet / mobile)",
@@ -219,6 +240,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     evidence:
       "Challenges page: internet/mobile marked critical. Why page: no grants yet for cell connectivity.",
     whoShouldAct: "Panchayat (demand) + DoT / tower operators / state digital mission",
+    rtiPointIds: [],
+    sourceIds: ["dot", "bbnl-bharatnet", "pm-wani"],
+    citizenRight: "Right to know public connectivity programmes planned for this GP/block.",
   },
   {
     duty: "Public information & Gram Sabha",
@@ -227,8 +251,12 @@ export const panchayatDuties: PanchayatDuty[] = [
     status: "failing",
     rateLabel: "No public works / fund board on this OS yet",
     evidence:
-      "Village OS plan requires eGramSwaraj-style transparency; current site has census + story, not audited fund releases.",
+      "Village OS plan requires eGramSwaraj-style transparency; current site has census + story, not audited fund releases. Citizens have a statutory right to this information (RTI Act 2005).",
     whoShouldAct: "Gram Panchayat (mandatory disclosure) + Block",
+    rtiPointIds: [1, 3, 7, 8, 9],
+    sourceIds: ["egramswaraj", "meri-panchayat", "rti-act"],
+    citizenRight:
+      "Core citizen right: know what the panchayat does — works, minutes, assets, abandoned/held-up items.",
   },
   {
     duty: "Housing & land records (support role)",
@@ -239,6 +267,9 @@ export const panchayatDuties: PanchayatDuty[] = [
     evidence:
       "Person roll has no PMAY / land-title columns. Dashboard flags these schemes as ‘coming soon’ trackers.",
     whoShouldAct: "Panchayat + BDO + revenue line",
+    rtiPointIds: [1],
+    sourceIds: ["rti-act", "data-gov-in"],
+    citizenRight: "Right to PMAY-G / housing beneficiary status lists for this GP.",
   },
 ];
 
@@ -250,6 +281,8 @@ export type SchemeRow = {
   villageStatus: "not_reaching" | "partial" | "unknown" | "working";
   rateOrSignal: string;
   analystNote: string;
+  rtiPointIds?: number[];
+  sourceIds?: string[];
 };
 
 export const schemes: SchemeRow[] = [
@@ -261,6 +294,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: `0% functional taps (${taps}/${hh})`,
     analystNote:
       "Hard failure with physical proof (tank without source). This is the cleanest KPI a panchayat can be scored on.",
+    rtiPointIds: [6],
+    sourceIds: ["jjm-ejal", "survey-2026", "rti-act"],
   },
   {
     scheme: "PMGSY / rural roads",
@@ -270,6 +305,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: "~1 mile bad road still defining access",
     analystNote:
       "Road is both economy and health: out-migration already high; bad road raises cost of staying.",
+    rtiPointIds: [1, 9],
+    sourceIds: ["pmgsy-omms", "egramswaraj", "rti-act"],
   },
   {
     scheme: "MGNREGA",
@@ -279,6 +316,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: `${outside} people already earning outside · local works list not public`,
     analystNote:
       "An analyst would demand: job-card coverage %, person-days this FY, wage delay days. Until published, treat local safety-net as opaque.",
+    rtiPointIds: [1],
+    sourceIds: ["nrega-mis", "rti-act"],
   },
   {
     scheme: "PM-KISAN",
@@ -288,6 +327,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: `${localWork} people in local labour/farming occupations (proxy, not land title count)`,
     analystNote:
       "Survey has occupation, not landholding. Next data step: list farmer HH vs e-KYC / instalment status.",
+    rtiPointIds: [1],
+    sourceIds: ["data-gov-in", "rti-act"],
   },
   {
     scheme: "PMAY-G (rural housing)",
@@ -297,6 +338,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: "Not in 2026 person sheet",
     analystNote:
       "Do not invent a housing rate. Expert move: photograph stock + match AwaasSoft list at Gram Sabha.",
+    rtiPointIds: [1],
+    sourceIds: ["data-gov-in", "rti-act"],
   },
   {
     scheme: "NSAP / old-age & widow pension",
@@ -306,6 +349,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: `${rates.elderlyHouseholdShare}% homes touch elder care risk`,
     analystNote:
       "Migration leaves elders behind. Analyst scorecard: % of 60+ with active pension + bank passbook check this quarter.",
+    rtiPointIds: [1],
+    sourceIds: ["rti-act", "survey-2026"],
   },
   {
     scheme: "ICDS / mid-day meal / school chain",
@@ -315,6 +360,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: `${rates.childrenShare}% of population are children · ${students} in education pipeline`,
     analystNote:
       "Child share is material. Failure mode is path safety + attendance on bad-road days, not only classroom supply.",
+    rtiPointIds: [3],
+    sourceIds: ["survey-2026", "rti-act"],
   },
   {
     scheme: "Digital India / BharatNet / mobile coverage",
@@ -324,6 +371,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: "Connectivity listed as critical community challenge",
     analystNote:
       "With 1 in 5 people working outside, dead signal is a tax on remittances, scheme OTPs, and tele-medicine.",
+    rtiPointIds: [],
+    sourceIds: ["bbnl-bharatnet", "dot", "pm-wani"],
   },
   {
     scheme: "SC scholarships / hostels / skill (post-matric & state)",
@@ -333,6 +382,8 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: "Enrollment % not in 2026 occupation sheet",
     analystNote:
       "Analyst move: publish how many students in the pipeline vs how many on scholarship lists — not slogans. Demand Block education cell list for this GP.",
+    rtiPointIds: [1],
+    sourceIds: ["rti-act", "data-gov-in"],
   },
   {
     scheme: "Stand-Up India / SC enterprise credit (eligible cohort)",
@@ -342,13 +393,15 @@ export const schemes: SchemeRow[] = [
     rateOrSignal: "No public loan-sanction list for this GP",
     analystNote:
       "High out-station chef/driver skills are human capital. Without local credit + road + water, talent exits. Opacity of credit delivery is the scorecard.",
+    rtiPointIds: [],
+    sourceIds: ["rti-act", "data-gov-in"],
   },
 ];
 
 export const panchayatExplainer = {
   title: "What a Gram Panchayat is for",
   lede:
-    "A Gram Panchayat is the nearest government. In plain words: it is supposed to turn national schemes into water, roads, work, schools support, and public lists you can check — not only meetings and photos.",
+    "A Gram Panchayat is the nearest government. In plain words: it is supposed to turn national schemes into water, roads, work, schools support, and public lists you can check — not only meetings and photos. Citizens have a legal right to that information.",
   bullets: [
     {
       title: "Basic services",
@@ -363,12 +416,12 @@ export const panchayatExplainer = {
       text: "Open meetings where the village prioritises works, sees budgets, and can object when a work is marked complete but is not.",
     },
     {
-      title: "Records & proof",
-      text: "Keep beneficiary lists, wage sheets, and water-connection status public so 22 houses can audit without a middleman.",
+      title: "Records & proof (citizen right)",
+      text: "Keep beneficiary lists, wage sheets, works expenditure, asset registers, and water-connection status public so 22 houses can audit without a middleman — by right under the RTI Act, 2005, not as a favour.",
     },
   ],
   bottomLine:
-    "If taps are 0%, the road is unfinished, and scheme enrollment is invisible, that is not ‘village culture’ — it is delivery failure at the local state.",
+    "If taps are 0%, the road is unfinished, and scheme enrollment is invisible, that is not ‘village culture’ — it is delivery failure at the local state. Citizens may demand the records.",
 };
 
 export const analystMethod = {
@@ -380,6 +433,8 @@ export const analystMethod = {
     "Income: we publish livelihood composition %, not fake average salaries. Remittance share of market labour is the clean proxy until a wage survey exists.",
     "SC equity: community cohort size is known; certificate-level verification and scheme enrollment still need public lists from the Block/GP.",
     "Panchayat scorecards should use public administrative data next (eGramSwaraj, JJM dashboard, MGNREGA MIS) — this page starts with what the village already measured.",
+    "Every claim should show source + date. Official portal links are entry points, not proof of delivery until a work/asset row is verified.",
+    "Citizen right: you may demand what the panchayat does (works, minutes, assets, FHTC lists). Opacity is a red flag.",
   ],
 };
 

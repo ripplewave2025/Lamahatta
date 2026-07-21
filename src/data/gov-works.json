@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "Gram Panchayat works & assets (public-safe)",
+    "lgd_gp_code": "261054",
+    "rule": "Never invent Work IDs. No beneficiary or villager names. Compare sanctioned vs portal status vs ground.",
+    "schema_note": "Fill from RTI reply or manual eGram/PMGSY capture. waste_flag only with evidence.",
+    "updated": "2026-07-21"
+  },
+  "works": [
+    {
+      "id": "local-water-tank-ward16",
+      "work_id_portal": null,
+      "asset_id_portal": null,
+      "name": "Ward drinking-water tank (Sunaray / field Ward 16)",
+      "scheme": "Jal Jeevan / drinking water (scheme code not yet verified)",
+      "amount_sanctioned": null,
+      "amount_spent": null,
+      "status_portal": "unknown",
+      "status_ground": "broken",
+      "location_note": "Ward tank present; source not connected to household taps (0/22 FHTC).",
+      "source": "manual",
+      "source_ids": ["survey-2026", "jjm-ejal", "egramswaraj"],
+      "as_of": "2026-07-01",
+      "waste_flag": false,
+      "waste_reason": null,
+      "citizen_right": "Right to sanction, contractor, expenditure, and completion status for this asset.",
+      "notes": "status_ground uses broken = not delivering water to homes. Portal IDs pending eGram/JJM capture or RTI Q6–Q7."
+    },
+    {
+      "id": "local-access-road",
+      "work_id_portal": null,
+      "asset_id_portal": null,
+      "name": "Main access road / last mile to settlement",
+      "scheme": "PMGSY or GP road work (not yet verified)",
+      "amount_sanctioned": null,
+      "amount_spent": null,
+      "status_portal": "unknown",
+      "status_ground": "in_progress",
+      "location_note": "Approximately one mile of bad access road still defining entry.",
+      "source": "manual",
+      "source_ids": ["pmgsy-omms", "egramswaraj", "rti-act"],
+      "as_of": "2026-07-01",
+      "waste_flag": false,
+      "waste_reason": null,
+      "citizen_right": "Right to package/work ID, length, sanctioned amount, and completion claim vs ground photo.",
+      "notes": "status_ground in_progress = incomplete access; not a certified portal status."
+    }
+  ]
+}

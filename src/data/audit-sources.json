@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "title": "Verified official sources for Lamahatta GP audit",
+    "lgd_gp_code": "261054",
+    "rule": "These are portals to look up — not proof of village delivery. Proof only after a row lands in infrastructure-audit.json or gov-works.json with source + as_of.",
+    "privacy": "No person names. Public-safe entry points only."
+  },
+  "sources": [
+    {
+      "id": "lgd-directory",
+      "name": "Local Government Directory (LGD)",
+      "system": "Ministry of Panchayati Raj · LGD",
+      "url": "https://lgdirectory.gov.in",
+      "scope_key": "State 19 · District 309 · Block 2869 · GP code 261054 (Lamahatta)",
+      "domains": ["identity"],
+      "last_checked": "2026-06-12",
+      "notes": "Offline statewide dumps in data_from_the_internet/; extract lives in lgd-identity.json.",
+      "public": true
+    },
+    {
+      "id": "egramswaraj",
+      "name": "eGramSwaraj",
+      "system": "Ministry of Panchayati Raj · eGramSwaraj",
+      "url": "https://egramswaraj.gov.in",
+      "scope_key": "Search Gram Panchayat Lamahatta / LGD 261054 — works, GPDP, expenditure, assets",
+      "domains": ["amenities", "funds", "roads", "water"],
+      "last_checked": null,
+      "notes": "Primary portal for GP works status, abandoned/held-up, and asset directory. Manual capture into gov-works.json first.",
+      "public": true
+    },
+    {
+      "id": "meri-panchayat",
+      "name": "Meri Panchayat",
+      "system": "Ministry of Panchayati Raj · Meri Panchayat",
+      "url": "https://meripanchayat.gov.in",
+      "scope_key": "Citizen view for GP Lamahatta (261054)",
+      "domains": ["amenities", "funds", "identity"],
+      "last_checked": null,
+      "notes": "Citizen-facing GP information surface. Cross-check with eGramSwaraj.",
+      "public": true
+    },
+    {
+      "id": "jjm-ejal",
+      "name": "Jal Jeevan Mission / e-Jal Shakti",
+      "system": "Department of Drinking Water & Sanitation · JJM",
+      "url": "https://ejalshakti.gov.in",
+      "scope_key": "West Bengal · Darjeeling · Rangli Rangliot · Lamahatta / habitation for Sunaray (Simana) Gaon",
+      "domains": ["water"],
+      "last_checked": null,
+      "notes": "FHTC coverage and habitation-level claims. Portal claim ≠ ground taps until verified.",
+      "public": true
+    },
+    {
+      "id": "data-gov-in",
+      "name": "Open Government Data (data.gov.in)",
+      "system": "National Data Sharing and Accessibility Policy · data.gov.in",
+      "url": "https://www.data.gov.in",
+      "scope_key": "Search JJM, BharatNet, Gram Panchayat, rural schemes datasets for WB / Darjeeling",
+      "domains": ["water", "connectivity", "amenities", "funds"],
+      "last_checked": null,
+      "notes": "Prefer official downloads over brittle HTML scrapes. Cache with fetched_at.",
+      "public": true
+    },
+    {
+      "id": "bbnl-bharatnet",
+      "name": "BharatNet / BBNL",
+      "system": "Bharat Broadband Network Limited",
+      "url": "https://bbnl.nic.in",
+      "scope_key": "West Bengal · Darjeeling · GP service-ready / OFC status near Lamahatta",
+      "domains": ["connectivity"],
+      "last_checked": null,
+      "notes": "Broadband infrastructure claims. Pair with ground signal checks.",
+      "public": true
+    },
+    {
+      "id": "pmgsy-omms",
+      "name": "PMGSY OMMS",
+      "system": "Pradhan Mantri Gram Sadak Yojana · Online Management Monitoring System",
+      "url": "https://omms.nic.in",
+      "scope_key": "West Bengal · Darjeeling · packages serving Rangli Rangliot / Lamahatta access",
+      "domains": ["roads"],
+      "last_checked": null,
+      "notes": "Road package IDs, length, completion status. Record IDs in gov-works.json.",
+      "public": true
+    },
+    {
+      "id": "nrega-mis",
+      "name": "MGNREGA MIS",
+      "system": "Ministry of Rural Development · NREGASoft",
+      "url": "https://nrega.nic.in",
+      "scope_key": "West Bengal · Darjeeling · Rangli Rangliot · Lamahatta GP — job cards, person-days (no Aadhaar on public site)",
+      "domains": ["funds", "amenities"],
+      "last_checked": null,
+      "notes": "Publish coverage % and person-days, never worker Aadhaar.",
+      "public": true
+    },
+    {
+      "id": "dot",
+      "name": "Department of Telecommunications",
+      "system": "DoT · Government of India",
+      "url": "https://dot.gov.in",
+      "scope_key": "Coverage programmes / tower policy relevant to Darjeeling hills",
+      "domains": ["connectivity"],
+      "last_checked": null,
+      "notes": "Policy and programme entry; not a household signal meter.",
+      "public": true
+    },
+    {
+      "id": "pm-wani",
+      "name": "PM-WANI",
+      "system": "Public Wi-Fi Access Network Interface",
+      "url": "https://pmwani.gov.in",
+      "scope_key": "Public Wi-Fi PDOs near Lamahatta / Rangli Rangliot if any",
+      "domains": ["connectivity"],
+      "last_checked": null,
+      "notes": "Public Wi-Fi presence check only.",
+      "public": true
+    },
+    {
+      "id": "rti-act",
+      "name": "Right to Information Act, 2005",
+      "system": "Citizen statutory right · RTI Act 2005 (esp. §4 proactive disclosure + §6 applications)",
+      "url": "https://rti.gov.in",
+      "scope_key": "PIO Lamahatta Gram Panchayat LGD 261054; copy BDO Rangli Rangliot",
+      "domains": ["identity", "funds", "amenities", "water", "roads"],
+      "last_checked": "2026-07-16",
+      "notes": "Citizens have a right to know what the panchayat does: works, minutes, water lists, assets. Tracker: rti-filings.json + /rti.",
+      "public": true
+    },
+    {
+      "id": "survey-2026",
+      "name": "Sunaray Gaon household survey 2026",
+      "system": "Village-owned ground survey (aggregates only on public site)",
+      "url": "/data",
+      "scope_key": "22 households · 103 people · Ward 16 field alias",
+      "domains": ["water", "identity"],
+      "last_checked": "2026-07-01",
+      "notes": "Source for functional_taps=0 and demography rates. Person names never public.",
+      "public": true
+    }
+  ]
+}
